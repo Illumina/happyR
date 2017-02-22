@@ -4,23 +4,27 @@
 #' Load a hap.py results directory
 #'
 #' Read a directory of hap.py output files into
-#' a R data structure
+#' a R data structure.
 #'
-#' @param directory path to the output directory
+#' @param happy_prefix hap.py output prefix (and path)
 #' @param lazy store lesser-used output as
 #'   unevaluated promises rather than reading
-#'   everything
+#'   everything at once
 #'
 #' @return A list structure containing hap.py output
 #'
 #' @examples
 #'
 #' \dontrun{
-#' happy <- read_happy('/path/to/output/dir')
+#' # run hap.py from commandline:
+#' #  hap.py truth.vcf query.vcf -o /output/path/prefix
+#'
+#' # load result into R
+#' happy <- read_happy('/output/path/prefix')
 #' names(happy)
 #' }
 #'
 #' @export
-read_happy <- function(directory, lazy = TRUE){
+read_happy <- function(happy_prefix, lazy = TRUE){
 
 }

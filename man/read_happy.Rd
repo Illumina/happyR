@@ -7,7 +7,7 @@
 read_happy(directory, lazy = TRUE)
 }
 \arguments{
-\item{directory}{path to the output directory}
+\item{directory}{hap.py output prefix (and path)}
 
 \item{lazy}{store lesser-used output as
 unevaluated promises rather than reading
@@ -18,12 +18,17 @@ A list structure containing hap.py output
 }
 \description{
 Read a directory of hap.py output files into
-a R data structure
+a R data structure -- just pass the output prefix
+from which hap.py results were generated.
 }
 \examples{
 
 \dontrun{
-happy <- read_happy('/path/to/output/dir')
+# run hap.py from commandline:
+#  hap.py truth.vcf query.vcf -o /output/path/prefix
+
+# load result into R
+happy <- read_happy('/output/path/prefix')
 names(happy)
 }
 
