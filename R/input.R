@@ -1,5 +1,34 @@
 ## Load hap.py data
 
+# Generic loader for CSVs written by hap.py
+load_happy_csv <- function(path, class = NULL) {
+  # using data.table for speedup
+  dt <- data.table::fread(path, sep = ",", header = TRUE,
+                          stringsAsFactors = FALSE)
+  if (!is.null(class))
+    class(dt) <- c(class, class(dt))
+  return(dt)
+}
+
+# Load sets of hap.py Precision-Recall data
+load_happy_pr <- function(happy_prefix) {
+
+  # all potential PR data files that may exist
+  possible_suffixes <- paste0(
+    c(".roc.all",
+      ".roc.Locations.INDEL", ".roc.Locations.INDEL.PASS",
+      ".roc.Locations.SNP", ".roc.Locations.SNP.PASS"
+    ), ".csv.gz")
+
+  if (file.exists(paste0(happy_prefix, possible_suffixes[1]))) {
+    message("Precision-Recall curve data found, reading... ")
+    # TODO
+  } else {
+    pr_data <- NULL
+  }
+
+  return(pr_data)
+}
 
 #' Load a hap.py results directory
 #'
@@ -27,4 +56,33 @@
 #' @export
 read_happy <- function(happy_prefix, lazy = TRUE){
 
+  summary_path <- paste0(happy_prefix, ".summary.csv")
+
+  if (!file.exists(summary_path)) {
+    stop("File missing -- is ",
+         normalizePath(happy_prefix, mustWork = FALSE),
+         " a hap.py output prefix?")
+  }
+
+  summary <- load_happy_csv(summary_path, "happy_summary")
+  extended <- load_happy_csv(paste0(happy_prefix, ".extended.csv"),
+                             "happy_extended")
+
+  # build metrics -- may or may not be present
+
+  # sompy stats -- may or may be present
+
+  # pr curves -- may or may not be present
+  pr_data <- load_happy_pr(happy_prefix)
+
+  happy_result <- structure(
+    list(
+      summary = summary,
+      extended = extended,
+      pr_curver = pr_data
+    ),
+    class = "happy_result",
+    from = happy_prefix)
+
+  return(happy_result)
 }

@@ -4,22 +4,21 @@
 \alias{read_happy}
 \title{Load a hap.py results directory}
 \usage{
-read_happy(directory, lazy = TRUE)
+read_happy(happy_prefix, lazy = TRUE)
 }
 \arguments{
-\item{directory}{hap.py output prefix (and path)}
+\item{happy_prefix}{hap.py output prefix (and path)}
 
 \item{lazy}{store lesser-used output as
 unevaluated promises rather than reading
-everything}
+everything at once}
 }
 \value{
 A list structure containing hap.py output
 }
 \description{
 Read a directory of hap.py output files into
-a R data structure -- just pass the output prefix
-from which hap.py results were generated.
+a R data structure.
 }
 \examples{
 
