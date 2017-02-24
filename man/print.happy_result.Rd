@@ -4,7 +4,12 @@
 \alias{print.happy_result}
 \title{Print a hap.py results object}
 \usage{
-\method{print}{happy_result}(happy_result)
+\method{print}{happy_result}(happy_result, ...)
+}
+\arguments{
+\item{happy_result}{an object of class happy_result}
+
+\item{...}{additional args passed down to \code{tibble::trunc_mat}}
 }
 \description{
 Pretty-print the contents of a list-style
@@ -16,5 +21,7 @@ object containing hap.py result data
 happy <- read_happy('/output/path/prefix')
 print(happy)
 }
-
+}
+\seealso{
+tibble::trunc_mat
 }

@@ -7,4 +7,6 @@ test_that("read_happy reads hap.py results to an R data structure", {
 
   expect_true(!is.null(results))
   expect_equal(class(results)[1], "happy_result")
+
+  expect_equal(length(results$pr_curve), 7)
 })

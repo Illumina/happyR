@@ -16,14 +16,33 @@ load_happy_pr <- function(happy_prefix) {
   # all potential PR data files that may exist
   possible_suffixes <- paste0(
     c(".roc.all",
-      ".roc.Locations.INDEL", ".roc.Locations.INDEL.PASS",
-      ".roc.Locations.SNP", ".roc.Locations.SNP.PASS"
+      ".roc.Locations.INDEL", ".roc.Locations.INDEL.PASS", ".roc.Locations.INDEL.SEL",
+      ".roc.Locations.SNP", ".roc.Locations.SNP.PASS", ".roc.Locations.SNP.SEL"
     ), ".csv.gz")
 
   if (file.exists(paste0(happy_prefix, possible_suffixes[1]))) {
-    message("Precision-Recall curve data found, reading... ")
-    # TODO
+    message("Reading precision-recall data")
+
+    pr_data <- list()
+    invisible(lapply(paste0(happy_prefix, possible_suffixes), function(fn){
+      if (file.exists(fn)){
+        # can't use fread on gzipped csv
+        this_pr <- read.csv(fn, header = TRUE, stringsAsFactors = FALSE)
+        this_pr$file_souce <- fn
+
+        # list component name (basename not needed, happy_prefix contains path)
+        this_name <- sub(paste0(happy_prefix, ".roc."), "", fn)
+        this_name <- gsub("\\.", "_", sub(".csv.gz", "", this_name))
+        pr_data[[this_name]] <<- this_pr
+      } else {
+        message("Missing file: ", fn)
+      }
+
+      NULL
+    }))
+
   } else {
+    # no pr data detected
     pr_data <- NULL
   }
 
@@ -79,7 +98,7 @@ read_happy <- function(happy_prefix, lazy = TRUE){
     list(
       summary = summary,
       extended = extended,
-      pr_curver = pr_data
+      pr_curve = pr_data
     ),
     class = "happy_result",
     from = happy_prefix)
