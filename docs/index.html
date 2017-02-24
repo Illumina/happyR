@@ -49,7 +49,62 @@
     <div id="happyr" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#happyr" class="anchor"> </a>happyR</h1></div>
+
 <p>Load hap.py results into a useful R data structure</p>
+<div id="install" class="section level2">
+<h2 class="hasAnchor">
+<a href="#install" class="anchor"> </a>Install</h2>
+<p>Download <a href="https://git.illumina.com/bmoore1/happyR/archive/master.zip">zip</a>, extract and run:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_local</span>(<span class="st">"path/to/happyR-master/"</span>)</code></pre></div>
+</div>
+<div id="usage" class="section level2">
+<h2 class="hasAnchor">
+<a href="#usage" class="anchor"> </a>Usage</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(happyR)
+
+<span class="co"># demo data that comes with the package</span>
+happy_input &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"happy_demo.summary.csv"</span>, <span class="dt">package =</span> <span class="st">"happyR"</span>)
+happy_prefix &lt;-<span class="st"> </span><span class="kw">sub</span>(<span class="st">".summary.csv"</span>, <span class="st">""</span>, happy_input)
+
+hapdata &lt;-<span class="st"> </span><span class="kw"><a href="reference/read_happy.html">read_happy</a></span>(happy_prefix)
+hapdata
+<span class="co"># Hap.py result containing:  summary, extended, pr_curve </span>
+<span class="co"># </span>
+<span class="co"># # happy_summary [4 × 16]</span>
+<span class="co"># Type Filter TRUTH.TOTAL TRUTH.TP TRUTH.FN QUERY.TOTAL QUERY.FP QUERY.UNK FP.gt METRIC.Recall</span>
+<span class="co"># &lt;chr&gt;  &lt;chr&gt;       &lt;int&gt;    &lt;int&gt;    &lt;int&gt;       &lt;int&gt;    &lt;int&gt;     &lt;int&gt; &lt;int&gt;         &lt;dbl&gt;</span>
+<span class="co">#   1 INDEL    ALL        8946     7840     1106       11811      367      3494    46      0.876369</span>
+<span class="co"># 2 INDEL   PASS        8946     7551     1395        9970      301      1944    31      0.844064</span>
+<span class="co"># 3   SNP    ALL       52494    52125      369       90092      548     37383   107      0.992971</span>
+<span class="co"># 4   SNP   PASS       52494    46920     5574       48078      122      1014     8      0.893816</span>
+<span class="co"># # ... with 6 more variables: METRIC.Precision &lt;dbl&gt;, METRIC.Frac_NA &lt;dbl&gt;, TRUTH.TOTAL.TiTv_ratio &lt;dbl&gt;,</span>
+<span class="co"># #   QUERY.TOTAL.TiTv_ratio &lt;dbl&gt;, TRUTH.TOTAL.het_hom_ratio &lt;dbl&gt;, QUERY.TOTAL.het_hom_ratio &lt;dbl&gt;</span></code></pre></div>
+<p><code>hapdata</code> is now a single hap.py data object containing:</p>
+<ul>
+<li>
+<code>summary</code> (from summary.csv) - high-level ALL / PASS numbers</li>
+<li>
+<code>extended</code> (from extended.csv) - region / subtype stratified metrics</li>
+<li>
+<code>pr_curve</code> (from roc.*.csv.gz) - precision-recall over quality score</li>
+</ul>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(hapdata)
+<span class="co"># [1] "summary"  "extended" "pr_curve"</span></code></pre></div>
+</div>
+<div id="example-plots" class="section level2">
+<h2 class="hasAnchor">
+<a href="#example-plots" class="anchor"> </a>Example plots</h2>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## get indel subtypes, skipping complex alleles and combined
+indel_extended &lt;-<span class="st"> </span><span class="kw">subset</span>(hapdata$extended, Type ==<span class="st"> "INDEL"</span> &amp;<span class="st"> </span>Filter ==<span class="st"> "ALL"</span> &amp;<span class="st"> </span><span class="kw">grepl</span>(<span class="st">"^[DI]"</span>, Subtype))
+
+<span class="co"># Precision-recall bu subtype, scaled by number in truthset</span>
+<span class="kw">ggplot</span>(indel_extended, <span class="kw">aes</span>(<span class="dt">x=</span>METRIC.Recall, <span class="dt">y=</span>METRIC.Precision, <span class="dt">col=</span>Subtype, <span class="dt">size=</span>TRUTH.TOTAL)) +
+<span class="st">  </span><span class="kw">geom_point</span>() +<span class="st"> </span><span class="kw">theme_minimal</span>() +<span class="st"> </span>
+<span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">"Set2"</span>) +
+<span class="st">  </span><span class="kw">scale_size</span>(<span class="dt">guide =</span> <span class="st">"none"</span>) +
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Indel subtype precision and recall"</span>)</code></pre></div>
+<p><img src="https://git.illumina.com/bmoore1/happyR/raw/master/examples/happyr_eg_indelext.png" width="600"></p>
+</div>
 </div>
   </div>
 
@@ -61,6 +116,12 @@
 <li>Mar Gonzalez-Porta <br><small class="roles"> Author, maintainer </small> </li>
 <li>Ben Moore <br><small class="roles"> Author </small> </li>
 </ul>
+<html><body>
+<h2>Dev status</h2>
+<ul class="list-unstyled">
+<li><a href="https://ukch-prd-jnks01.illumina.com/job/happyR/job/master/"><img src="https://ukch-prd-jnks01.illumina.com/buildStatus/icon?job=happyR/master" alt="Build Status"></a></li>
+</ul>
+</body></html>
 </div>
 </div>
 

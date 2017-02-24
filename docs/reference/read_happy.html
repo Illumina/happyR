@@ -74,19 +74,19 @@
 
     
     <p>Read a directory of hap.py output files into
-a R data structure</p>
+a R data structure.</p>
     
 
-    <pre><span class='fu'>read_happy</span>(<span class='no'>directory</span>, <span class='kw'>lazy</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre><span class='fu'>read_happy</span>(<span class='no'>happy_prefix</span>, <span class='kw'>lazy</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
-      <dt>directory</dt>
-      <dd>path to the output directory</dd>
+      <dt>happy_prefix</dt>
+      <dd>hap.py output prefix (and path)</dd>
       <dt>lazy</dt>
       <dd>store lesser-used output as
 unevaluated promises rather than reading
-everything</dd>
+everything at once</dd>
     </dl>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -97,7 +97,11 @@ everything</dd>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># happy &lt;- read_happy('/path/to/output/dir')</span>
+<span class='co'># # run hap.py from commandline:</span>
+<span class='co'># #  hap.py truth.vcf query.vcf -o /output/path/prefix</span>
+<span class='co'># </span>
+<span class='co'># # load result into R</span>
+<span class='co'># happy &lt;- read_happy('/output/path/prefix')</span>
 <span class='co'># names(happy)</span>
 <span class='co'>## ---------------------------------------------</span></div></pre>
   </div>
