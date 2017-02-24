@@ -58,3 +58,4 @@ ggplot(indel_extended, aes(x=METRIC.Recall, y=METRIC.Precision, col=Subtype, siz
   scale_size(guide = "none") +
   ggtitle("Indel subtype precision and recall")
 ```
+<img src="https://git.illumina.com/bmoore1/happyR/raw/master/examples/happyr_eg_indelext.png" width="600">
