@@ -33,6 +33,7 @@ load_happy_pr <- function(happy_prefix) {
         # list component name (basename not needed, happy_prefix contains path)
         this_name <- sub(paste0(happy_prefix, ".roc."), "", fn)
         this_name <- gsub("\\.", "_", sub(".csv.gz", "", this_name))
+        this_name <- sub("Locations_", "", this_name)
         pr_data[[this_name]] <<- this_pr
       } else {
         message("Missing file: ", fn)
