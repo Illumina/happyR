@@ -20,13 +20,6 @@ node('uk_centos6_cluster') {
         sh "R CMD check --no-examples happyR_*.tar.gz"
     }
 
-    stage('Document') {
-        // pkgdown needs to be run offline and pushed with commit due to dependencies
-        sh 'cp -r docs/* /illumina/development/www/python/happyr/static//.'
-        sh 'chmod a+w -Rf /illumina/development/www/python/happyr/static/ || true'
-        
-    }
-    
     stage('Cleanup') {
         deleteDir()
     }
