@@ -21,10 +21,8 @@ node('uk_centos6_cluster') {
     }
 
     stage('Document') {
-        // run pkgdown to generate static site and copy to webserver
-        // sh "Rscript -e 'pkgdown::build_site()' && rm -rf /illumina/development/www/python/happyr/static/* || true"
+        // pkgdown needs to be run offline and pushed with commit due to dependencies
         sh 'cp -r docs/* /illumina/development/www/python/happyr/static//.'
-        sh 'cp -r examples /illumina/development/www/python/happyr/static/.'
         sh 'chmod a+w -Rf /illumina/development/www/python/happyr/static/ || true'
         
     }
