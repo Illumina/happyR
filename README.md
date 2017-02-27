@@ -20,6 +20,7 @@ library(happyR)
 happy_input <- system.file("extdata", "happy_demo.summary.csv", package = "happyR")
 happy_prefix <- sub(".summary.csv", "", happy_input)
 
+# happy_prefix is the -o argument to hap.py, here: path/to/files/happy_demo
 hapdata <- read_happy(happy_prefix)
 hapdata
 # Hap.py result containing:  summary, extended, pr_curve 
@@ -51,6 +52,7 @@ names(hapdata$pr_curve)
 
 ## Example plots
 
+### Indel subtypes
 ```r
 ## get indel subtypes from 'extended', skipping complex alleles and combined
 indel_extended <- subset(hapdata$extended, Type == "INDEL" & Filter == "ALL" & grepl("^[DI]", Subtype))
@@ -63,3 +65,34 @@ ggplot(indel_extended, aes(x=METRIC.Recall, y=METRIC.Precision, col=Subtype, siz
   ggtitle("Indel subtype precision and recall")
 ```
 <img src="https://git.illumina.com/bmoore1/happyR/raw/master/examples/happyr_eg_indelext.png" width="600">
+
+
+### Precision-recall curves
+```r
+# PR curve starting at ALL point
+all_pr <- subset(hapdata$pr_curve$all, Filter == "ALL" & Subtype == "*")
+
+ggplot(all_pr, aes(x=METRIC.Recall, y=METRIC.Precision, col=Type)) +
+  geom_line() + theme_minimal() +
+  geom_point(data=hapdata$summary) +
+  scale_x_continuous(limits = c(.6, 1)) +
+  scale_y_continuous(limits = c(.95, 1)) +
+  ggtitle("ALL PR curve might not hit the PASS point")
+```
+
+
+```r
+# selectively filtered PR curve
+pr <- subset(hapdata$pr_curve$all, Filter == "SEL" & Subtype == "*")
+
+# link this to the ALL point
+pr <- dplyr::bind_rows(pr, subset(hapdata$summary, Filter == "ALL"))
+
+ggplot(pr, aes(x=METRIC.Recall, y=METRIC.Precision, col=Type)) +
+  geom_line() + theme_minimal() +
+  geom_point(data=hapdata$summary) +
+  scale_x_continuous(limits = c(.6, 1)) +
+  scale_y_continuous(limits = c(.95, 1)) +
+  ggtitle("Selectively-filtered PR curve reliably hits PASS")
+
+```
