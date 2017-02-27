@@ -79,7 +79,7 @@ ggplot(all_pr, aes(x=METRIC.Recall, y=METRIC.Precision, col=Type)) +
   scale_y_continuous(limits = c(.95, 1)) +
   ggtitle("ALL PR curve might not hit the PASS point")
 ```
-<img src="https://git.illumina.com/bmoore1/happyR/blob/master/examples/happyr_eg_prall.png" width="600">
+<img src="https://git.illumina.com/bmoore1/happyR/raw/master/examples/happyr_eg_prall.png" width="600">
 
 ```r
 # selectively filtered PR curve
@@ -96,4 +96,4 @@ ggplot(pr, aes(x=METRIC.Recall, y=METRIC.Precision, col=Type)) +
   ggtitle("Selectively-filtered PR curve reliably hits PASS")
 
 ```
-<img src="https://git.illumina.com/bmoore1/happyR/blob/master/examples/happyr_eg_prsel.png" width="600">
+<img src="https://git.illumina.com/bmoore1/happyR/raw/master/examples/happyr_eg_prsel.png" width="600">
