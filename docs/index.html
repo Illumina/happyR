@@ -99,6 +99,9 @@ hapdata
 <div id="example-plots" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example-plots" class="anchor"> </a>Example plots</h2>
+<div id="indel-subtypes" class="section level3">
+<h3 class="hasAnchor">
+<a href="#indel-subtypes" class="anchor"> </a>Indel subtypes</h3>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## get indel subtypes from 'extended', skipping complex alleles and combined
 indel_extended &lt;-<span class="st"> </span><span class="kw">subset</span>(hapdata$extended, Type ==<span class="st"> "INDEL"</span> &amp;<span class="st"> </span>Filter ==<span class="st"> "ALL"</span> &amp;<span class="st"> </span><span class="kw">grepl</span>(<span class="st">"^[DI]"</span>, Subtype))
 
@@ -109,6 +112,34 @@ indel_extended &lt;-<span class="st"> </span><span class="kw">subset</span>(hapd
 <span class="st">  </span><span class="kw">scale_size</span>(<span class="dt">guide =</span> <span class="st">"none"</span>) +
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Indel subtype precision and recall"</span>)</code></pre></div>
 <p><img src="https://git.illumina.com/bmoore1/happyR/raw/master/examples/happyr_eg_indelext.png" width="600"></p>
+</div>
+<div id="precision-recall-curves" class="section level3">
+<h3 class="hasAnchor">
+<a href="#precision-recall-curves" class="anchor"> </a>Precision-recall curves</h3>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># PR curve starting at ALL point</span>
+all_pr &lt;-<span class="st"> </span><span class="kw">subset</span>(hapdata$pr_curve$all, Filter ==<span class="st"> "ALL"</span> &amp;<span class="st"> </span>Subtype ==<span class="st"> "*"</span>)
+
+<span class="kw">ggplot</span>(all_pr, <span class="kw">aes</span>(<span class="dt">x=</span>METRIC.Recall, <span class="dt">y=</span>METRIC.Precision, <span class="dt">col=</span>Type)) +
+<span class="st">  </span><span class="kw">geom_line</span>() +<span class="st"> </span><span class="kw">theme_minimal</span>() +
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data=</span>hapdata$summary) +
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(.<span class="dv">6</span>, <span class="dv">1</span>)) +
+<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(.<span class="dv">95</span>, <span class="dv">1</span>)) +
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"ALL PR curve might not hit the PASS point"</span>)</code></pre></div>
+<p><img src="https://git.illumina.com/bmoore1/happyR/raw/master/examples/happyr_eg_prall.png" width="600"></p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># selectively filtered PR curve</span>
+pr &lt;-<span class="st"> </span><span class="kw">subset</span>(hapdata$pr_curve$all, Filter ==<span class="st"> "SEL"</span> &amp;<span class="st"> </span>Subtype ==<span class="st"> "*"</span>)
+
+<span class="co"># link this to the ALL point</span>
+pr &lt;-<span class="st"> </span>dplyr::<span class="kw">bind_rows</span>(pr, <span class="kw">subset</span>(hapdata$summary, Filter ==<span class="st"> "ALL"</span>))
+
+<span class="kw">ggplot</span>(pr, <span class="kw">aes</span>(<span class="dt">x=</span>METRIC.Recall, <span class="dt">y=</span>METRIC.Precision, <span class="dt">col=</span>Type)) +
+<span class="st">  </span><span class="kw">geom_line</span>() +<span class="st"> </span><span class="kw">theme_minimal</span>() +
+<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data=</span>hapdata$summary) +
+<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(.<span class="dv">6</span>, <span class="dv">1</span>)) +
+<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(.<span class="dv">95</span>, <span class="dv">1</span>)) +
+<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Selectively-filtered PR curve reliably hits PASS"</span>)</code></pre></div>
+<p><img src="https://git.illumina.com/bmoore1/happyR/raw/master/examples/happyr_eg_prsel.png" width="600"></p>
+</div>
 </div>
 </div>
   </div>
