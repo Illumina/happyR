@@ -27,7 +27,7 @@ hapdata
 # # happy_summary [4 × 16]
 # Type Filter TRUTH.TOTAL TRUTH.TP TRUTH.FN QUERY.TOTAL QUERY.FP QUERY.UNK FP.gt METRIC.Recall
 # <chr>  <chr>       <int>    <int>    <int>       <int>    <int>     <int> <int>         <dbl>
-#   1 INDEL    ALL        8946     7840     1106       11811      367      3494    46      0.876369
+# 1 INDEL    ALL        8946     7840     1106       11811      367      3494    46      0.876369
 # 2 INDEL   PASS        8946     7551     1395        9970      301      1944    31      0.844064
 # 3   SNP    ALL       52494    52125      369       90092      548     37383   107      0.992971
 # 4   SNP   PASS       52494    46920     5574       48078      122      1014     8      0.893816
