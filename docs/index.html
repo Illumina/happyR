@@ -89,15 +89,19 @@ hapdata
 <code>pr_curve</code> (from roc.*.csv.gz) - precision-recall over quality score</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(hapdata)
-<span class="co"># [1] "summary"  "extended" "pr_curve"</span></code></pre></div>
+<span class="co"># [1] "summary"  "extended" "pr_curve"</span>
+
+<span class="co"># e.g. here pr_curve$INDEL_PASS maps to happy_demo.roc.Locations.INDEL.PASS.csv.gz</span>
+<span class="kw">names</span>(hapdata$pr_curve)
+<span class="co"># [1] "all"        "INDEL"      "INDEL_PASS" "INDEL_SEL"  "SNP"        "SNP_PASS"   "SNP_SEL"   </span></code></pre></div>
 </div>
 <div id="example-plots" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example-plots" class="anchor"> </a>Example plots</h2>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## get indel subtypes, skipping complex alleles and combined
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## get indel subtypes from 'extended', skipping complex alleles and combined
 indel_extended &lt;-<span class="st"> </span><span class="kw">subset</span>(hapdata$extended, Type ==<span class="st"> "INDEL"</span> &amp;<span class="st"> </span>Filter ==<span class="st"> "ALL"</span> &amp;<span class="st"> </span><span class="kw">grepl</span>(<span class="st">"^[DI]"</span>, Subtype))
 
-<span class="co"># Precision-recall bu subtype, scaled by number in truthset</span>
+<span class="co"># Precision-recall by subtype, scaled by number in truthset</span>
 <span class="kw">ggplot</span>(indel_extended, <span class="kw">aes</span>(<span class="dt">x=</span>METRIC.Recall, <span class="dt">y=</span>METRIC.Precision, <span class="dt">col=</span>Subtype, <span class="dt">size=</span>TRUTH.TOTAL)) +
 <span class="st">  </span><span class="kw">geom_point</span>() +<span class="st"> </span><span class="kw">theme_minimal</span>() +<span class="st"> </span>
 <span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">"Set2"</span>) +

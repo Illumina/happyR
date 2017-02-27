@@ -43,15 +43,19 @@ hapdata
 ```r
 names(hapdata)
 # [1] "summary"  "extended" "pr_curve"
+
+# e.g. here pr_curve$INDEL_PASS maps to happy_demo.roc.Locations.INDEL.PASS.csv.gz
+names(hapdata$pr_curve)
+# [1] "all"        "INDEL"      "INDEL_PASS" "INDEL_SEL"  "SNP"        "SNP_PASS"   "SNP_SEL"   
 ```
 
 ## Example plots
 
 ```r
-## get indel subtypes, skipping complex alleles and combined
+## get indel subtypes from 'extended', skipping complex alleles and combined
 indel_extended <- subset(hapdata$extended, Type == "INDEL" & Filter == "ALL" & grepl("^[DI]", Subtype))
 
-# Precision-recall bu subtype, scaled by number in truthset
+# Precision-recall by subtype, scaled by number in truthset
 ggplot(indel_extended, aes(x=METRIC.Recall, y=METRIC.Precision, col=Subtype, size=TRUTH.TOTAL)) +
   geom_point() + theme_minimal() + 
   scale_color_brewer(palette = "Set2") +
