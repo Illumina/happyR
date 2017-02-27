@@ -66,6 +66,7 @@
 happy_input &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"happy_demo.summary.csv"</span>, <span class="dt">package =</span> <span class="st">"happyR"</span>)
 happy_prefix &lt;-<span class="st"> </span><span class="kw">sub</span>(<span class="st">".summary.csv"</span>, <span class="st">""</span>, happy_input)
 
+<span class="co"># happy_prefix is the -o argument to hap.py, here: path/to/files/happy_demo</span>
 hapdata &lt;-<span class="st"> </span><span class="kw"><a href="reference/read_happy.html">read_happy</a></span>(happy_prefix)
 hapdata
 <span class="co"># Hap.py result containing:  summary, extended, pr_curve </span>
@@ -73,7 +74,7 @@ hapdata
 <span class="co"># # happy_summary [4 × 16]</span>
 <span class="co"># Type Filter TRUTH.TOTAL TRUTH.TP TRUTH.FN QUERY.TOTAL QUERY.FP QUERY.UNK FP.gt METRIC.Recall</span>
 <span class="co"># &lt;chr&gt;  &lt;chr&gt;       &lt;int&gt;    &lt;int&gt;    &lt;int&gt;       &lt;int&gt;    &lt;int&gt;     &lt;int&gt; &lt;int&gt;         &lt;dbl&gt;</span>
-<span class="co">#   1 INDEL    ALL        8946     7840     1106       11811      367      3494    46      0.876369</span>
+<span class="co"># 1 INDEL    ALL        8946     7840     1106       11811      367      3494    46      0.876369</span>
 <span class="co"># 2 INDEL   PASS        8946     7551     1395        9970      301      1944    31      0.844064</span>
 <span class="co"># 3   SNP    ALL       52494    52125      369       90092      548     37383   107      0.992971</span>
 <span class="co"># 4   SNP   PASS       52494    46920     5574       48078      122      1014     8      0.893816</span>

@@ -20,6 +20,7 @@ library(happyR)
 happy_input <- system.file("extdata", "happy_demo.summary.csv", package = "happyR")
 happy_prefix <- sub(".summary.csv", "", happy_input)
 
+# happy_prefix is the -o argument to hap.py, here: path/to/files/happy_demo
 hapdata <- read_happy(happy_prefix)
 hapdata
 # Hap.py result containing:  summary, extended, pr_curve 
