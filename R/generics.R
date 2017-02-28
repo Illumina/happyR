@@ -53,31 +53,40 @@ c.happy_result <- function(...){
 
   to_c <- as.list(substitute(list(...)))[-1L]
   classes <- lapply(to_c, class)
+
   out_list <- list()
   out_names <- c()
   recognised_classes <- c("happy_result", "happy_result_list")
 
   if (!all(classes %in% recognised_classes)){
-    message(classes)
-    stop("Cannot combine happy_result/_list with non-happy_result")
+    stop("Cannot combine happy_result with non-happy_result")
   }
-  lists <- which(lapply(to_c, class) == "happy_result")
+
+  lists <- which(classes == "happy_result")
   if (length(lists) > 0){
-    out_list <- list(to_c[lists])
+    out_list <- to_c[lists]
   }
 
-  list_of_lists <- which(lapply(to_c, class) == "happy_result_list")
-  if (length(list_of_lists) > 0){
-    junk <- lapply(to_c[list_of_lists], function(a) append(out_list, a))
+  # unpack existing list of lists
+  list_of_lists <- which(classes == "happy_result_list")
+  if (length(list_of_lists) > 0) {
+    for (l in list_of_lists) {
+      this_list <- to_c[[l]]
+      stopifnot(class(this_list) == "happy_result_list")
+      for (sublist in seq_along(this_list)) {
+        stopifnot(class(this_list[[sublist]]) == "happy_result")
+        out_list <- append(out_list, this_list[sublist])
+      }
+    }
   }
 
-  out_names <- lapply(out_list, attr, "from")
+  out_names <- lapply(out_list, attr, "class")
   if (length(unique(out_names)) < length(out_names))
     warning("Combining redundant hap.py results")
 
-  return(structure(out_list, class = "happy_result_list",
-                    names = out_names))
+  return(structure(out_list, class="happy_result_list"))
 }
+
 
 #' @rdname c.happy_result
 #' @export
