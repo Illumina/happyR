@@ -80,7 +80,7 @@ c.happy_result <- function(...){
     }
   }
 
-  out_names <- lapply(out_list, attr, "class")
+  out_names <- lapply(out_list, attr, "from")
   if (length(unique(out_names)) < length(out_names))
     warning("Combining redundant hap.py results")
 
