@@ -3,8 +3,8 @@ Type: Package
 Title: Load Hap.py Results into R
 Version: 0.1.0
 Authors@R: as.person(c(
-    "Mar Gonzalez-Porta <mgonzalez@illumina.com> [aut, cre]",
-    "Ben Moore <bmoore1@illumina.com> [aut]"))
+    "Ben Moore <bmoore1@illumina.com> [aut, cre]",
+    "Mar Gonzalez-Porta <mgonzalez@illumina.com> [aut]"))
 Description: Read multiple output files from the haplotype-comparison
     tool hap.py into an organised R data structure.
 License: MIT
