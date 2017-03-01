@@ -18,7 +18,7 @@ A list structure containing hap.py output
 }
 \description{
 Read a directory of hap.py output files into
-a R data structure.
+an R data structure.
 }
 \examples{
 
@@ -31,4 +31,7 @@ happy <- read_happy('/output/path/prefix')
 names(happy)
 }
 
+}
+\seealso{
+read_sompy
 }
