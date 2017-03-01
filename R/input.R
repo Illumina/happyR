@@ -43,6 +43,7 @@ load_happy_pr <- function(happy_prefix) {
 
   } else {
     # no pr data detected
+    message("No precision-recall data found")
     pr_data <- NULL
   }
 
