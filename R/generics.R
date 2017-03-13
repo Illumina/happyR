@@ -93,3 +93,46 @@ c.happy_result <- function(...){
 c.happy_result_list <- function(...){
   c.happy_result(...)
 }
+
+
+#' @export
+extract = function(x, ...) UseMethod("extract")
+
+
+#' Extract items from happy result lists
+#'
+#' Extract items across multiple happy result objects and combine into a single `data.frame`.
+#'
+#' @param happy_result_list A `happy_result_list` object.
+#' @param item Item to extract. One of: summary, extended.
+#'
+#' @export
+extract.happy_result_list = function(happy_result_list, item, ...) {
+  # validate input
+  if (!class(happy_result_list)[1] == "happy_result_list") {
+    stop("Must provide a happy_result_list object.")
+  }
+
+  if (!item %in% c("summary", "extended")) {
+    stop("Invalid item selected")
+  }
+
+  # extract results into a data.frame
+  item_list = lapply(happy_result_list, function(d) {
+    if (!item %in% names(d)) {
+      stop("Could not find item in happy_result_list")
+    }
+    d[[item]]
+  })
+  df = item_list %>% dplyr::bind_rows()
+
+  # set class
+  if (item == "summary") {
+    class(df) <- c("happy_summary", class(df))
+  }
+  if (item == "extended") {
+    class(df) <- c("happy_extended", class(df))
+  }
+
+  return(df)
+}

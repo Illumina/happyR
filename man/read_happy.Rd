@@ -35,3 +35,4 @@ names(happy)
 \seealso{
 read_sompy
 }
+
