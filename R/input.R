@@ -10,7 +10,7 @@ load_happy_csv <- function(path, class = NULL) {
 }
 
 # Load sets of hap.py Precision-Recall data
-load_happy_pr <- function(happy_prefix) {
+load_happy_pr <- function(happy_prefix, quietly) {
 
   # all potential PR data files that may exist
   possible_suffixes <- paste0(
@@ -20,7 +20,8 @@ load_happy_pr <- function(happy_prefix) {
     ), ".csv.gz")
 
   if (file.exists(paste0(happy_prefix, possible_suffixes[1]))) {
-    message("Reading precision-recall data")
+    if (!quietly)
+      message("Reading precision-recall data")
 
     pr_data <- list()
     invisible(lapply(paste0(happy_prefix, possible_suffixes), function(fn){
@@ -43,7 +44,9 @@ load_happy_pr <- function(happy_prefix) {
 
   } else {
     # no pr data detected
-    message("No precision-recall data found")
+    if (!quietly)
+      message("No precision-recall curve data found")
+
     pr_data <- NULL
   }
 
@@ -65,6 +68,8 @@ load_sompy_pr <- function(sompy_prefix){
 #' @param lazy store lesser-used output as
 #'   unevaluated promises rather than reading
 #'   everything at once
+#' @param quietly inhibit logging messages as files
+#'   are loaded
 #'
 #' @return A list structure containing hap.py output
 #'
@@ -82,7 +87,7 @@ load_sompy_pr <- function(sompy_prefix){
 #' }
 #'
 #' @export
-read_happy <- function(happy_prefix, lazy = TRUE){
+read_happy <- function(happy_prefix, lazy = TRUE, quietly = FALSE){
 
   summary_path <- paste0(happy_prefix, ".summary.csv")
 
@@ -92,12 +97,17 @@ read_happy <- function(happy_prefix, lazy = TRUE){
          " a hap.py output prefix?")
   }
 
+  if (!quietly)
+    message("Reading summary table")
   summary <- load_happy_csv(summary_path, "happy_summary")
+
+  if(!quietly)
+    message("Reading extended table")
   extended <- load_happy_csv(paste0(happy_prefix, ".extended.csv"),
                              "happy_extended")
 
   # pr curves -- may or may not be present
-  pr_data <- load_happy_pr(happy_prefix)
+  pr_data <- load_happy_pr(happy_prefix, quietly = quietly)
 
   happy_result <- structure(
     list(

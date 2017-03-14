@@ -43,3 +43,13 @@ test_that("combining happy_results warns of redundancy", {
   attr(results3, "from") <- "dummy/path/to/happy"
   expect_silent(rl <- c(results2, results3))
 })
+
+context("User feedback")
+
+test_that("quietly suppresses loading messages", {
+  expect_silent(results <- read_happy(file.path(dirname(dir), "happy_demo"), quietly = TRUE))
+})
+
+test_that("without quietly user gets loading feedback", {
+  expect_message(results <- read_happy(file.path(dirname(dir), "happy_demo"), quietly = FALSE))
+})
