@@ -77,7 +77,7 @@
 an R data structure.</p>
     
 
-    <pre><span class='fu'>read_happy</span>(<span class='no'>happy_prefix</span>, <span class='kw'>lazy</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre><span class='fu'>read_happy</span>(<span class='no'>happy_prefix</span>, <span class='kw'>lazy</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>quietly</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
@@ -87,6 +87,9 @@ an R data structure.</p>
       <dd>store lesser-used output as
 unevaluated promises rather than reading
 everything at once</dd>
+      <dt>quietly</dt>
+      <dd>inhibit logging messages as files
+are loaded</dd>
     </dl>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
