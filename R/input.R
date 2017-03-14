@@ -21,7 +21,7 @@ load_happy_pr <- function(happy_prefix, quietly) {
 
   if (file.exists(paste0(happy_prefix, possible_suffixes[1]))) {
     if (!quietly)
-      message("Reading precision-recall data")
+      message("Reading precision-recall curve data")
 
     pr_data <- list()
     invisible(lapply(paste0(happy_prefix, possible_suffixes), function(fn){
