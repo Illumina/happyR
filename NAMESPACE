@@ -3,5 +3,6 @@
 S3method(c,happy_result)
 S3method(c,happy_result_list)
 S3method(print,happy_result)
+export(extract)
 export(read_happy)
 export(read_sompy)

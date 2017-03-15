@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • happyR</title>
+<title>Extract tables from hap.py result lists — extract • happyR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -34,7 +34,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -67,50 +67,53 @@
       </header>
 
       <div class="row">
-  <div class="col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Function reference</h1>
-      <h4>version&nbsp;0.1.0</h4>
+    <h1>Extract tables from hap.py result lists</h1>
     </div>
 
-    <div class="contents">
-      <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-      <p class="section-desc"></p>
-
-      
-      <p><a href="c.happy_result.html">Combine multiple hap.py results objects</a></p>
-      <ul>
-        <li><code><a href="c.happy_result.html">c.happy_result</a></code></li><li><code><a href="c.happy_result.html">c.happy_result_list</a></code></li>
-      </ul>
-      
-      <p><a href="extract.html">Extract tables from hap.py result lists</a></p>
-      <ul>
-        <li><code><a href="extract.html">extract</a></code></li>
-      </ul>
-      
-      <p><a href="print.happy_result.html">Print a hap.py results object</a></p>
-      <ul>
-        <li><code><a href="print.happy_result.html">print.happy_result</a></code></li>
-      </ul>
-      
-      <p><a href="read_happy.html">Load a hap.py results directory</a></p>
-      <ul>
-        <li><code><a href="read_happy.html">read_happy</a></code></li>
-      </ul>
-      
-      <p><a href="read_sompy.html">Load a som.py results directory</a></p>
-      <ul>
-        <li><code><a href="read_sompy.html">read_sompy</a></code></li>
-      </ul>
     
-    </div>
-  </div>
+    <p>Extract tables from multiple hap.py result objects and combine
+into a single <code>data.frame</code>. Source information from each
+result is added as an additional column (<code>from</code>).</p>
+    
 
+    <pre><span class='fu'>extract</span>(<span class='no'>happy_result_list</span>, <span class='kw'>table</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"summary"</span>, <span class='st'>"extended"</span>))</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <dl class="dl-horizontal">
+      <dt>happy_result_list</dt>
+      <dd>A <code>happy_result_list</code> object, created
+by combining <code>happy_result</code>s together with <code>c</code></dd>
+      <dt>table</dt>
+      <dd>Table of data to extract from each result</dd>
+    </dl>
+    
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+<span class='co'>## Not run: ------------------------------------</span>
+<span class='co'># happy1 &lt;- read_happy('/output/path/prefix')</span>
+<span class='co'># happy2 &lt;- read_happy('/different/path/prefix')</span>
+<span class='co'># results_list &lt;- c(happy1, happy2)</span>
+<span class='co'># </span>
+<span class='co'># # get full extended metrics for all results as a data.frame</span>
+<span class='co'># extended_df &lt;- extract(results_list, table = "extended")</span>
+<span class='co'># </span>
+<span class='co'># # get collapsed summary table of high-level metrics</span>
+<span class='co'># summary_df &lt;- extract(results_list, table = "summary")</span>
+<span class='co'># unique(summary_df$from)</span>
+<span class='co'># # [1] "/output/path/prefix"  "/different/path/prefix"</span>
+<span class='co'>## ---------------------------------------------</span></div></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-all-functions">All functions</a></li>
+      <li><a href="#arguments">Arguments</a></li>
+            
+      <li><a href="#examples">Examples</a></li>
     </ul>
+
   </div>
 </div>
 
