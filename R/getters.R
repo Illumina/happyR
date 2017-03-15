@@ -32,32 +32,47 @@ pr_data <- function(happy_result, filter = c("ALL", "PASS", "SEL"),
 #'   by combining \code{happy_result}s together with \code{c}
 #' @param table Table of data to extract from each result
 #'
+#' @examples
+#'
+#' \dontrun{
+#' happy1 <- read_happy('/output/path/prefix')
+#' happy2 <- read_happy('/different/path/prefix')
+#' results_list <- c(happy1, happy2)
+#'
+#' # get full extended metrics for all results as a data.frame
+#' extended_df <- extract(results_list, table = "extended")
+#'
+#' # get collapsed summary table of high-level metrics
+#' summary_df <- extract(results_list, table = "summary")
+#' unique(summary_df$from)
+#' # [1] "/output/path/prefix"  "/different/path/prefix"
+#' }
 #'
 #' @export
-extract <- function(happy_result_list, item = c("summary", "extended")) {
+extract <- function(happy_result_list, table = c("summary", "extended")) {
   # validate input
   if (!"happy_result_list" %in% class(happy_result_list)) {
     stop("Must provide a happy_result_list object.")
   }
 
-  item <- match.arg(item)
+  table <- match.arg(table)
 
   # extract results into a data.frame
   item_list <- lapply(happy_result_list, function(d) {
-    if (!item %in% names(d)) {
+    if (!table %in% names(d)) {
       stop("Could not find ", item, " in happy_result_list")
     }
-    table <- d[[item]]
-    table$from <- attr(d, "from")
-    table
+    table_out <- d[[table]]
+    table_out$from <- attr(d, "from")
+    table_out
   })
   df <- dplyr::bind_rows(item_list)
 
   # set class
-  if (item == "summary") {
+  if (table == "summary") {
     class(df) <- c("happy_summary", class(df))
   }
-  if (item == "extended") {
+  if (table == "extended") {
     class(df) <- c("happy_extended", class(df))
   }
 

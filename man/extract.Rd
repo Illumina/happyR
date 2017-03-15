@@ -4,7 +4,7 @@
 \alias{extract}
 \title{Extract tables from hap.py result lists}
 \usage{
-extract(happy_result_list, item = c("summary", "extended"))
+extract(happy_result_list, table = c("summary", "extended"))
 }
 \arguments{
 \item{happy_result_list}{A \code{happy_result_list} object, created
@@ -16,4 +16,21 @@ by combining \code{happy_result}s together with \code{c}}
 Extract tables from multiple hap.py result objects and combine
 into a single \code{data.frame}. Source information from each
 result is added as an additional column (\code{from}).
+}
+\examples{
+
+\dontrun{
+happy1 <- read_happy('/output/path/prefix')
+happy2 <- read_happy('/different/path/prefix')
+results_list <- c(happy1, happy2)
+
+# get full extended metrics for all results as a data.frame
+extended_df <- extract(results_list, table = "extended")
+
+# get collapsed summary table of high-level metrics
+summary_df <- extract(results_list, table = "summary")
+unique(summary_df$from)
+# [1] "/output/path/prefix"  "/different/path/prefix"
+}
+
 }
