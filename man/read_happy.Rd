@@ -4,7 +4,7 @@
 \alias{read_happy}
 \title{Load a hap.py results directory}
 \usage{
-read_happy(happy_prefix, lazy = TRUE)
+read_happy(happy_prefix, lazy = TRUE, quietly = FALSE)
 }
 \arguments{
 \item{happy_prefix}{hap.py output prefix (and path)}
@@ -12,6 +12,9 @@ read_happy(happy_prefix, lazy = TRUE)
 \item{lazy}{store lesser-used output as
 unevaluated promises rather than reading
 everything at once}
+
+\item{quietly}{inhibit logging messages as files
+are loaded}
 }
 \value{
 A list structure containing hap.py output
