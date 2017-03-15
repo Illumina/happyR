@@ -25,4 +25,3 @@ print(happy)
 \seealso{
 tibble::trunc_mat
 }
-

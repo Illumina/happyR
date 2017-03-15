@@ -28,4 +28,3 @@ class(happy_results)
 }
 
 }
-
