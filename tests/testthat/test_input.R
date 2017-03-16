@@ -13,6 +13,10 @@ test_that("read_happy reads hap.py results to an R data structure", {
   expect_equal(length(results$pr_curve), 7)
 })
 
+test_that("PR curve data is of class happy_roc", {
+  expect_is(results$pr_curve[[1]], "happy_roc")
+})
+
 
 context("Combining results")
 

@@ -29,6 +29,7 @@ load_happy_pr <- function(happy_prefix, quietly) {
         # can't use fread on gzipped csv
         this_pr <- suppressWarnings(suppressMessages(readr::read_csv(fn, progress = FALSE)))
         this_pr$file_souce <- fn
+        class(this_pr) <- c("happy_roc", class(this_pr))
 
         # list component name (basename not needed, happy_prefix contains path)
         this_name <- sub(paste0(happy_prefix, ".roc."), "", fn)
