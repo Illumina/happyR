@@ -12,6 +12,13 @@ load_happy_csv <- function(path, class = NULL) {
   return(dt)
 }
 
+lazy_pr <- function(prefix){
+  df <- quiet(readr::read_csv(prefix, progress = FALSE))
+  df$file_source <- prefix
+  class(df) <- c("happy_roc", class(df))
+  df
+}
+
 # Load sets of hap.py Precision-Recall data
 load_happy_pr <- function(happy_prefix, quietly) {
 
@@ -23,28 +30,28 @@ load_happy_pr <- function(happy_prefix, quietly) {
     ), ".csv.gz")
 
   if (file.exists(paste0(happy_prefix, possible_suffixes[1]))) {
-    if (!quietly)
+    if (!quietly) {
       message("Reading precision-recall curve data")
+    }
 
-    pr_data <- list()
-    invisible(lapply(paste0(happy_prefix, possible_suffixes), function(fn){
-      if (file.exists(fn)){
-        # can't use fread on gzipped csv
-        this_pr <- quiet(readr::read_csv(fn, progress = FALSE))
-        this_pr$file_souce <- fn
-        class(this_pr) <- c("happy_roc", class(this_pr))
+    pr_data <- new.env()
+    prefixes <- paste0(happy_prefix, possible_suffixes)
 
+    for (prefix in prefixes) {
+      if (file.exists(prefix)) {
+
+        message("Found ", prefix)
+ath
         # list component name (basename not needed, happy_prefix contains path)
-        this_name <- sub(paste0(happy_prefix, ".roc."), "", fn)
+        this_name <- sub(paste0(happy_prefix, ".roc."), "", prefix)
         this_name <- gsub("\\.", "_", sub(".csv.gz", "", this_name))
         this_name <- sub("Locations_", "", this_name)
-        pr_data[[this_name]] <<- this_pr
-      } else {
-        message("Missing file: ", fn)
-      }
 
-      NULL
-    }))
+        delayedAssign(this_name, lazy_pr(prefix), assign.env = pr_data)
+      } else {
+        message("Missing file: ", prefix)
+      }
+    }
 
   } else {
     # no pr data detected
