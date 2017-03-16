@@ -42,5 +42,7 @@ test_that("summary tables can be extracted from list of happy_result", {
   attr(other_results, "from") <- "dummy/path/to/happy"
   result_list <- c(results, other_results)
   summary_table <- extract(result_list, "summary")
+
   expect_is(summary_table, "data.frame")
+  expect_equal(nrow(summary_table), 8)
 })

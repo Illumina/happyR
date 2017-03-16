@@ -1,9 +1,12 @@
 ## Load hap.py data
 
+quiet <- function(...)
+  suppressMessages(suppressWarnings(...))
+
 # Generic loader for CSVs written by hap.py
 load_happy_csv <- function(path, class = NULL) {
   # using data.table for speedup
-  dt <- suppressMessages(suppressWarnings(readr::read_csv(path, progress = FALSE)))
+  dt <- quiet(readr::read_csv(path, progress = FALSE))
   if (!is.null(class))
     class(dt) <- c(class, class(dt))
   return(dt)
@@ -27,7 +30,7 @@ load_happy_pr <- function(happy_prefix, quietly) {
     invisible(lapply(paste0(happy_prefix, possible_suffixes), function(fn){
       if (file.exists(fn)){
         # can't use fread on gzipped csv
-        this_pr <- suppressWarnings(suppressMessages(readr::read_csv(fn, progress = FALSE)))
+        this_pr <- quiet(readr::read_csv(fn, progress = FALSE))
         this_pr$file_souce <- fn
         class(this_pr) <- c("happy_roc", class(this_pr))
 
