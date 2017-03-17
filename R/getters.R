@@ -60,7 +60,7 @@ extract <- function(happy_result_list, table = c("summary", "extended")) {
   # extract results into a data.frame
   item_list <- lapply(happy_result_list, function(d) {
     if (!table %in% names(d)) {
-      stop("Could not find ", item, " in happy_result_list")
+      stop("Could not find ", table, " in happy_result_list")
     }
     table_out <- d[[table]]
     table_out$from <- attr(d, "from")

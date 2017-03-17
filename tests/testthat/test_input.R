@@ -14,7 +14,9 @@ test_that("read_happy reads hap.py results to an R data structure", {
 })
 
 test_that("PR curve data is of class happy_roc", {
-  expect_is(results$pr_curve[[1]], "happy_roc")
+  for (name in names(results$pr_curve)) {
+    expect_is(results$pr_curve[[name]], "happy_roc")
+  }
 })
 
 

@@ -51,7 +51,7 @@ load_happy_pr <- function(happy_prefix, quietly) {
         this_name <- sub("Locations_", "", this_name)
 
         # this borrowed from pryr::`%<d-%`
-        delayedAssign(deparse(substitute(this_name)), lazy_pr(prefix), assign.env = pr_data)
+        delayedAssign(substitute(this_name), lazy_pr(prefix), assign.env = pr_data)
 
       } else {
         message("Missing file: ", prefix)
