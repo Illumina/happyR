@@ -13,11 +13,6 @@ load_happy_csv <- function(path, class = NULL) {
 }
 
 lazy_pr <- function(prefix){
-  # double-catch
-  if (!file.exists(prefix)){
-
-    return(NULL)
-  }
   df <- quiet(readr::read_csv(prefix, progress = FALSE))
   df$file_source <- prefix
   class(df) <- c("happy_roc", class(df))
@@ -50,8 +45,13 @@ load_happy_pr <- function(happy_prefix, quietly) {
         this_name <- gsub("\\.", "_", sub(".csv.gz", "", this_name))
         this_name <- sub("Locations_", "", this_name)
 
-        # this borrowed from pryr::`%<d-%`
-        delayedAssign(substitute(this_name), lazy_pr(prefix), assign.env = pr_data)
+        # see also pryr::`%<d-%`
+        if (this_name == "all") {
+          all_pref <- substitute(prefix)  # avoids delayed variable eval
+          delayedAssign("all", lazy_pr(all_pref), assign.env = pr_data)
+        } else {
+          assign(substitute(this_name), lazy_pr(prefix), envir = pr_data)
+        }
 
       } else {
         message("Missing file: ", prefix)
