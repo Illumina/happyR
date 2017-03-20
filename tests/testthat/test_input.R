@@ -30,3 +30,7 @@ test_that("without quietly user gets loading feedback", {
   expect_message(results <- read_happy(file.path(dirname(dir), "happy_demo"), quietly = FALSE))
 })
 
+test_that("error messages distinguish missing directories from non-hap.py results", {
+  expect_error(read_happy("/a/bad/dir"), regexp = "directory")
+  expect_error(read_happy("/bin/sh"), regexp = "prefix")
+})

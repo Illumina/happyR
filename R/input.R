@@ -71,8 +71,28 @@ load_happy_pr <- function(happy_prefix, quietly) {
 
 # som.py pr curves can be more complex than hap.py,
 # could be different prefix for SNV / INDEL
-load_sompy_pr <- function(sompy_prefix){
+load_sompy_pr <- function(sompy_prefix) {
 
+}
+
+# informative error messages that distinguish:
+#   * bad file path
+#   * good file path that's not a hap.py result
+check_happy_path <- function(prefix) {
+  test_file <- paste0(prefix, ".summary.csv")
+  test_dir <- dirname(normalizePath(prefix, mustWork = FALSE))
+
+  if (!file.exists(test_dir)) {
+    stop("Can't read directory: ", test_dir)
+  }
+
+  if (!file.exists(test_file)) {
+    stop("Summary CSV missing, is ",
+         normalizePath(prefix, mustWork = FALSE),
+         " a hap.py output prefix?")
+  }
+
+  invisible(NULL)
 }
 
 #' Load a hap.py results directory
@@ -105,17 +125,12 @@ load_sompy_pr <- function(sompy_prefix){
 #' @export
 read_happy <- function(happy_prefix, lazy = TRUE, quietly = FALSE){
 
-  summary_path <- paste0(happy_prefix, ".summary.csv")
-
-  if (!file.exists(summary_path)) {
-    stop("File missing -- is ",
-         normalizePath(happy_prefix, mustWork = FALSE),
-         " a hap.py output prefix?")
-  }
+  check_happy_path(happy_prefix)
 
   if (!quietly)
     message("Reading summary table")
-  summary <- load_happy_csv(summary_path, "happy_summary")
+  summary <- load_happy_csv(paste0(happy_prefix, ".summary.csv"),
+                            "happy_summary")
 
   if(!quietly)
     message("Reading extended table")
