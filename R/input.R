@@ -20,7 +20,7 @@ lazy_pr <- function(prefix){
 }
 
 # Load sets of hap.py Precision-Recall data
-load_happy_pr <- function(happy_prefix, quietly) {
+load_happy_pr <- function(happy_prefix, lazy_load, quietly) {
 
   # all potential PR data files that may exist
   possible_suffixes <- paste0(
@@ -46,7 +46,7 @@ load_happy_pr <- function(happy_prefix, quietly) {
         this_name <- sub("Locations_", "", this_name)
 
         # see also pryr::`%<d-%`
-        if (this_name == "all") {
+        if (this_name == "all" & lazy_load) {
           all_pref <- substitute(prefix)  # avoids delayed variable eval
           delayedAssign("all", lazy_pr(all_pref), assign.env = pr_data)
         } else {
@@ -95,6 +95,17 @@ check_happy_path <- function(prefix) {
   invisible(NULL)
 }
 
+get_happy_version <- function(prefix) {
+
+  metrics_json <- paste0(prefix, "metrics.json.gz")
+  if (file.exists(metrics_json)) {
+    # TODO: this is a pretty big file
+    # feature request for hap.py
+    NULL
+  }
+
+}
+
 #' Load a hap.py results directory
 #'
 #' Read a directory of hap.py output files into
@@ -138,7 +149,7 @@ read_happy <- function(happy_prefix, lazy = TRUE, quietly = FALSE){
                              "happy_extended")
 
   # pr curves -- may or may not be present
-  pr_data <- load_happy_pr(happy_prefix, quietly = quietly)
+  pr_data <- load_happy_pr(happy_prefix, lazy_load = lazy, quietly = quietly)
 
   happy_result <- structure(
     list(
