@@ -1,5 +1,7 @@
 ## Cleaner access to hap.py data
-pr_data <- function(happy_result, filter = c("ALL", "PASS", "SEL"),
+pr_data <- function(happy_result,
+                    var_type = "both",
+                    filter = c("ALL", "PASS", "SEL"),
                     start_from = c("ALL", "PASS"),
                     selectively_filter = c(TRUE, FALSE),
                     subtype = c("*", "C16_PLUS", "C1_5", "C6_15", "D16_PLUS",
@@ -11,16 +13,67 @@ pr_data <- function(happy_result, filter = c("ALL", "PASS", "SEL"),
          "not a ", class(happy_result))
   }
 
-  # TODO
   filter <- match.arg(filter)
+  var_type <- match.arg(var_type, choices = c("both", "snv", "indel"))
   subtype <- match.arg(subtype, several.ok = TRUE)
+
+  # starting point: smallest possible PR file
+  outdf <- if (filter == "ALL" | !is.null(subset) | var_type == "both") {
+    happy_result$pr_curve$all
+  } else if (filter == "SEL") {
+    if (var_type == "snv") {
+      happy_result$pr_curve$SNP_SEL
+    } else {
+      happy_result$pr_curve$INDEL_SEL
+    }
+  } else {
+    if (var_type == "indel") {
+      happy_result$pr_curve$SNP_PASS
+    } else {
+      happy_result$pr_curve$INDEL_PASS
+    }
+  }
+  message(nrow(outdf), " records loaded")
 
   if (!is.null(subset)){
     # filter by subset, warn if fails
+    outdf <- outdf[outdf$Subset %in% subset]
+    if (!nrow(outdf) > 0){
+      warning("No PR data found for subset: ", subset)
+    }
   }
 
+  outdf <- outdf[outdf$Subtype %in% subtype & outdf$Filter %in% filter,]
+
+  return(outdf)
 }
 
+
+# summary of factor levels in PR data.frame
+pr_describe <- function(pr_data) {
+
+  for (col_index in 1:ncol(pr_data)) {
+    # summarise column contents (if factor-like)
+    col_summary <- if (class(pr_data[[col_index]]) %in% c("character", "factor")) {
+      members <- sort(unique(as.character(pr_data[[col_index]])))
+      if (length(members) > 10) {
+        colstring <- paste(c(members[1:9], "..."), collapse = ", ")
+      } else {
+        colstring <- paste(members, collapse = ", ")
+      }
+    } else {
+      colstring <- paste(c("min", "lQR", "median", "uQR", "max"),
+                         signif(fivenum(pr_data[[col_index]]), digits = 3),
+                         sep = ":")
+      colstring <- paste(colstring, collapse = ", ")
+    }
+    cat("  ", colnames(pr_data)[col_index], ": ",
+        "<", class(pr_data[[col_index]]), "> ",
+        colstring, "\n", sep = "")
+  }
+
+  invisible()
+}
 
 #' Extract tables from hap.py result lists
 #'

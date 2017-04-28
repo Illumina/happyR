@@ -55,10 +55,12 @@ names(hapdata$pr_curve)
 ### Indel subtypes
 ```r
 ## get indel subtypes from 'extended', skipping complex alleles and combined
-indel_extended <- subset(hapdata$extended, Type == "INDEL" & Filter == "ALL" & grepl("^[DI]", Subtype))
+indel_extended <- subset(hapdata$extended, Type == "INDEL" & 
+                         Filter == "ALL" & grepl("^[DI]", Subtype))
 
 # Precision-recall by subtype, scaled by number in truthset
-ggplot(indel_extended, aes(x=METRIC.Recall, y=METRIC.Precision, col=Subtype, size=TRUTH.TOTAL)) +
+ggplot(indel_extended, aes(x = METRIC.Recall, y = METRIC.Precision, 
+                           col = Subtype, size = TRUTH.TOTAL)) +
   geom_point() + theme_minimal() + 
   scale_color_brewer(palette = "Set2") +
   scale_size(guide = "none") +
@@ -72,9 +74,9 @@ ggplot(indel_extended, aes(x=METRIC.Recall, y=METRIC.Precision, col=Subtype, siz
 # PR curve starting at ALL point
 all_pr <- subset(hapdata$pr_curve$all, Filter == "ALL" & Subtype == "*")
 
-ggplot(all_pr, aes(x=METRIC.Recall, y=METRIC.Precision, col=Type)) +
+ggplot(all_pr, aes(x = METRIC.Recall, y = METRIC.Precision, col = Type)) +
   geom_line() + theme_minimal() +
-  geom_point(data=hapdata$summary) +
+  geom_point(data = hapdata$summary) +
   scale_x_continuous(limits = c(.6, 1)) +
   scale_y_continuous(limits = c(.95, 1)) +
   ggtitle("ALL PR curve might not hit the PASS point")
@@ -88,9 +90,9 @@ pr <- subset(hapdata$pr_curve$all, Filter == "SEL" & Subtype == "*")
 # link this to the ALL point
 pr <- dplyr::bind_rows(pr, subset(hapdata$summary, Filter == "ALL"))
 
-ggplot(pr, aes(x=METRIC.Recall, y=METRIC.Precision, col=Type)) +
+ggplot(pr, aes(x = METRIC.Recall, y = METRIC.Precision, col = Type)) +
   geom_line() + theme_minimal() +
-  geom_point(data=hapdata$summary) +
+  geom_point(data = hapdata$summary) +
   scale_x_continuous(limits = c(.6, 1)) +
   scale_y_continuous(limits = c(.95, 1)) +
   ggtitle("Selectively-filtered PR curve reliably hits PASS")

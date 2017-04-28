@@ -5,15 +5,23 @@ quiet <- function(...)
 
 # Generic loader for CSVs written by hap.py
 load_happy_csv <- function(path, class = NULL) {
-  # using data.table for speedup
-  dt <- quiet(readr::read_csv(path, progress = FALSE))
-  if (!is.null(class))
+  # use readr for speedup, not using fread as we need gzip support
+  # big guess_max for mostly NA columns
+  dt <- quiet(readr::read_csv(path, progress = FALSE,
+                              na = c("", "NA", "."),
+                              guess_max = 1e5))
+
+  if (!is.null(class)) {
     class(dt) <- c(class, class(dt))
+  }
+
   return(dt)
 }
 
 lazy_pr <- function(prefix){
-  df <- quiet(readr::read_csv(prefix, progress = FALSE))
+  df <- quiet(readr::read_csv(prefix, progress = FALSE,
+                              na = c("", "NA", "."),
+                              guess_max = 1e5))
   df$file_source <- prefix
   class(df) <- c("happy_roc", class(df))
   df
