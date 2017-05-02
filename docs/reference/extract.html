@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -78,33 +80,38 @@ into a single <code>data.frame</code>. Source information from each
 result is added as an additional column (<code>from</code>).</p>
     
 
-    <pre><span class='fu'>extract</span>(<span class='no'>happy_result_list</span>, <span class='kw'>table</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"summary"</span>, <span class='st'>"extended"</span>))</pre>
+    <pre class="usage"><span class='fu'>extract</span>(<span class='no'>happy_result_list</span>, <span class='kw'>table</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"summary"</span>, <span class='st'>"extended"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>happy_result_list</dt>
-      <dd>A <code>happy_result_list</code> object, created
-by combining <code>happy_result</code>s together with <code>c</code></dd>
-      <dt>table</dt>
-      <dd>Table of data to extract from each result</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>happy_result_list</th>
+      <td><p>A <code>happy_result_list</code> object, created
+by combining <code>happy_result</code>s together with <code>c</code></p></td>
+    </tr>
+    <tr>
+      <th>table</th>
+      <td><p>Table of data to extract from each result</p></td>
+    </tr>
+    </table>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># happy1 &lt;- read_happy('/output/path/prefix')</span>
-<span class='co'># happy2 &lt;- read_happy('/different/path/prefix')</span>
-<span class='co'># results_list &lt;- c(happy1, happy2)</span>
-<span class='co'># </span>
-<span class='co'># # get full extended metrics for all results as a data.frame</span>
-<span class='co'># extended_df &lt;- extract(results_list, table = "extended")</span>
-<span class='co'># </span>
-<span class='co'># # get collapsed summary table of high-level metrics</span>
-<span class='co'># summary_df &lt;- extract(results_list, table = "summary")</span>
-<span class='co'># unique(summary_df$from)</span>
-<span class='co'># # [1] "/output/path/prefix"  "/different/path/prefix"</span>
-<span class='co'>## ---------------------------------------------</span></div></pre>
+<span class='fu'>not_run</span>({
+  <span class='no'>happy1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='read_happy.html'>read_happy</a></span>(<span class='st'>'/output/path/prefix'</span>)
+  <span class='no'>happy2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='read_happy.html'>read_happy</a></span>(<span class='st'>'/different/path/prefix'</span>)
+  <span class='no'>results_list</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='no'>happy1</span>, <span class='no'>happy2</span>)
+
+  <span class='co'># get full extended metrics for all results as a data.frame</span>
+  <span class='no'>extended_df</span> <span class='kw'>&lt;-</span> <span class='fu'>extract</span>(<span class='no'>results_list</span>, <span class='kw'>table</span> <span class='kw'>=</span> <span class='st'>"extended"</span>)
+
+  <span class='co'># get collapsed summary table of high-level metrics</span>
+  <span class='no'>summary_df</span> <span class='kw'>&lt;-</span> <span class='fu'>extract</span>(<span class='no'>results_list</span>, <span class='kw'>table</span> <span class='kw'>=</span> <span class='st'>"summary"</span>)
+  <span class='fu'>unique</span>(<span class='no'>summary_df</span>$<span class='no'>from</span>)
+  <span class='co'># [1] "/output/path/prefix"  "/different/path/prefix"</span>
+})</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -77,16 +79,21 @@
 object containing hap.py result data</p>
     
 
-    <pre><span class='co'># S3 method for happy_result</span>
+    <pre class="usage"><span class='co'># S3 method for happy_result</span>
 <span class='fu'>print</span>(<span class='no'>happy_result</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>happy_result</dt>
-      <dd>an object of class happy_result</dd>
-      <dt>...</dt>
-      <dd>additional args passed down to <code>tibble::trunc_mat</code></dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>happy_result</th>
+      <td><p>an object of class happy_result</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>additional args passed down to <code>tibble::trunc_mat</code></p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
@@ -95,10 +102,10 @@ object containing hap.py result data</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># happy &lt;- read_happy('/output/path/prefix')</span>
-<span class='co'># print(happy)</span>
-<span class='co'>## ---------------------------------------------</span></div></pre>
+<span class='fu'>not_run</span>({
+  <span class='no'>happy</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='read_happy.html'>read_happy</a></span>(<span class='st'>'/output/path/prefix'</span>)
+  <span class='fu'>print</span>(<span class='no'>happy</span>)
+})</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

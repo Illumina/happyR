@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -73,33 +75,36 @@
     </div>
 
     
-    <p>Combine &gt;1 objects of class &quot;happy_result&quot; into
-a list, or extend an existing &quot;happy_result_list&quot;.</p>
+    <p>Combine &gt;1 objects of class "happy_result" into
+a list, or extend an existing "happy_result_list".</p>
     
 
-    <pre><span class='co'># S3 method for happy_result</span>
+    <pre class="usage"><span class='co'># S3 method for happy_result</span>
 <span class='fu'>c</span>(<span class='no'>...</span>)
 
 <span class='co'># S3 method for happy_result_list</span>
 <span class='fu'>c</span>(<span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>...</dt>
-      <dd>Multiple <code>happy_result</code> objects</dd>
-    </dl>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>...</th>
+      <td><p>Multiple <code>happy_result</code> objects</p></td>
+    </tr>
+    </table>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># happy1 &lt;- read_happy('/output/path/prefix')</span>
-<span class='co'># happy2 &lt;- read_happy('/another/path/prefix')</span>
-<span class='co'># </span>
-<span class='co'># happy_results &lt;- c(happy1, happy2)</span>
-<span class='co'># class(happy_results)</span>
-<span class='co'># # happy_results_list</span>
-<span class='co'>## ---------------------------------------------</span></div></pre>
+<span class='fu'>not_run</span>({
+  <span class='no'>happy1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='read_happy.html'>read_happy</a></span>(<span class='st'>'/output/path/prefix'</span>)
+  <span class='no'>happy2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='read_happy.html'>read_happy</a></span>(<span class='st'>'/another/path/prefix'</span>)
+
+  <span class='no'>happy_results</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='no'>happy1</span>, <span class='no'>happy2</span>)
+  <span class='fu'>class</span>(<span class='no'>happy_results</span>)
+  <span class='co'># happy_results_list</span>
+})</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -25,12 +25,14 @@
 <script src="../pkgdown.js"></script>
 
 <!-- mathjax -->
-<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
+
   </head>
 
   <body>
@@ -77,20 +79,27 @@
 an R data structure.</p>
     
 
-    <pre><span class='fu'>read_happy</span>(<span class='no'>happy_prefix</span>, <span class='kw'>lazy</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>quietly</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>read_happy</span>(<span class='no'>happy_prefix</span>, <span class='kw'>lazy</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>quietly</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <dl class="dl-horizontal">
-      <dt>happy_prefix</dt>
-      <dd>hap.py output prefix (and path)</dd>
-      <dt>lazy</dt>
-      <dd>store lesser-used output as
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>happy_prefix</th>
+      <td><p>hap.py output prefix (and path)</p></td>
+    </tr>
+    <tr>
+      <th>lazy</th>
+      <td><p>store lesser-used output as
 unevaluated promises rather than reading
-everything at once</dd>
-      <dt>quietly</dt>
-      <dd>inhibit logging messages as files
-are loaded</dd>
-    </dl>
+everything at once</p></td>
+    </tr>
+    <tr>
+      <th>quietly</th>
+      <td><p>inhibit logging messages as files
+are loaded</p></td>
+    </tr>
+    </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
@@ -103,14 +112,14 @@ are loaded</dd>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='co'>## Not run: ------------------------------------</span>
-<span class='co'># # run hap.py from commandline:</span>
-<span class='co'># #  hap.py truth.vcf query.vcf -o /output/path/prefix</span>
-<span class='co'># </span>
-<span class='co'># # load result into R</span>
-<span class='co'># happy &lt;- read_happy('/output/path/prefix')</span>
-<span class='co'># names(happy)</span>
-<span class='co'>## ---------------------------------------------</span></div></pre>
+<span class='fu'>not_run</span>({
+  <span class='co'># run hap.py from commandline:</span>
+  <span class='co'>#  hap.py truth.vcf query.vcf -o /output/path/prefix</span>
+
+  <span class='co'># load result into R</span>
+  <span class='no'>happy</span> <span class='kw'>&lt;-</span> <span class='fu'>read_happy</span>(<span class='st'>'/output/path/prefix'</span>)
+  <span class='fu'>names</span>(<span class='no'>happy</span>)
+})</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
