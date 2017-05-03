@@ -1,5 +1,6 @@
 # happyR
 [![Build Status](https://ukch-prd-jnks01.illumina.com/buildStatus/icon?job=happyR/master)](https://ukch-prd-jnks01.illumina.com/job/happyR/job/master/)
+[![Docs](https://img.shields.io/badge/docs-latest-blue.svg)](https://git.illumina.com/pages/bmoore1/happyR)
 
 Load hap.py results into a useful R data structure
 
