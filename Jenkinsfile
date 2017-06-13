@@ -21,7 +21,7 @@ node('uk_centos6_cluster') {
     }
     
     stage('Test coverage') {
-        sh "Rscript 'covr::report(covr::package_coverage(), file='/illumina/development/www/python/codecov/static/happyR.html', browse = F)'"
+        sh "Rscript -e 'covr::report(covr::package_coverage(), file=\"/illumina/development/www/python/codecov/static/happyR.html\", browse = F)'"
     }
 
     stage('Cleanup') {
