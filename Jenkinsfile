@@ -8,6 +8,9 @@ node('uk_centos6_cluster') {
     // centos 6.5 compiled pandoc binary
     env.RSTUDIO_PANDOC = '/illumina/development/curium/bin'
     
+    // 3.2.3 rlibs
+    env.R_LIBS_USER = '/illumina/thirdparty/bmoore1/rlibs-3.2.3'
+    
     stage('Checkout') {
         checkout scm
     }
