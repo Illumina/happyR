@@ -4,7 +4,7 @@ happyR
 
 [![Build Status](https://ukch-prd-jnks01.illumina.com/buildStatus/icon?job=happyR/master)](https://ukch-prd-jnks01.illumina.com/job/happyR/job/master/)
 
-Load hap.py results into a useful R data structure
+Load [hap.py](https://github.com/Illumina/hap.py) results into an R data structure to enable plotting, comparisons and aggregation.
 
 Install
 -------
@@ -87,7 +87,7 @@ Here subtypes are categories based on the variant type and length (e.g. `I6_15` 
 ``` r
 library(ggplot2)
 
-## get indel subtypes from 'extended', skipping complex alleles and combined
+# get indel subtypes from 'extended', skipping complex alleles and combined
 indel_extended <- subset(hapdata$extended, Type == "INDEL" & 
                          Filter == "ALL" & grepl("^[DI]", Subtype))
 
@@ -104,7 +104,7 @@ ggplot(indel_extended, aes(x = METRIC.Recall, y = METRIC.Precision,
 
 ### Precision-recall curves
 
-Precision-Recall (PR) curves show how precision and recall vary with a changing threshold, in this example it's over a range of quality score thresholds: as the threshold increases, the remaining variant set is less comprehensive (lower recall) but typically contains fewer false positives (higher precision).
+PR curves show how precision and recall vary with a changing threshold, in this example it's over a range of quality score thresholds applied to a set of variants: as the threshold increases, the remaining variant set is less comprehensive (lower recall) but typically contains fewer false positives (higher precision).
 
 This gets more complicated when `PASS` records aren't set solely by a single quality score threshold, but by multiple independent filters (e.g. high-depth, genomic context, etc.). These interactions can't be fully captured by drawing a PR curve only on a quality threshold:
 
@@ -122,7 +122,7 @@ ggplot(all_pr, aes(x = METRIC.Recall, y = METRIC.Precision, col = Type)) +
 
 <img src="examples/README-all_pr-1.png" style="display: block; margin: auto;" />
 
-Hap.py accounts for this by generating a selectively-filtered PR curve (`SEL`). First hap.py applies these independent filters to the variant set, then we can draw the remaining PR curve using the quality score threshold.
+Hap.py accounts for this by generating a selectively-filtered PR curve (`SEL`). First these independent filters are applied to the variant set, then we can draw the remaining PR curve using the quality score threshold. This gives a more accurate view of how changing the quality score threshold can impact precision and recall.
 
 ``` r
 # selectively filtered PR curve

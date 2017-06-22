@@ -55,7 +55,7 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#happyr" class="anchor"></a>happyR</h1></div>
 
-<p>Load hap.py results into a useful R data structure</p>
+<p>Load <a href="https://github.com/Illumina/hap.py">hap.py</a> results into an R data structure to enable plotting, comparisons and aggregation.</p>
 <div id="install" class="section level2">
 <h2 class="hasAnchor">
 <a href="#install" class="anchor"></a>Install</h2>
@@ -128,15 +128,16 @@ hapdata
 <div id="indel-subtypes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#indel-subtypes" class="anchor"></a>Indel subtypes</h3>
+<p>Here subtypes are categories based on the variant type and length (e.g. <code>I6_15</code> are insertions of length 6 bp up to 15 bp). Genomic subsets are <code>*</code> for all, <code>TS_contained</code> for truth variants fully-contained with confident regions and <code>TS_boundary</code> for truth variants near the edge of a confident region block. See <a href="https://github.com/Illumina/hap.py/blob/master/doc/happy.md">hap.py docs</a> for more info.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
 
-## get indel subtypes from 'extended', skipping complex alleles and combined
+<span class="co"># get indel subtypes from 'extended', skipping complex alleles and combined</span>
 indel_extended &lt;-<span class="st"> </span><span class="kw">subset</span>(hapdata$extended, Type ==<span class="st"> "INDEL"</span> &amp;<span class="st"> </span>
 <span class="st">                         </span>Filter ==<span class="st"> "ALL"</span> &amp;<span class="st"> </span><span class="kw">grepl</span>(<span class="st">"^[DI]"</span>, Subtype))
 
 <span class="co"># Precision-recall by subtype, scaled by number in truthset</span>
 <span class="kw">ggplot</span>(indel_extended, <span class="kw">aes</span>(<span class="dt">x =</span> METRIC.Recall, <span class="dt">y =</span> METRIC.Precision, 
-                           <span class="dt">col =</span> Subtype, <span class="dt">size =</span> TRUTH.TOTAL)) +
+                           <span class="dt">col =</span> Subtype, <span class="dt">size =</span> TRUTH.TOTAL, <span class="dt">shape=</span>Subset)) +
 <span class="st">  </span><span class="kw">geom_point</span>() +<span class="st"> </span><span class="kw">theme_minimal</span>() +<span class="st"> </span>
 <span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">"Set2"</span>) +
 <span class="st">  </span><span class="kw">scale_size</span>(<span class="dt">guide =</span> <span class="st">"none"</span>) +
@@ -146,8 +147,10 @@ indel_extended &lt;-<span class="st"> </span><span class="kw">subset</span>(hapd
 <div id="precision-recall-curves" class="section level3">
 <h3 class="hasAnchor">
 <a href="#precision-recall-curves" class="anchor"></a>Precision-recall curves</h3>
+<p>PR curves show how precision and recall vary with a changing threshold, in this example it’s over a range of quality score thresholds applied to a set of variants: as the threshold increases, the remaining variant set is less comprehensive (lower recall) but typically contains fewer false positives (higher precision).</p>
+<p>This gets more complicated when <code>PASS</code> records aren’t set solely by a single quality score threshold, but by multiple independent filters (e.g. high-depth, genomic context, etc.). These interactions can’t be fully captured by drawing a PR curve only on a quality threshold:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># PR curve starting at ALL point</span>
-all_pr &lt;-<span class="st"> </span><span class="kw">subset</span>(hapdata$pr_curve$all, Filter ==<span class="st"> "ALL"</span> &amp;<span class="st"> </span>Subtype ==<span class="st"> "*"</span>)
+all_pr &lt;-<span class="st"> </span><span class="kw">subset</span>(hapdata$pr_curve$all, Filter ==<span class="st"> "ALL"</span> &amp;<span class="st"> </span>Subtype ==<span class="st"> "*"</span> &amp;<span class="st"> </span>Subset ==<span class="st"> "*"</span>)
 
 <span class="kw">ggplot</span>(all_pr, <span class="kw">aes</span>(<span class="dt">x =</span> METRIC.Recall, <span class="dt">y =</span> METRIC.Precision, <span class="dt">col =</span> Type)) +
 <span class="st">  </span><span class="kw">geom_line</span>() +<span class="st"> </span><span class="kw">theme_minimal</span>() +
@@ -156,8 +159,9 @@ all_pr &lt;-<span class="st"> </span><span class="kw">subset</span>(hapdata$pr_c
 <span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(.<span class="dv">95</span>, <span class="dv">1</span>)) +
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"ALL PR curve might not hit the PASS point"</span>)</code></pre></div>
 <p><img src="examples/README-all_pr-1.png" width="480" style="display: block; margin: auto;"></p>
+<p>Hap.py accounts for this by generating a selectively-filtered PR curve (<code>SEL</code>). First these independent filters are applied to the variant set, then we can draw the remaining PR curve using the quality score threshold. This gives a more accurate view of how changing the quality score threshold can impact precision and recall.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># selectively filtered PR curve</span>
-pr &lt;-<span class="st"> </span><span class="kw">subset</span>(hapdata$pr_curve$all, Filter ==<span class="st"> "SEL"</span> &amp;<span class="st"> </span>Subtype ==<span class="st"> "*"</span>)
+pr &lt;-<span class="st"> </span><span class="kw">subset</span>(hapdata$pr_curve$all, Filter ==<span class="st"> "SEL"</span> &amp;<span class="st"> </span>Subtype ==<span class="st"> "*"</span> &amp;<span class="st"> </span>Subset ==<span class="st"> "*"</span>)
 
 <span class="co"># link this to the ALL point</span>
 pr &lt;-<span class="st"> </span>dplyr::<span class="kw">bind_rows</span>(pr, <span class="kw">subset</span>(hapdata$summary, Filter ==<span class="st"> "ALL"</span>))
