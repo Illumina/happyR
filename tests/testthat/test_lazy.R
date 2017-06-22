@@ -9,8 +9,10 @@ suppressMessages(results_nonlazy <- read_happy(file.path(dirname(dir), "happy_de
 
 
 test_that("PR data are lazy-loaded if selected", {
-  expect_true(pryr:::is_promise2("all", results$pr_curve))
-  expect_false(pryr:::is_promise2("all", results_nonlazy$pr_curve))
+  if (require(pryr)) {
+    expect_true(pryr:::is_promise2("all", results$pr_curve))
+    expect_false(pryr:::is_promise2("all", results_nonlazy$pr_curve))
+  }
 })
 
 test_that("Lazy data is properly forced", {
