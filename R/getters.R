@@ -58,7 +58,12 @@ pr_data <- function(happy_result,
 
   filter <- match.arg(filter)
   var_type <- match.arg(var_type)
-  subtype <- match.arg(subtype, several.ok = TRUE)
+  if (!missing(subtype)) {
+    subtype <- match.arg(subtype, several.ok = TRUE)
+  } else {
+    # pick first, i.e. '*'
+    subtype <- match.arg(subtype)
+  }
 
   # starting point: smallest possible PR file
   outdf <- if (filter == "ALL" | var_type == "both") {

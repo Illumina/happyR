@@ -9,7 +9,7 @@
 \arguments{
 \item{happy_result}{an object of class happy_result}
 
-\item{...}{additional args passed down to \code{tibble::trunc_mat}}
+\item{...}{additional args passed to \code{tibble::trunc_mat}}
 }
 \description{
 Pretty-print the contents of a list-style

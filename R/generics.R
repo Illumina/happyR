@@ -6,7 +6,7 @@
 #' object containing hap.py result data
 #'
 #' @param happy_result an object of class happy_result
-#' @param ... additional args passed down to \code{tibble::trunc_mat}
+#' @param ... additional args passed to \code{tibble::trunc_mat}
 #'
 #' @examples
 #'

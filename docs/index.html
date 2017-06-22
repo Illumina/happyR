@@ -151,8 +151,11 @@ indel_extended &lt;-<span class="st"> </span><span class="kw">subset</span>(hapd
 <a href="#precision-recall-curves" class="anchor"></a>Precision-recall curves</h3>
 <p>PR curves show how precision and recall vary with a changing threshold, in this example it’s over a range of quality score thresholds applied to a set of variants: as the threshold increases, the remaining variant set is less comprehensive (lower recall) but typically contains fewer false positives (higher precision).</p>
 <p>This gets more complicated when <code>PASS</code> records aren’t set solely by a single quality score threshold, but by multiple independent filters (e.g. high-depth, genomic context, etc.). These interactions can’t be fully captured by drawing a PR curve only on a quality threshold:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># PR curve starting at ALL point</span>
-all_pr &lt;-<span class="st"> </span><span class="kw">subset</span>(hapdata$pr_curve$all, Filter ==<span class="st"> "ALL"</span> &amp;<span class="st"> </span>Subtype ==<span class="st"> "*"</span> &amp;<span class="st"> </span>Subset ==<span class="st"> "*"</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># using happyR::pr_data to simplify subsetting:</span>
+all_pr &lt;-<span class="st"> </span><span class="kw"><a href="reference/pr_data.html">pr_data</a></span>(hapdata)
+
+<span class="co"># this gets PR curve starting at ALL point, equivalent to base:</span>
+<span class="co"># all_pr &lt;- subset(hapdata$pr_curve$all, Filter == "ALL" &amp; Subtype == "*" &amp; Subset == "*")</span>
 
 <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(all_pr, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> METRIC.Recall, <span class="dt">y =</span> METRIC.Precision, <span class="dt">col =</span> Type)) +
 <span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() +<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_minimal</a></span>() +
@@ -163,7 +166,7 @@ all_pr &lt;-<span class="st"> </span><span class="kw">subset</span>(hapdata$pr_c
 <p><img src="examples/README-all_pr-1.png" width="480" style="display: block; margin: auto;"></p>
 <p>Hap.py accounts for this by generating a selectively-filtered PR curve (<code>SEL</code>). First these independent filters are applied to the variant set, then we can draw the remaining PR curve using the quality score threshold. This gives a more accurate view of how changing the quality score threshold can impact precision and recall.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># selectively filtered PR curve</span>
-pr &lt;-<span class="st"> </span><span class="kw">subset</span>(hapdata$pr_curve$all, Filter ==<span class="st"> "SEL"</span> &amp;<span class="st"> </span>Subtype ==<span class="st"> "*"</span> &amp;<span class="st"> </span>Subset ==<span class="st"> "*"</span>)
+pr &lt;-<span class="st"> </span><span class="kw"><a href="reference/pr_data.html">pr_data</a></span>(hapdata, <span class="dt">filter =</span> <span class="st">"SEL"</span>)
 
 <span class="co"># link this to the ALL point</span>
 pr &lt;-<span class="st"> </span>dplyr::<span class="kw">bind_rows</span>(pr, <span class="kw">subset</span>(hapdata$summary, Filter ==<span class="st"> "ALL"</span>))

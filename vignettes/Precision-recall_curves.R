@@ -1,3 +1,8 @@
+## ----opts, echo=FALSE----------------------------------------------------
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>")
+
 ## ----load_settings, message=FALSE----------------------------------------
 
 library(happyR)

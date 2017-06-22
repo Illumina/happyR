@@ -96,8 +96,11 @@ PR curves show how precision and recall vary with a changing threshold, in this 
 This gets more complicated when `PASS` records aren't set solely by a single quality score threshold, but by multiple independent filters (e.g. high-depth, genomic context, etc.). These interactions can't be fully captured by drawing a PR curve only on a quality threshold:
 
 ``` r
-# PR curve starting at ALL point
-all_pr <- subset(hapdata$pr_curve$all, Filter == "ALL" & Subtype == "*" & Subset == "*")
+# using happyR::pr_data to simplify subsetting:
+all_pr <- pr_data(hapdata)
+
+# this gets PR curve starting at ALL point, equivalent to base:
+# all_pr <- subset(hapdata$pr_curve$all, Filter == "ALL" & Subtype == "*" & Subset == "*")
 
 ggplot(all_pr, aes(x = METRIC.Recall, y = METRIC.Precision, col = Type)) +
   geom_line() + theme_minimal() +
@@ -113,7 +116,7 @@ Hap.py accounts for this by generating a selectively-filtered PR curve (`SEL`). 
 
 ``` r
 # selectively filtered PR curve
-pr <- subset(hapdata$pr_curve$all, Filter == "SEL" & Subtype == "*" & Subset == "*")
+pr <- pr_data(hapdata, filter = "SEL")
 
 # link this to the ALL point
 pr <- dplyr::bind_rows(pr, subset(hapdata$summary, Filter == "ALL"))
