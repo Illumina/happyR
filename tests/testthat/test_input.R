@@ -34,3 +34,9 @@ test_that("error messages distinguish missing directories from non-hap.py result
   expect_error(read_happy("/a/bad/dir"), regexp = "directory")
   expect_error(read_happy("/bin/sh"), regexp = "prefix")
 })
+
+test_that("read_happy compains about partial hap.py results", {
+  file.create("test.summary.csv")
+  expect_error(read_happy("test"), "Missing expected hap.py output file: test.extended.csv")
+  unlink("test.summary.csv")
+})

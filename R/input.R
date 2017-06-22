@@ -6,6 +6,11 @@ quiet <- function(...) {
 
 # Generic loader for CSVs written by hap.py
 load_happy_csv <- function(path, class = NULL) {
+
+  if (!file.exists(path)) {
+    stop("Missing expected hap.py output file: ", path)
+  }
+
   # use readr for speedup, not using fread as we need gzip support
   # big guess_max for mostly NA columns
   dt <- quiet(readr::read_csv(path, progress = FALSE,
