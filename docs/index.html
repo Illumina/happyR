@@ -29,10 +29,25 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 <li>
-  <a href="reference/index.html">Reference</a>
+  <a href="/index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="articles/index.html">Articles</a>
+  <a href="reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="articles/Precision-recall_curves.html">Precision-recall curves</a>
+    </li>
+  </ul>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right"></ul>
@@ -136,12 +151,12 @@ indel_extended &lt;-<span class="st"> </span><span class="kw">subset</span>(hapd
 <span class="st">                         </span>Filter ==<span class="st"> "ALL"</span> &amp;<span class="st"> </span><span class="kw">grepl</span>(<span class="st">"^[DI]"</span>, Subtype))
 
 <span class="co"># Precision-recall by subtype, scaled by number in truthset</span>
-<span class="kw">ggplot</span>(indel_extended, <span class="kw">aes</span>(<span class="dt">x =</span> METRIC.Recall, <span class="dt">y =</span> METRIC.Precision, 
+<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(indel_extended, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> METRIC.Recall, <span class="dt">y =</span> METRIC.Precision, 
                            <span class="dt">col =</span> Subtype, <span class="dt">size =</span> TRUTH.TOTAL, <span class="dt">shape=</span>Subset)) +
-<span class="st">  </span><span class="kw">geom_point</span>() +<span class="st"> </span><span class="kw">theme_minimal</span>() +<span class="st"> </span>
-<span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">"Set2"</span>) +
-<span class="st">  </span><span class="kw">scale_size</span>(<span class="dt">guide =</span> <span class="st">"none"</span>) +
-<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Indel subtype precision and recall"</span>)</code></pre></div>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>() +<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_minimal</a></span>() +<span class="st"> </span>
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_brewer">scale_color_brewer</a></span>(<span class="dt">palette =</span> <span class="st">"Set2"</span>) +
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_size">scale_size</a></span>(<span class="dt">guide =</span> <span class="st">"none"</span>) +
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"Indel subtype precision and recall"</span>)</code></pre></div>
 <p><img src="examples/README-indel_subtypes-1.png" width="480" style="display: block; margin: auto;"></p>
 </div>
 <div id="precision-recall-curves" class="section level3">
@@ -152,12 +167,12 @@ indel_extended &lt;-<span class="st"> </span><span class="kw">subset</span>(hapd
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># PR curve starting at ALL point</span>
 all_pr &lt;-<span class="st"> </span><span class="kw">subset</span>(hapdata$pr_curve$all, Filter ==<span class="st"> "ALL"</span> &amp;<span class="st"> </span>Subtype ==<span class="st"> "*"</span> &amp;<span class="st"> </span>Subset ==<span class="st"> "*"</span>)
 
-<span class="kw">ggplot</span>(all_pr, <span class="kw">aes</span>(<span class="dt">x =</span> METRIC.Recall, <span class="dt">y =</span> METRIC.Precision, <span class="dt">col =</span> Type)) +
-<span class="st">  </span><span class="kw">geom_line</span>() +<span class="st"> </span><span class="kw">theme_minimal</span>() +
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> hapdata$summary) +
-<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(.<span class="dv">6</span>, <span class="dv">1</span>)) +
-<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(.<span class="dv">95</span>, <span class="dv">1</span>)) +
-<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"ALL PR curve might not hit the PASS point"</span>)</code></pre></div>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(all_pr, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> METRIC.Recall, <span class="dt">y =</span> METRIC.Precision, <span class="dt">col =</span> Type)) +
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() +<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_minimal</a></span>() +
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>(<span class="dt">data =</span> hapdata$summary) +
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_x_continuous</a></span>(<span class="dt">limits =</span> <span class="kw">c</span>(.<span class="dv">6</span>, <span class="dv">1</span>)) +
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>(<span class="dt">limits =</span> <span class="kw">c</span>(.<span class="dv">95</span>, <span class="dv">1</span>)) +
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"ALL PR curve might not hit the PASS point"</span>)</code></pre></div>
 <p><img src="examples/README-all_pr-1.png" width="480" style="display: block; margin: auto;"></p>
 <p>Hap.py accounts for this by generating a selectively-filtered PR curve (<code>SEL</code>). First these independent filters are applied to the variant set, then we can draw the remaining PR curve using the quality score threshold. This gives a more accurate view of how changing the quality score threshold can impact precision and recall.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># selectively filtered PR curve</span>
@@ -166,12 +181,12 @@ pr &lt;-<span class="st"> </span><span class="kw">subset</span>(hapdata$pr_curve
 <span class="co"># link this to the ALL point</span>
 pr &lt;-<span class="st"> </span>dplyr::<span class="kw">bind_rows</span>(pr, <span class="kw">subset</span>(hapdata$summary, Filter ==<span class="st"> "ALL"</span>))
 
-<span class="kw">ggplot</span>(pr, <span class="kw">aes</span>(<span class="dt">x =</span> METRIC.Recall, <span class="dt">y =</span> METRIC.Precision, <span class="dt">col =</span> Type)) +
-<span class="st">  </span><span class="kw">geom_line</span>() +<span class="st"> </span><span class="kw">theme_minimal</span>() +
-<span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">data =</span> hapdata$summary) +
-<span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(.<span class="dv">6</span>, <span class="dv">1</span>)) +
-<span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(.<span class="dv">95</span>, <span class="dv">1</span>)) +
-<span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Selectively-filtered PR curve reliably hits PASS"</span>)</code></pre></div>
+<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggplot">ggplot</a></span>(pr, <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/aes">aes</a></span>(<span class="dt">x =</span> METRIC.Recall, <span class="dt">y =</span> METRIC.Precision, <span class="dt">col =</span> Type)) +
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_path">geom_line</a></span>() +<span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_minimal</a></span>() +
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/geom_point">geom_point</a></span>(<span class="dt">data =</span> hapdata$summary) +
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_x_continuous</a></span>(<span class="dt">limits =</span> <span class="kw">c</span>(.<span class="dv">6</span>, <span class="dv">1</span>)) +
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/scale_continuous">scale_y_continuous</a></span>(<span class="dt">limits =</span> <span class="kw">c</span>(.<span class="dv">95</span>, <span class="dv">1</span>)) +
+<span class="st">  </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"Selectively-filtered PR curve reliably hits PASS"</span>)</code></pre></div>
 <p><img src="examples/README-sel_pr-1.png" width="480" style="display: block; margin: auto;"></p>
 </div>
 </div>
@@ -180,7 +195,8 @@ pr &lt;-<span class="st"> </span>dplyr::<span class="kw">bind_rows</span>(pr, <s
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>License</h2>
+    <h2 class="hasAnchor">
+<a href="#sidebar" class="anchor"></a>License</h2>
 <p><a href="https://opensource.org/licenses/mit-license.php">MIT</a></p>
 <h2>Developers</h2>
 <ul class="list-unstyled">

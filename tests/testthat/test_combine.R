@@ -35,14 +35,4 @@ test_that("combining happy_results warns of redundancy", {
   expect_silent(rl <- c(results2, results3))
 })
 
-context("Extracting tables")
 
-test_that("summary tables can be extracted from list of happy_result", {
-  other_results <- results
-  attr(other_results, "from") <- "dummy/path/to/happy"
-  result_list <- c(results, other_results)
-  summary_table <- extract(result_list, "summary")
-
-  expect_is(summary_table, "data.frame")
-  expect_equal(nrow(summary_table), 8)
-})

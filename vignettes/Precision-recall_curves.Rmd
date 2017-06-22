@@ -1,0 +1,113 @@
+---
+title: "Precision-recall curves"
+author: "Ben Moore"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+A powerful aspect of the haplotype comparison tool hap.py is the precision and recall curve data it generates.
+HappyR contains a few helper functions to load, access and subset this data. Here's a few quick examples.
+
+## Example data
+
+First load the example data that comes with the package, and set a few global options for future chunks:
+
+```{r load_settings, message=FALSE}
+
+library(happyR)
+
+happy_input <- system.file("extdata", "happy_demo.summary.csv", package = "happyR")
+happy_prefix <- sub(".summary.csv", "", happy_input)
+
+hapdata <- read_happy(happy_prefix, quietly = TRUE)
+
+# other packages and options
+library(ggplot2)
+library(magrittr)
+theme_set(theme_minimal())
+
+```
+
+## Lazy-loading large files
+
+PR data associated with this hap.py result is lazy-loaded; that is, the data will only be read into 
+R once it is accessed. This saves time that would be spent reading lots of data that's never used.
+
+```{r force_promise, message=FALSE}
+# Large 'ALL' PR data isn't loaded yet and the results object isn't too big
+if (require(pryr))
+  pryr::object_size(hapdata)
+```
+
+Any access, even just a `head`, evaluates the promise and loads the remaining data:
+
+```{r head}
+# view part of all PR data, evaluating the promise
+knitr::kable(head(hapdata$pr_curve$all[,1:9]))
+```
+
+```{r evald}
+# The hapdata object now includes the full PR data so is a bit bigger
+if (require(pryr))
+  pryr::object_size(hapdata)
+```
+
+If you don't find this useful, turn it off by passing `lazy = FALSE` to `read_happy`.
+
+## Subset PR curves
+
+Subsetting the correct PR curve data can be a bit unwieldy:
+
+```{r manual_subset}
+# subset for short insertions 1 - 5 bp in length
+short_ins1 <- subset(hapdata$pr_curve$all, Filter == "ALL" & Subset == "*" & Subtype == "D1_5")
+```
+
+happyR offers `pr_data` to make this a bit simpler:
+
+```{r pr_data}
+short_ins2 <- pr_data(hapdata, var_type = "indel", subtype = "D1_5")
+
+# check they give the same results
+all.equal(short_ins1, short_ins2)
+```
+
+### Deletions by length
+
+Insertion subtypes are of the form: `[IDC]length_range` where the first letter indicates
+the variant classification: `I` insertion; `D` deletion; and `C` complex. Hap.py bins
+the lengths of these records into ranges by ALT allele length in basepairs: `1_5`, `6_15` 
+and `16_PLUS`.
+
+```{r del_length, fig.align="center", fig.width=5, fig.height=3, warning=FALSE}
+# get only deletions for all length ranges
+del_pr <- pr_data(hapdata, var_type = "indel", 
+                  subtype = c("D1_5", "D6_15", "D16_PLUS"))
+
+ggplot(del_pr, aes(x = METRIC.Recall, y = METRIC.Precision, col = Subtype)) +
+  geom_line() + coord_cartesian(ylim = c(.75, 1)) +
+  ggtitle("Longer deletions are more difficult to call accurately")
+```
+
+### SNVs at truthset boundaries
+
+Hap.py v0.3.7+ writes subsets `TS_contained` and `TS_boundary` by default.
+These contain truth variants which are either comfortably contained or near the
+boundary of confident regions, respectively. In some truthsets, those in 
+`TS_boundary` will show worse performance metrics due to issues with variant 
+representation or a partial haplotype description in the truthset. Alternatively,
+`TS_contained` can be an easier-to-call subset of truth variants where the 
+surrounding region was able to be fully-characterised.
+
+```{r snv_boundary, fig.align="center", fig.width=5, fig.height=3, warning=FALSE}
+snv_pr <- pr_data(hapdata, var_type = "snv",
+                  subset = c("TS_contained", "TS_boundary"))
+
+ggplot(snv_pr, aes(x = METRIC.Recall, y = METRIC.Precision, col = Subset)) +
+  geom_line() + coord_cartesian(ylim = c(.75, 1)) +
+  ggtitle("TS_contained performance is higher than TS_boundary subset")
+```
