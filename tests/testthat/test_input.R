@@ -19,6 +19,13 @@ test_that("PR curve data is of class happy_roc", {
   }
 })
 
+test_that("hap.py version is detected if runinfo is present", {
+  expect_equal(attr(results, "version"), "v0.3.9")
+})
+
+test_that("print shows hap.py version", {
+  expect_output(print(results), "v0\\.3\\.9")
+})
 
 context("User feedback")
 

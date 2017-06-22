@@ -103,15 +103,18 @@ check_happy_path <- function(prefix) {
   invisible(NULL)
 }
 
+# hap.py v0.3.8+ write a JSON of runinfo
 get_happy_version <- function(prefix) {
 
-  metrics_json <- paste0(prefix, "metrics.json.gz")
-  if (file.exists(metrics_json)) {
-    # TODO: this is a pretty big file
-    # feature request for hap.py
-    NULL
+  version <- "Unknown"
+  runinfo_json <- paste0(prefix, ".runinfo.json")
+
+  if (file.exists(runinfo_json)) {
+    json <- jsonlite::read_json(runinfo_json)
+    version <- json$metadata$required$version
   }
 
+  version
 }
 
 #' Load a hap.py results directory
@@ -159,6 +162,9 @@ read_happy <- function(happy_prefix, lazy = TRUE, quietly = FALSE){
   # pr curves -- may or may not be present
   pr_data <- load_happy_pr(happy_prefix, lazy_load = lazy, quietly = quietly)
 
+  # version from runinfo (hap.py v0.3.8+)
+  happy_version <- get_happy_version(prefix = happy_prefix)
+
   happy_result <- structure(
     list(
       summary = summary,
@@ -166,7 +172,8 @@ read_happy <- function(happy_prefix, lazy = TRUE, quietly = FALSE){
       pr_curve = pr_data
     ),
     class = "happy_result",
-    from = happy_prefix)
+    from = happy_prefix,
+    version = happy_version)
 
   happy_result
 }

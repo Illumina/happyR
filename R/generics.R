@@ -22,7 +22,12 @@ print.happy_result <- function(happy_result, ...){
   # show contents of object (i.e. which hap.py files loaded)
   present <- names(happy_result)[which(!vapply(happy_result, is.null, logical(1)))]
   cat("  Hap.py result containing: ", paste(present, collapse=", "), "\n",
-      "  Loaded from ", attr(happy_result, "from"), "\n\n")
+      "  Loaded from: ", attr(happy_result, "from"))
+  version <- attr(happy_result, "version")
+  if (version != "Unknown") {
+    cat("  (hap.py version: ", version, ")", sep = "")
+  }
+  cat("\n\n")
 
   # simplified results summary (drop some columns)
   print(tibble::trunc_mat(happy_result$summary))
