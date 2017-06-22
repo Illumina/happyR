@@ -103,11 +103,11 @@ representation or a partial haplotype description in the truthset. Alternatively
 `TS_contained` can be an easier-to-call subset of truth variants where the 
 surrounding region was able to be fully-characterised.
 
-```{r snv_boundary, fig.align="center", fig.width=5, fig.height=3, warning=FALSE}
+```{r snv_boundary, fig.align="center", fig.width=6, fig.height=3.5, warning=FALSE}
 snv_pr <- pr_data(hapdata, var_type = "snv",
                   subset = c("TS_contained", "TS_boundary"))
 
 ggplot(snv_pr, aes(x = METRIC.Recall, y = METRIC.Precision, col = Subset)) +
-  geom_line() + coord_cartesian(ylim = c(.75, 1)) +
-  ggtitle("TS_contained performance is higher than TS_boundary subset")
+  geom_line() + coord_cartesian(ylim = c(.8, 1)) +
+  ggtitle("TS_contained performance is higher than TS_boundary")
 ```
