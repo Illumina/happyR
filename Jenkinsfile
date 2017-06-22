@@ -8,6 +8,9 @@ node('uk_centos6_cluster') {
     // centos 6.5 compiled pandoc binary
     env.RSTUDIO_PANDOC = '/illumina/development/curium/bin'
     
+    // 3.2.3 rlibs
+    env.R_LIBS_USER = '/illumina/thirdparty/bmoore1/rlibs-3.2.3'
+    
     stage('Checkout') {
         checkout scm
     }
@@ -18,6 +21,10 @@ node('uk_centos6_cluster') {
 
     stage('Test') {
         sh "R CMD check --no-examples happyR_*.tar.gz"
+    }
+    
+    stage('Test coverage') {
+        sh "Rscript -e 'covr::report(covr::package_coverage(), file=\"/illumina/development/www/python/codecov/static/happyR.html\", browse = F)'"
     }
 
     stage('Cleanup') {
