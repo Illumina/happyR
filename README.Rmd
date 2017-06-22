@@ -7,13 +7,15 @@ output: github_document
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.path = "examples/README-"
+  fig.path = "examples/README-",
+  fig.height = 3.5,
+  fig.width = 5,
+  fig.align = "center"
 )
 ```
 
 # happyR
 [![Build Status](https://ukch-prd-jnks01.illumina.com/buildStatus/icon?job=happyR/master)](https://ukch-prd-jnks01.illumina.com/job/happyR/job/master/)
-[![Docs](https://img.shields.io/badge/docs-latest-blue.svg)](https://git.illumina.com/pages/bmoore1/happyR)
 
 Load hap.py results into a useful R data structure
 
@@ -51,6 +53,7 @@ hapdata
 ```
 
 `hapdata` is now a single hap.py data object containing:
+
 * `summary` (from summary.csv) - high-level ALL / PASS numbers
 * `extended` (from extended.csv) - region / subtype stratified metrics
 * `pr_curve` (from roc.*.csv.gz) - precision-recall over quality score
@@ -85,7 +88,7 @@ ggplot(indel_extended, aes(x = METRIC.Recall, y = METRIC.Precision,
 
 
 ### Precision-recall curves
-```{r all_pr}
+```{r all_pr, warning=FALSE}
 # PR curve starting at ALL point
 all_pr <- subset(hapdata$pr_curve$all, Filter == "ALL" & Subtype == "*")
 
@@ -97,7 +100,7 @@ ggplot(all_pr, aes(x = METRIC.Recall, y = METRIC.Precision, col = Type)) +
   ggtitle("ALL PR curve might not hit the PASS point")
 ```
 
-```{r sel_pr}
+```{r sel_pr, warning=FALSE}
 # selectively filtered PR curve
 pr <- subset(hapdata$pr_curve$all, Filter == "SEL" & Subtype == "*")
 

@@ -2,7 +2,7 @@
 happyR
 ======
 
-[![Build Status](https://ukch-prd-jnks01.illumina.com/buildStatus/icon?job=happyR/master)](https://ukch-prd-jnks01.illumina.com/job/happyR/job/master/) [![Docs](https://img.shields.io/badge/docs-latest-blue.svg)](https://git.illumina.com/pages/bmoore1/happyR)
+[![Build Status](https://ukch-prd-jnks01.illumina.com/buildStatus/icon?job=happyR/master)](https://ukch-prd-jnks01.illumina.com/job/happyR/job/master/)
 
 Load hap.py results into a useful R data structure
 
@@ -58,7 +58,11 @@ hapdata
 # #   QUERY.TOTAL.TiTv_ratio <dbl>, TRUTH.TOTAL.het_hom_ratio <dbl>, QUERY.TOTAL.het_hom_ratio <dbl>
 ```
 
-`hapdata` is now a single hap.py data object containing: \* `summary` (from summary.csv) - high-level ALL / PASS numbers \* `extended` (from extended.csv) - region / subtype stratified metrics \* `pr_curve` (from roc.\*.csv.gz) - precision-recall over quality score
+`hapdata` is now a single hap.py data object containing:
+
+-   `summary` (from summary.csv) - high-level ALL / PASS numbers
+-   `extended` (from extended.csv) - region / subtype stratified metrics
+-   `pr_curve` (from roc.\*.csv.gz) - precision-recall over quality score
 
 ``` r
 names(hapdata)
@@ -93,7 +97,7 @@ ggplot(indel_extended, aes(x = METRIC.Recall, y = METRIC.Precision,
   ggtitle("Indel subtype precision and recall")
 ```
 
-![](examples/README-indel_subtypes-1.png)
+<img src="examples/README-indel_subtypes-1.png" style="display: block; margin: auto;" />
 
 ### Precision-recall curves
 
@@ -107,10 +111,9 @@ ggplot(all_pr, aes(x = METRIC.Recall, y = METRIC.Precision, col = Type)) +
   scale_x_continuous(limits = c(.6, 1)) +
   scale_y_continuous(limits = c(.95, 1)) +
   ggtitle("ALL PR curve might not hit the PASS point")
-#> Warning: Removed 11857 rows containing missing values (geom_path).
 ```
 
-![](examples/README-all_pr-1.png)
+<img src="examples/README-all_pr-1.png" style="display: block; margin: auto;" />
 
 ``` r
 # selectively filtered PR curve
@@ -125,7 +128,6 @@ ggplot(pr, aes(x = METRIC.Recall, y = METRIC.Precision, col = Type)) +
   scale_x_continuous(limits = c(.6, 1)) +
   scale_y_continuous(limits = c(.95, 1)) +
   ggtitle("Selectively-filtered PR curve reliably hits PASS")
-#> Warning: Removed 11987 rows containing missing values (geom_path).
 ```
 
-![](examples/README-sel_pr-1.png)
+<img src="examples/README-sel_pr-1.png" style="display: block; margin: auto;" />
