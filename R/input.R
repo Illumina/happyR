@@ -43,7 +43,7 @@ load_happy_pr <- function(happy_prefix, lazy_load, quietly) {
       ".roc.Locations.SNP", ".roc.Locations.SNP.PASS", ".roc.Locations.SNP.SEL"
     ), ".csv.gz")
 
-  if (file.exists(paste0(happy_prefix, possible_suffixes[1]))) {
+  if (any(file.exists(paste0(happy_prefix, possible_suffixes)))) {
     if (!quietly) {
       message("Reading precision-recall curve data")
     }
