@@ -78,12 +78,6 @@ load_happy_pr <- function(happy_prefix, lazy_load, quietly) {
   pr_data
 }
 
-# som.py pr curves can be more complex than hap.py,
-# could be different prefix for SNV / INDEL
-load_sompy_pr <- function(sompy_prefix) {
-
-}
-
 # informative error messages that distinguish:
 #   * bad file path
 #   * good file path that's not a hap.py result
@@ -168,61 +162,6 @@ read_happy <- function(happy_prefix, lazy = TRUE, quietly = FALSE){
     ),
     class = "happy_result",
     from = happy_prefix)
-
-  happy_result
-}
-
-#' Load a som.py results directory
-#'
-#' Read a directory of som.py (somatic hap.py) output
-#' files into an R data structure.
-#'
-#' @param sompy_prefix som.py output prefix (and path)
-#' @param lazy store lesser-used output as
-#'   unevaluated promises rather than reading
-#'   everything at once
-#'
-#' @return A list structure containing som.py output
-#'
-#' @seealso read_happy
-#'
-#' @examples
-#'
-#' \dontrun{
-#' # run som.py from commandline:
-#' #  som.py truth.vcf query.vcf -o /output/path/prefix
-#'
-#' # load result into R
-#' sompy <- read_sompy('/output/path/prefix')
-#' names(sompy)
-#' }
-#'
-#' @export
-read_sompy <- function(sompy_prefix, lazy = TRUE){
-
-  summary_path <- paste0(sompy_prefix, ".summary.csv")
-
-  if (!file.exists(summary_path)) {
-    stop("File missing -- is ",
-         normalizePath(sompy_prefix, mustWork = FALSE),
-         " a som.py output prefix?")
-  }
-
-  summary <- load_happy_csv(summary_path, "happy_summary")
-  extended <- load_happy_csv(paste0(sompy_prefix, ".extended.csv"),
-                             "happy_extended")
-
-  # pr curves -- may or may not be present
-  pr_data <- load_sompy_pr(sompy_prefix)
-
-  happy_result <- structure(
-    list(
-      summary = summary,
-      extended = extended,
-      pr_curve = pr_data
-    ),
-    class = "sompy_result",
-    from = sompy_prefix)
 
   happy_result
 }
