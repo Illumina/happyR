@@ -113,15 +113,37 @@ object containing hap.py result data</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>tibble::trunc_mat</p>
+    <p><code><a href='http://www.rdocumentation.org/packages/tibble/topics/formatting'>trunc_mat</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='fu'>not_run</span>({
+  <span class='co'># not run example:</span>
   <span class='no'>happy</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='read_happy.html'>read_happy</a></span>(<span class='st'>'/output/path/prefix'</span>)
   <span class='fu'>print</span>(<span class='no'>happy</span>)
-})</div></pre>
+})
+
+<span class='co'># running example with package demo data</span>
+<span class='no'>happy_input</span> <span class='kw'>&lt;-</span> <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>, <span class='st'>"happy_demo.summary.csv"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"happyR"</span>)
+<span class='no'>happy_prefix</span> <span class='kw'>&lt;-</span> <span class='fu'>sub</span>(<span class='st'>".summary.csv"</span>, <span class='st'>""</span>, <span class='no'>happy_input</span>)
+
+<span class='co'># load happy result</span>
+<span class='no'>hapdata</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='read_happy.html'>read_happy</a></span>(<span class='no'>happy_prefix</span>)</div><div class='output co'>#&gt; <span class='message'>Reading summary table</span></div><div class='output co'>#&gt; <span class='message'>Reading extended table</span></div><div class='output co'>#&gt; <span class='message'>Reading precision-recall curve data</span></div><div class='input'><span class='fu'>print</span>(<span class='no'>hapdata</span>)</div><div class='output co'>#&gt;   Hap.py result containing:  summary, extended, pr_curve 
+#&gt;    Loaded from:  /Users/bmoore1/git_local/happyR/inst/extdata/happy_demo  (hap.py version: v0.3.9)
+#&gt; 
+#&gt; # A tibble: 4 x 17
+#&gt;    Type Filter TRUTH.TOTAL TRUTH.TP TRUTH.FN QUERY.TOTAL QUERY.FP QUERY.UNK
+#&gt;   &lt;chr&gt;  &lt;chr&gt;       &lt;int&gt;    &lt;int&gt;    &lt;int&gt;       &lt;int&gt;    &lt;int&gt;     &lt;int&gt;
+#&gt; 1 INDEL    ALL        8937     7839     1098       11812      343      3520
+#&gt; 2 INDEL   PASS        8937     7550     1387        9971      283      1964
+#&gt; 3   SNP    ALL       52494    52125      369       90092      582     37348
+#&gt; 4   SNP   PASS       52494    46920     5574       48078      143       992
+#&gt; # ... with 9 more variables: FP.gt &lt;int&gt;, METRIC.Recall &lt;dbl&gt;,
+#&gt; #   METRIC.Precision &lt;dbl&gt;, METRIC.Frac_NA &lt;dbl&gt;, METRIC.F1_Score &lt;dbl&gt;,
+#&gt; #   TRUTH.TOTAL.TiTv_ratio &lt;dbl&gt;, QUERY.TOTAL.TiTv_ratio &lt;dbl&gt;,
+#&gt; #   TRUTH.TOTAL.het_hom_ratio &lt;dbl&gt;, QUERY.TOTAL.het_hom_ratio &lt;dbl&gt;</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

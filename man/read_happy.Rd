@@ -31,10 +31,13 @@ an R data structure.
 
 # load result into R
 happy <- read_happy('/output/path/prefix')
-names(happy)
 }
 
-}
-\seealso{
-read_sompy
+# load demo data supplied with package
+happy_input <- system.file("extdata", "happy_demo.summary.csv", package = "happyR")
+happy_prefix <- sub(".summary.csv", "", happy_input)
+
+hapdata <- read_happy(happy_prefix)
+print(hapdata)
+
 }

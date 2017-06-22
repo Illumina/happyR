@@ -191,9 +191,9 @@ if (<span class="kw">require</span>(pryr))
 <a href="#subset-pr-curves" class="anchor"></a>Subset PR curves</h2>
 <p>Subsetting the correct PR curve data can be a bit unwieldy:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># subset for short insertions 1 - 5 bp in length</span>
-short_ins1 &lt;-<span class="st"> </span><span class="kw">subset</span>(hapdata$pr_curve$all, Filter ==<span class="st"> "ALL"</span> &amp;<span class="st"> </span>Subset ==<span class="st"> "*"</span> &amp;<span class="st"> </span>Subtype ==<span class="st"> "D1_5"</span>)</code></pre></div>
+short_ins1 &lt;-<span class="st"> </span><span class="kw">subset</span>(hapdata$pr_curve$all, Filter ==<span class="st"> "ALL"</span> &amp;<span class="st"> </span>Subset ==<span class="st"> "*"</span> &amp;<span class="st"> </span>Subtype ==<span class="st"> "I1_5"</span>)</code></pre></div>
 <p>happyR offers <code>pr_data</code> to make this a bit simpler:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">short_ins2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/pr_data.html">pr_data</a></span>(hapdata, <span class="dt">var_type =</span> <span class="st">"indel"</span>, <span class="dt">subtype =</span> <span class="st">"D1_5"</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">short_ins2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/pr_data.html">pr_data</a></span>(hapdata, <span class="dt">var_type =</span> <span class="st">"indel"</span>, <span class="dt">subtype =</span> <span class="st">"I1_5"</span>)
 
 <span class="co"># check they give the same results</span>
 <span class="kw">all.equal</span>(short_ins1, short_ins2)</code></pre></div>

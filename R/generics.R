@@ -11,10 +11,20 @@
 #' @examples
 #'
 #' \dontrun{
+#' # not run example:
 #' happy <- read_happy('/output/path/prefix')
 #' print(happy)
 #' }
-#' @seealso tibble::trunc_mat
+#'
+#' # running example with package demo data
+#' happy_input <- system.file("extdata", "happy_demo.summary.csv", package = "happyR")
+#' happy_prefix <- sub(".summary.csv", "", happy_input)
+#'
+#' # load happy result
+#' hapdata <- read_happy(happy_prefix)
+#' print(hapdata)
+#'
+#' @seealso \code{\link[tibble]{trunc_mat}}
 #'
 #' @export
 print.happy_result <- function(happy_result, ...){
@@ -30,7 +40,7 @@ print.happy_result <- function(happy_result, ...){
   cat("\n\n")
 
   # simplified results summary (drop some columns)
-  print(tibble::trunc_mat(happy_result$summary))
+  print(tibble::trunc_mat(happy_result$summary, ...))
 
   invisible()
 }

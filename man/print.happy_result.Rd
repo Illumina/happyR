@@ -18,10 +18,20 @@ object containing hap.py result data
 \examples{
 
 \dontrun{
+# not run example:
 happy <- read_happy('/output/path/prefix')
 print(happy)
 }
+
+# running example with package demo data
+happy_input <- system.file("extdata", "happy_demo.summary.csv", package = "happyR")
+happy_prefix <- sub(".summary.csv", "", happy_input)
+
+# load happy result
+hapdata <- read_happy(happy_prefix)
+print(hapdata)
+
 }
 \seealso{
-tibble::trunc_mat
+\code{\link[tibble]{trunc_mat}}
 }

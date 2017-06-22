@@ -64,13 +64,13 @@ Subsetting the correct PR curve data can be a bit unwieldy:
 
 ```{r manual_subset}
 # subset for short insertions 1 - 5 bp in length
-short_ins1 <- subset(hapdata$pr_curve$all, Filter == "ALL" & Subset == "*" & Subtype == "D1_5")
+short_ins1 <- subset(hapdata$pr_curve$all, Filter == "ALL" & Subset == "*" & Subtype == "I1_5")
 ```
 
 happyR offers `pr_data` to make this a bit simpler:
 
 ```{r pr_data}
-short_ins2 <- pr_data(hapdata, var_type = "indel", subtype = "D1_5")
+short_ins2 <- pr_data(hapdata, var_type = "indel", subtype = "I1_5")
 
 # check they give the same results
 all.equal(short_ins1, short_ins2)
