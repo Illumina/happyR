@@ -48,33 +48,6 @@ pr_data <- function(happy_result,
   return(outdf)
 }
 
-
-# summary of factor levels in PR data.frame
-pr_describe <- function(pr_data) {
-
-  for (col_index in 1:ncol(pr_data)) {
-    # summarise column contents (if factor-like)
-    col_summary <- if (class(pr_data[[col_index]]) %in% c("character", "factor")) {
-      members <- sort(unique(as.character(pr_data[[col_index]])))
-      if (length(members) > 10) {
-        colstring <- paste(c(members[1:9], "..."), collapse = ", ")
-      } else {
-        colstring <- paste(members, collapse = ", ")
-      }
-    } else {
-      colstring <- paste(c("min", "lQR", "median", "uQR", "max"),
-                         signif(fivenum(pr_data[[col_index]]), digits = 3),
-                         sep = ":")
-      colstring <- paste(colstring, collapse = ", ")
-    }
-    cat("  ", colnames(pr_data)[col_index], ": ",
-        "<", class(pr_data[[col_index]]), "> ",
-        colstring, "\n", sep = "")
-  }
-
-  invisible()
-}
-
 #' Extract tables from hap.py result lists
 #'
 #' Extract tables from multiple hap.py result objects and combine
