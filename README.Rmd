@@ -40,17 +40,6 @@ happy_prefix <- sub(".summary.csv", "", happy_input)
 # happy_prefix is the -o argument to hap.py, here: path/to/files/happy_demo
 hapdata <- read_happy(happy_prefix)
 hapdata
-# Hap.py result containing:  summary, extended, pr_curve 
-# 
-# # happy_summary [4 × 16]
-# Type Filter TRUTH.TOTAL TRUTH.TP TRUTH.FN QUERY.TOTAL QUERY.FP QUERY.UNK FP.gt METRIC.Recall
-# <chr>  <chr>       <int>    <int>    <int>       <int>    <int>     <int> <int>         <dbl>
-# 1 INDEL    ALL        8946     7840     1106       11811      367      3494    46      0.876369
-# 2 INDEL   PASS        8946     7551     1395        9970      301      1944    31      0.844064
-# 3   SNP    ALL       52494    52125      369       90092      548     37383   107      0.992971
-# 4   SNP   PASS       52494    46920     5574       48078      122      1014     8      0.893816
-# # ... with 6 more variables: METRIC.Precision <dbl>, METRIC.Frac_NA <dbl>, TRUTH.TOTAL.TiTv_ratio <dbl>,
-# #   QUERY.TOTAL.TiTv_ratio <dbl>, TRUTH.TOTAL.het_hom_ratio <dbl>, QUERY.TOTAL.het_hom_ratio <dbl>
 ```
 
 `hapdata` is now a single hap.py data object containing:
@@ -61,11 +50,9 @@ hapdata
 
 ```{r read_demo_2}
 names(hapdata)
-# [1] "summary"  "extended" "pr_curve"
 
 # e.g. here pr_curve$INDEL_PASS maps to happy_demo.roc.Locations.INDEL.PASS.csv.gz
 names(hapdata$pr_curve)
-# [1] "all"        "INDEL"      "INDEL_PASS" "INDEL_SEL"  "SNP"        "SNP_PASS"   "SNP_SEL"   
 ```
 
 ## Example plots

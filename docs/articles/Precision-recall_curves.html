@@ -76,7 +76,8 @@
 <h2 class="hasAnchor">
 <a href="#example-data" class="anchor"></a>Example data</h2>
 <p>First load the example data that comes with the package, and set a few global options for future chunks:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(happyR)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
+<span class="kw">library</span>(happyR)
 
 happy_input &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"happy_demo.summary.csv"</span>, <span class="dt">package =</span> <span class="st">"happyR"</span>)
 happy_prefix &lt;-<span class="st"> </span><span class="kw">sub</span>(<span class="st">".summary.csv"</span>, <span class="st">""</span>, happy_input)
@@ -94,8 +95,8 @@ hapdata &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rea
 <p>PR data associated with this hap.py result is lazy-loaded; that is, the data will only be read into R once it is accessed. This saves time that would be spent reading lots of data that’s never used.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Large 'ALL' PR data isn't loaded yet and the results object isn't too big</span>
 if (<span class="kw">require</span>(pryr))
-  pryr::<span class="kw"><a href="http://www.rdocumentation.org/packages/pryr/topics/object_size">object_size</a></span>(hapdata)</code></pre></div>
-<pre><code>## 21.4 MB</code></pre>
+  pryr::<span class="kw"><a href="http://www.rdocumentation.org/packages/pryr/topics/object_size">object_size</a></span>(hapdata)
+<span class="co">#&gt; 21.4 MB</span></code></pre></div>
 <p>Any access, even just a <code>head</code>, evaluates the promise and loads the remaining data:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># view part of all PR data, evaluating the promise</span>
 knitr::<span class="kw">kable</span>(<span class="kw">head</span>(hapdata$pr_curve$all[,<span class="dv">1</span>:<span class="dv">9</span>]))</code></pre></div>
@@ -182,8 +183,8 @@ knitr::<span class="kw">kable</span>(<span class="kw">head</span>(hapdata$pr_cur
 </table>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># The hapdata object now includes the full PR data so is a bit bigger</span>
 if (<span class="kw">require</span>(pryr))
-  pryr::<span class="kw"><a href="http://www.rdocumentation.org/packages/pryr/topics/object_size">object_size</a></span>(hapdata)</code></pre></div>
-<pre><code>## 85 MB</code></pre>
+  pryr::<span class="kw"><a href="http://www.rdocumentation.org/packages/pryr/topics/object_size">object_size</a></span>(hapdata)
+<span class="co">#&gt; 85 MB</span></code></pre></div>
 <p>If you don’t find this useful, turn it off by passing <code>lazy = FALSE</code> to <code>read_happy</code>.</p>
 </div>
 <div id="subset-pr-curves" class="section level2">
@@ -196,8 +197,8 @@ short_ins1 &lt;-<span class="st"> </span><span class="kw">subset</span>(hapdata$
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">short_ins2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/pr_data.html">pr_data</a></span>(hapdata, <span class="dt">var_type =</span> <span class="st">"indel"</span>, <span class="dt">subtype =</span> <span class="st">"I1_5"</span>)
 
 <span class="co"># check they give the same results</span>
-<span class="kw">all.equal</span>(short_ins1, short_ins2)</code></pre></div>
-<pre><code>## [1] TRUE</code></pre>
+<span class="kw">all.equal</span>(short_ins1, short_ins2)
+<span class="co">#&gt; [1] TRUE</span></code></pre></div>
 <div id="deletions-by-length" class="section level3">
 <h3 class="hasAnchor">
 <a href="#deletions-by-length" class="anchor"></a>Deletions by length</h3>

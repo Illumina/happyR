@@ -106,18 +106,7 @@ hapdata
 <span class="co">#&gt; #   METRIC.Recall &lt;dbl&gt;, METRIC.Precision &lt;dbl&gt;, METRIC.Frac_NA &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   METRIC.F1_Score &lt;dbl&gt;, TRUTH.TOTAL.TiTv_ratio &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   QUERY.TOTAL.TiTv_ratio &lt;dbl&gt;, TRUTH.TOTAL.het_hom_ratio &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   QUERY.TOTAL.het_hom_ratio &lt;dbl&gt;</span>
-<span class="co"># Hap.py result containing:  summary, extended, pr_curve </span>
-<span class="co"># </span>
-<span class="co"># # happy_summary [4 × 16]</span>
-<span class="co"># Type Filter TRUTH.TOTAL TRUTH.TP TRUTH.FN QUERY.TOTAL QUERY.FP QUERY.UNK FP.gt METRIC.Recall</span>
-<span class="co"># &lt;chr&gt;  &lt;chr&gt;       &lt;int&gt;    &lt;int&gt;    &lt;int&gt;       &lt;int&gt;    &lt;int&gt;     &lt;int&gt; &lt;int&gt;         &lt;dbl&gt;</span>
-<span class="co"># 1 INDEL    ALL        8946     7840     1106       11811      367      3494    46      0.876369</span>
-<span class="co"># 2 INDEL   PASS        8946     7551     1395        9970      301      1944    31      0.844064</span>
-<span class="co"># 3   SNP    ALL       52494    52125      369       90092      548     37383   107      0.992971</span>
-<span class="co"># 4   SNP   PASS       52494    46920     5574       48078      122      1014     8      0.893816</span>
-<span class="co"># # ... with 6 more variables: METRIC.Precision &lt;dbl&gt;, METRIC.Frac_NA &lt;dbl&gt;, TRUTH.TOTAL.TiTv_ratio &lt;dbl&gt;,</span>
-<span class="co"># #   QUERY.TOTAL.TiTv_ratio &lt;dbl&gt;, TRUTH.TOTAL.het_hom_ratio &lt;dbl&gt;, QUERY.TOTAL.het_hom_ratio &lt;dbl&gt;</span></code></pre></div>
+<span class="co">#&gt; #   QUERY.TOTAL.het_hom_ratio &lt;dbl&gt;</span></code></pre></div>
 <p><code>hapdata</code> is now a single hap.py data object containing:</p>
 <ul>
 <li>
@@ -129,13 +118,11 @@ hapdata
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(hapdata)
 <span class="co">#&gt; [1] "summary"  "extended" "pr_curve"</span>
-<span class="co"># [1] "summary"  "extended" "pr_curve"</span>
 
 <span class="co"># e.g. here pr_curve$INDEL_PASS maps to happy_demo.roc.Locations.INDEL.PASS.csv.gz</span>
 <span class="kw">names</span>(hapdata$pr_curve)
 <span class="co">#&gt; [1] "INDEL_SEL"  "INDEL_PASS" "SNP"        "all"        "INDEL"     </span>
-<span class="co">#&gt; [6] "SNP_PASS"   "SNP_SEL"</span>
-<span class="co"># [1] "all"        "INDEL"      "INDEL_PASS" "INDEL_SEL"  "SNP"        "SNP_PASS"   "SNP_SEL"   </span></code></pre></div>
+<span class="co">#&gt; [6] "SNP_PASS"   "SNP_SEL"</span></code></pre></div>
 </div>
 <div id="example-plots" class="section level2">
 <h2 class="hasAnchor">
