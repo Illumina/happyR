@@ -27,7 +27,7 @@ print.happy_result <- function(happy_result, ...){
   # simplified results summary (drop some columns)
   print(tibble::trunc_mat(happy_result$summary))
 
-  return(invisible())
+  invisible()
 }
 
 #' Combine multiple hap.py results objects
@@ -84,7 +84,7 @@ c.happy_result <- function(...){
   if (length(unique(out_names)) < length(out_names))
     warning("Combining redundant hap.py results")
 
-  return(structure(out_list, class="happy_result_list"))
+  structure(out_list, class="happy_result_list")
 }
 
 

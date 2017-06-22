@@ -45,7 +45,7 @@ pr_data <- function(happy_result,
 
   outdf <- outdf[outdf$Subtype %in% subtype & outdf$Filter %in% filter,]
 
-  return(outdf)
+  outdf
 }
 
 #' Extract tables from hap.py result lists
@@ -102,5 +102,5 @@ extract <- function(happy_result_list, table = c("summary", "extended")) {
     class(df) <- c("happy_extended", class(df))
   }
 
-  return(df)
+  df
 }

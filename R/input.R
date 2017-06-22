@@ -1,7 +1,8 @@
 ## Load hap.py data
 
-quiet <- function(...)
+quiet <- function(...) {
   suppressMessages(suppressWarnings(...))
+}
 
 # Generic loader for CSVs written by hap.py
 load_happy_csv <- function(path, class = NULL) {
@@ -15,7 +16,7 @@ load_happy_csv <- function(path, class = NULL) {
     class(dt) <- c(class, class(dt))
   }
 
-  return(dt)
+  dt
 }
 
 lazy_pr <- function(prefix){
@@ -74,7 +75,7 @@ load_happy_pr <- function(happy_prefix, lazy_load, quietly) {
     pr_data <- NULL
   }
 
-  return(pr_data)
+  pr_data
 }
 
 # som.py pr curves can be more complex than hap.py,
@@ -168,7 +169,7 @@ read_happy <- function(happy_prefix, lazy = TRUE, quietly = FALSE){
     class = "happy_result",
     from = happy_prefix)
 
-  return(happy_result)
+  happy_result
 }
 
 #' Load a som.py results directory
@@ -223,6 +224,6 @@ read_sompy <- function(sompy_prefix, lazy = TRUE){
     class = "sompy_result",
     from = sompy_prefix)
 
-  return(happy_result)
+  happy_result
 }
 
