@@ -15,7 +15,7 @@
 <![endif]-->
 </head>
 <body>
-    <div class="container template-home">
+    <div class="container template-vignette">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -45,8 +45,13 @@
 
       
       </header><div class="row">
-  <div class="contents col-md-9">
-    <div id="happyr" class="section level1">
+  <div class="col-md-9">
+    
+
+    
+    
+<div class="contents">
+<div id="happyr" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#happyr" class="anchor"></a>happyR</h1></div>
 
@@ -68,7 +73,25 @@ happy_prefix &lt;-<span class="st"> </span><span class="kw">sub</span>(<span cla
 
 <span class="co"># happy_prefix is the -o argument to hap.py, here: path/to/files/happy_demo</span>
 hapdata &lt;-<span class="st"> </span><span class="kw"><a href="reference/read_happy.html">read_happy</a></span>(happy_prefix)
+<span class="co">#&gt; Reading summary table</span>
+<span class="co">#&gt; Reading extended table</span>
+<span class="co">#&gt; Reading precision-recall curve data</span>
 hapdata
+<span class="co">#&gt;   Hap.py result containing:  summary, extended, pr_curve </span>
+<span class="co">#&gt;    Loaded from:  /Users/bmoore1/Rlibs/happyR/extdata/happy_demo  (hap.py version: v0.3.9)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; # A tibble: 4 x 17</span>
+<span class="co">#&gt;    Type Filter TRUTH.TOTAL TRUTH.TP TRUTH.FN QUERY.TOTAL QUERY.FP</span>
+<span class="co">#&gt;   &lt;chr&gt;  &lt;chr&gt;       &lt;int&gt;    &lt;int&gt;    &lt;int&gt;       &lt;int&gt;    &lt;int&gt;</span>
+<span class="co">#&gt; 1 INDEL    ALL        8937     7839     1098       11812      343</span>
+<span class="co">#&gt; 2 INDEL   PASS        8937     7550     1387        9971      283</span>
+<span class="co">#&gt; 3   SNP    ALL       52494    52125      369       90092      582</span>
+<span class="co">#&gt; 4   SNP   PASS       52494    46920     5574       48078      143</span>
+<span class="co">#&gt; # ... with 10 more variables: QUERY.UNK &lt;int&gt;, FP.gt &lt;int&gt;,</span>
+<span class="co">#&gt; #   METRIC.Recall &lt;dbl&gt;, METRIC.Precision &lt;dbl&gt;, METRIC.Frac_NA &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   METRIC.F1_Score &lt;dbl&gt;, TRUTH.TOTAL.TiTv_ratio &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   QUERY.TOTAL.TiTv_ratio &lt;dbl&gt;, TRUTH.TOTAL.het_hom_ratio &lt;dbl&gt;,</span>
+<span class="co">#&gt; #   QUERY.TOTAL.het_hom_ratio &lt;dbl&gt;</span>
 <span class="co"># Hap.py result containing:  summary, extended, pr_curve </span>
 <span class="co"># </span>
 <span class="co"># # happy_summary [4 × 16]</span>
@@ -90,10 +113,13 @@ hapdata
 <code>pr_curve</code> (from roc.*.csv.gz) - precision-recall over quality score</li>
 </ul>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">names</span>(hapdata)
+<span class="co">#&gt; [1] "summary"  "extended" "pr_curve"</span>
 <span class="co"># [1] "summary"  "extended" "pr_curve"</span>
 
 <span class="co"># e.g. here pr_curve$INDEL_PASS maps to happy_demo.roc.Locations.INDEL.PASS.csv.gz</span>
 <span class="kw">names</span>(hapdata$pr_curve)
+<span class="co">#&gt; [1] "INDEL_SEL"  "INDEL_PASS" "SNP"        "all"        "INDEL"     </span>
+<span class="co">#&gt; [6] "SNP_PASS"   "SNP_SEL"</span>
 <span class="co"># [1] "all"        "INDEL"      "INDEL_PASS" "INDEL_SEL"  "SNP"        "SNP_PASS"   "SNP_SEL"   </span></code></pre></div>
 </div>
 <div id="example-plots" class="section level2">
@@ -102,7 +128,9 @@ hapdata
 <div id="indel-subtypes" class="section level3">
 <h3 class="hasAnchor">
 <a href="#indel-subtypes" class="anchor"></a>Indel subtypes</h3>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">## get indel subtypes from 'extended', skipping complex alleles and combined
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)
+
+## get indel subtypes from 'extended', skipping complex alleles and combined
 indel_extended &lt;-<span class="st"> </span><span class="kw">subset</span>(hapdata$extended, Type ==<span class="st"> "INDEL"</span> &amp;<span class="st"> </span>
 <span class="st">                         </span>Filter ==<span class="st"> "ALL"</span> &amp;<span class="st"> </span><span class="kw">grepl</span>(<span class="st">"^[DI]"</span>, Subtype))
 
@@ -113,7 +141,7 @@ indel_extended &lt;-<span class="st"> </span><span class="kw">subset</span>(hapd
 <span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">"Set2"</span>) +
 <span class="st">  </span><span class="kw">scale_size</span>(<span class="dt">guide =</span> <span class="st">"none"</span>) +
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Indel subtype precision and recall"</span>)</code></pre></div>
-<p><img src="https://git.illumina.com/bmoore1/happyR/raw/master/examples/happyr_eg_indelext.png" width="600"></p>
+<p><img src="examples/README-indel_subtypes-1.png" width="480" style="display: block; margin: auto;"></p>
 </div>
 <div id="precision-recall-curves" class="section level3">
 <h3 class="hasAnchor">
@@ -127,7 +155,7 @@ all_pr &lt;-<span class="st"> </span><span class="kw">subset</span>(hapdata$pr_c
 <span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(.<span class="dv">6</span>, <span class="dv">1</span>)) +
 <span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(.<span class="dv">95</span>, <span class="dv">1</span>)) +
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"ALL PR curve might not hit the PASS point"</span>)</code></pre></div>
-<p><img src="https://git.illumina.com/bmoore1/happyR/raw/master/examples/happyr_eg_prall.png" width="600"></p>
+<p><img src="examples/README-all_pr-1.png" width="480" style="display: block; margin: auto;"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># selectively filtered PR curve</span>
 pr &lt;-<span class="st"> </span><span class="kw">subset</span>(hapdata$pr_curve$all, Filter ==<span class="st"> "SEL"</span> &amp;<span class="st"> </span>Subtype ==<span class="st"> "*"</span>)
 
@@ -140,13 +168,14 @@ pr &lt;-<span class="st"> </span>dplyr::<span class="kw">bind_rows</span>(pr, <s
 <span class="st">  </span><span class="kw">scale_x_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(.<span class="dv">6</span>, <span class="dv">1</span>)) +
 <span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">limits =</span> <span class="kw">c</span>(.<span class="dv">95</span>, <span class="dv">1</span>)) +
 <span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Selectively-filtered PR curve reliably hits PASS"</span>)</code></pre></div>
-<p><img src="https://git.illumina.com/bmoore1/happyR/raw/master/examples/happyr_eg_prsel.png" width="600"></p>
+<p><img src="examples/README-sel_pr-1.png" width="480" style="display: block; margin: auto;"></p>
+</div>
 </div>
 </div>
 </div>
   </div>
 
-  <div class="col-md-3" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>License</h2>
 <p><a href="https://opensource.org/licenses/mit-license.php">MIT</a></p>
 <h2>Developers</h2>
@@ -159,6 +188,7 @@ pr &lt;-<span class="st"> </span>dplyr::<span class="kw">bind_rows</span>(pr, <s
 <li><a href="https://ukch-prd-jnks01.illumina.com/job/happyR/job/master/"><img src="https://ukch-prd-jnks01.illumina.com/buildStatus/icon?job=happyR/master" alt="Build Status"></a></li>
 </ul>
 </div>
+
 </div>
 
 

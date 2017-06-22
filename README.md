@@ -32,19 +32,20 @@ hapdata <- read_happy(happy_prefix)
 #> Reading precision-recall curve data
 hapdata
 #>   Hap.py result containing:  summary, extended, pr_curve 
-#>    Loaded from  /Users/bmoore1/Rlibs/happyR/extdata/happy_demo 
+#>    Loaded from:  /Users/bmoore1/Rlibs/happyR/extdata/happy_demo  (hap.py version: v0.3.9)
 #> 
-#> # A tibble: 4 x 16
+#> # A tibble: 4 x 17
 #>    Type Filter TRUTH.TOTAL TRUTH.TP TRUTH.FN QUERY.TOTAL QUERY.FP
 #>   <chr>  <chr>       <int>    <int>    <int>       <int>    <int>
-#> 1 INDEL    ALL        8946     7840     1106       11811      367
-#> 2 INDEL   PASS        8946     7551     1395        9970      301
-#> 3   SNP    ALL       52494    52125      369       90092      548
-#> 4   SNP   PASS       52494    46920     5574       48078      122
-#> # ... with 9 more variables: QUERY.UNK <int>, FP.gt <int>,
+#> 1 INDEL    ALL        8937     7839     1098       11812      343
+#> 2 INDEL   PASS        8937     7550     1387        9971      283
+#> 3   SNP    ALL       52494    52125      369       90092      582
+#> 4   SNP   PASS       52494    46920     5574       48078      143
+#> # ... with 10 more variables: QUERY.UNK <int>, FP.gt <int>,
 #> #   METRIC.Recall <dbl>, METRIC.Precision <dbl>, METRIC.Frac_NA <dbl>,
-#> #   TRUTH.TOTAL.TiTv_ratio <dbl>, QUERY.TOTAL.TiTv_ratio <dbl>,
-#> #   TRUTH.TOTAL.het_hom_ratio <dbl>, QUERY.TOTAL.het_hom_ratio <dbl>
+#> #   METRIC.F1_Score <dbl>, TRUTH.TOTAL.TiTv_ratio <dbl>,
+#> #   QUERY.TOTAL.TiTv_ratio <dbl>, TRUTH.TOTAL.het_hom_ratio <dbl>,
+#> #   QUERY.TOTAL.het_hom_ratio <dbl>
 # Hap.py result containing:  summary, extended, pr_curve 
 # 
 # # happy_summary [4 × 16]
@@ -81,6 +82,8 @@ Example plots
 
 ### Indel subtypes
 
+Here subtypes are categories based on the variant type and length (e.g. `I6_15` are insertions of length 6 bp up to 15 bp). Genomic subsets are `*` for all, `TS_contained` for truth variants fully-contained with confident regions and `TS_boundary` for truth variants near the edge of a confident region block. See [hap.py docs](https://github.com/Illumina/hap.py/blob/master/doc/happy.md) for more info.
+
 ``` r
 library(ggplot2)
 
@@ -90,7 +93,7 @@ indel_extended <- subset(hapdata$extended, Type == "INDEL" &
 
 # Precision-recall by subtype, scaled by number in truthset
 ggplot(indel_extended, aes(x = METRIC.Recall, y = METRIC.Precision, 
-                           col = Subtype, size = TRUTH.TOTAL)) +
+                           col = Subtype, size = TRUTH.TOTAL, shape=Subset)) +
   geom_point() + theme_minimal() + 
   scale_color_brewer(palette = "Set2") +
   scale_size(guide = "none") +
@@ -101,9 +104,13 @@ ggplot(indel_extended, aes(x = METRIC.Recall, y = METRIC.Precision,
 
 ### Precision-recall curves
 
+Precision-Recall (PR) curves show how precision and recall vary with a changing threshold, in this example it's over a range of quality score thresholds: as the threshold increases, the remaining variant set is less comprehensive (lower recall) but typically contains fewer false positives (higher precision).
+
+This gets more complicated when `PASS` records aren't set solely by a single quality score threshold, but by multiple independent filters (e.g. high-depth, genomic context, etc.). These interactions can't be fully captured by drawing a PR curve only on a quality threshold:
+
 ``` r
 # PR curve starting at ALL point
-all_pr <- subset(hapdata$pr_curve$all, Filter == "ALL" & Subtype == "*")
+all_pr <- subset(hapdata$pr_curve$all, Filter == "ALL" & Subtype == "*" & Subset == "*")
 
 ggplot(all_pr, aes(x = METRIC.Recall, y = METRIC.Precision, col = Type)) +
   geom_line() + theme_minimal() +
@@ -115,9 +122,11 @@ ggplot(all_pr, aes(x = METRIC.Recall, y = METRIC.Precision, col = Type)) +
 
 <img src="examples/README-all_pr-1.png" style="display: block; margin: auto;" />
 
+Hap.py accounts for this by generating a selectively-filtered PR curve (`SEL`). First hap.py applies these independent filters to the variant set, then we can draw the remaining PR curve using the quality score threshold.
+
 ``` r
 # selectively filtered PR curve
-pr <- subset(hapdata$pr_curve$all, Filter == "SEL" & Subtype == "*")
+pr <- subset(hapdata$pr_curve$all, Filter == "SEL" & Subtype == "*" & Subset == "*")
 
 # link this to the ALL point
 pr <- dplyr::bind_rows(pr, subset(hapdata$summary, Filter == "ALL"))
