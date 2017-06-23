@@ -65,19 +65,19 @@
       <h1>Precision-recall curves</h1>
                         <h4 class="author">Ben Moore</h4>
             
-            <h4 class="date">2017-06-22</h4>
+            <h4 class="date">2017-06-23</h4>
           </div>
 
     
     
 <div class="contents">
-<p>A powerful aspect of the haplotype comparison tool hap.py is the precision and recall curve data it generates. HappyR contains a few helper functions to load, access and subset this data. Here’s a few quick examples.</p>
+<p>One useful set of outputs of that hap.py generates is precision and recall curve data (for information on how to generate this data, see the <a href="https://github.com/Illumina/hap.py/blob/master/doc/happy.md#roc-curves">hap.py docs</a>). Once you’ve run hap.py, <code>happyR</code> contains a few helper functions to load, access and subset this precision-recall data from raw output files.</p>
+<p>This vignette contains a few quick examples of loading data, extracting relevant subsets and plotting with <code>ggplot2</code>.</p>
 <div id="example-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example-data" class="anchor"></a>Example data</h2>
-<p>First load the example data that comes with the package, and set a few global options for future chunks:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">
-<span class="kw">library</span>(happyR)
+<p>First load the example data that comes with the package, and load packages / set options for future chunks:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(happyR)
 
 happy_input &lt;-<span class="st"> </span><span class="kw">system.file</span>(<span class="st">"extdata"</span>, <span class="st">"happy_demo.summary.csv"</span>, <span class="dt">package =</span> <span class="st">"happyR"</span>)
 happy_prefix &lt;-<span class="st"> </span><span class="kw">sub</span>(<span class="st">".summary.csv"</span>, <span class="st">""</span>, happy_input)
@@ -88,6 +88,14 @@ hapdata &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rea
 <span class="kw">library</span>(ggplot2)
 <span class="kw">library</span>(magrittr)
 <span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/theme_get">theme_set</a></span>(<span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/ggtheme">theme_minimal</a></span>())</code></pre></div>
+<div id="real-data" class="section level3">
+<h3 class="hasAnchor">
+<a href="#real-data" class="anchor"></a>Real data</h3>
+<p>This vignette uses example data, in real applications you’ll want to load your own results. For example if you’d run hap.py with the output prefix <code>"happy_output/na12878"</code>:</p>
+<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">/opt/hap.py</span> -r <span class="ot">$reference</span> -f <span class="ot">$confident_regions</span> -o <span class="st">"happy_output/na12878"</span> <span class="ot">$truth</span> <span class="ot">$query</span></code></pre></div>
+<p>Load this data into R with <code>happyR</code> as follows:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">happy_data &lt;-<span class="st"> </span>happyR::<span class="kw"><a href="../reference/read_happy.html">read_happy</a></span>(<span class="st">"happy_output/na12878"</span>)</code></pre></div>
+</div>
 </div>
 <div id="lazy-loading-large-files" class="section level2">
 <h2 class="hasAnchor">

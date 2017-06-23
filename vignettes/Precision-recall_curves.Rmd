@@ -15,15 +15,17 @@ knitr::opts_chunk$set(
   comment = "#>")
 ```
 
-A powerful aspect of the haplotype comparison tool hap.py is the precision and recall curve data it generates.
-HappyR contains a few helper functions to load, access and subset this data. Here's a few quick examples.
+One useful set of outputs of that hap.py generates is precision and recall curve data (for information on how to 
+generate this data, see the [hap.py docs](https://github.com/Illumina/hap.py/blob/master/doc/happy.md#roc-curves)). Once you've run hap.py, `happyR` contains a few helper functions to load, access and subset this precision-recall data from raw output files. 
+
+This vignette contains a few quick examples of loading data,
+extracting relevant subsets and plotting with `ggplot2`.
 
 ## Example data
 
-First load the example data that comes with the package, and set a few global options for future chunks:
+First load the example data that comes with the package, and load packages / set options for future chunks:
 
 ```{r load_settings, message=FALSE}
-
 library(happyR)
 
 happy_input <- system.file("extdata", "happy_demo.summary.csv", package = "happyR")
@@ -36,6 +38,20 @@ library(ggplot2)
 library(magrittr)
 theme_set(theme_minimal())
 
+```
+
+### Real data
+
+This vignette uses example data, in real applications you'll want to load your own results. For example if you'd run hap.py with the output prefix `"happy_output/na12878"`:
+
+```{bash, eval = FALSE}
+/opt/hap.py -r $reference -f $confident_regions -o "happy_output/na12878" $truth $query
+```
+
+Load this data into R with `happyR` as follows:
+
+```{r eval=FALSE}
+happy_data <- happyR::read_happy("happy_output/na12878")
 ```
 
 ## Lazy-loading large files
