@@ -4,10 +4,10 @@
 \alias{print.happy_result}
 \title{Print a hap.py results object}
 \usage{
-\method{print}{happy_result}(happy_result, ...)
+\method{print}{happy_result}(x, ...)
 }
 \arguments{
-\item{happy_result}{an object of class happy_result}
+\item{x}{an object of class happy_result}
 
 \item{...}{additional args passed to \code{tibble::trunc_mat}}
 }

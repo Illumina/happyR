@@ -5,7 +5,7 @@
 #' Pretty-print the contents of a list-style
 #' object containing hap.py result data
 #'
-#' @param happy_result an object of class happy_result
+#' @param x an object of class happy_result
 #' @param ... additional args passed to \code{tibble::trunc_mat}
 #'
 #' @examples
@@ -27,20 +27,20 @@
 #' @seealso \code{\link[tibble]{trunc_mat}}
 #'
 #' @export
-print.happy_result <- function(happy_result, ...){
+print.happy_result <- function(x, ...){
 
   # show contents of object (i.e. which hap.py files loaded)
-  present <- names(happy_result)[which(!vapply(happy_result, is.null, logical(1)))]
+  present <- names(x)[which(!vapply(x, is.null, logical(1)))]
   cat("  Hap.py result containing: ", paste(present, collapse=", "), "\n",
-      "  Loaded from: ", attr(happy_result, "from"))
-  version <- attr(happy_result, "version")
+      "  Loaded from: ", attr(x, "from"))
+  version <- attr(x, "version")
   if (version != "Unknown") {
     cat("  (hap.py version: ", version, ")", sep = "")
   }
   cat("\n\n")
 
   # simplified results summary (drop some columns)
-  print(tibble::trunc_mat(happy_result$summary, ...))
+  print(tibble::trunc_mat(x$summary, ...))
 
   invisible()
 }

@@ -15,6 +15,7 @@
 #'   e.g. \code{"D6_15"} is deletions of length \eqn{>=5} and \eqn{<=15}
 #' @param subset when run with stratification regions, the subset is
 #'   the region ID. \code{"*"} for genome-wide PR data. See details.
+#' @param quietly suppress info messages
 #'
 #' @details
 #'
