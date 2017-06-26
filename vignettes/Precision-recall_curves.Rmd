@@ -57,7 +57,7 @@ happy_data <- happyR::read_happy("happy_output/na12878")
 ## Lazy-loading large files
 
 PR data associated with this hap.py result is lazy-loaded; that is, the data will only be read into 
-R once it is accessed. This saves time that would be spent reading lots of data that's never used.
+R once it is accessed. This saves time that would otherwise be spent reading lots of data that's never used.
 
 ```{r force_promise, message=FALSE}
 # Large 'ALL' PR data isn't loaded yet and the results object isn't too big
@@ -102,7 +102,7 @@ all.equal(short_ins1, short_ins2)
 
 Insertion subtypes are of the form: `[IDC]length_range` where the first letter indicates
 the variant classification: `I` insertion; `D` deletion; and `C` complex. Hap.py bins
-the lengths of these records into ranges by ALT allele length in basepairs: `1_5`, `6_15` 
+the lengths of these records into ranges by allele length in basepairs: `1_5`, `6_15` 
 and `16_PLUS`.
 
 ```{r del_length, fig.align="center", fig.width=5, fig.height=3, warning=FALSE}

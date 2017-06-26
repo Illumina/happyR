@@ -65,7 +65,7 @@
       <h1>Precision-recall curves</h1>
                         <h4 class="author">Ben Moore</h4>
             
-            <h4 class="date">2017-06-23</h4>
+            <h4 class="date">2017-06-26</h4>
           </div>
 
     
@@ -100,7 +100,7 @@ hapdata &lt;-<span class="st"> </span><span class="kw"><a href="../reference/rea
 <div id="lazy-loading-large-files" class="section level2">
 <h2 class="hasAnchor">
 <a href="#lazy-loading-large-files" class="anchor"></a>Lazy-loading large files</h2>
-<p>PR data associated with this hap.py result is lazy-loaded; that is, the data will only be read into R once it is accessed. This saves time that would be spent reading lots of data that’s never used.</p>
+<p>PR data associated with this hap.py result is lazy-loaded; that is, the data will only be read into R once it is accessed. This saves time that would otherwise be spent reading lots of data that’s never used.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Large 'ALL' PR data isn't loaded yet and the results object isn't too big</span>
 if (<span class="kw">require</span>(pryr))
   pryr::<span class="kw"><a href="http://www.rdocumentation.org/packages/pryr/topics/object_size">object_size</a></span>(hapdata)
@@ -210,7 +210,7 @@ short_ins1 &lt;-<span class="st"> </span><span class="kw">subset</span>(hapdata$
 <div id="deletions-by-length" class="section level3">
 <h3 class="hasAnchor">
 <a href="#deletions-by-length" class="anchor"></a>Deletions by length</h3>
-<p>Insertion subtypes are of the form: <code>[IDC]length_range</code> where the first letter indicates the variant classification: <code>I</code> insertion; <code>D</code> deletion; and <code>C</code> complex. Hap.py bins the lengths of these records into ranges by ALT allele length in basepairs: <code>1_5</code>, <code>6_15</code> and <code>16_PLUS</code>.</p>
+<p>Insertion subtypes are of the form: <code>[IDC]length_range</code> where the first letter indicates the variant classification: <code>I</code> insertion; <code>D</code> deletion; and <code>C</code> complex. Hap.py bins the lengths of these records into ranges by allele length in basepairs: <code>1_5</code>, <code>6_15</code> and <code>16_PLUS</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># get only deletions for all length ranges</span>
 del_pr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/pr_data.html">pr_data</a></span>(hapdata, <span class="dt">var_type =</span> <span class="st">"indel"</span>, 
                   <span class="dt">subtype =</span> <span class="kw">c</span>(<span class="st">"D1_5"</span>, <span class="st">"D6_15"</span>, <span class="st">"D16_PLUS"</span>))
