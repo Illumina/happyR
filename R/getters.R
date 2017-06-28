@@ -152,22 +152,29 @@ extract <- function(happy_result_list,
   if (grepl("^pr\\.", table)) {
 
     if (table == "pr.all") {
-      path <- "pr_curve$ALL"
+      path <- "all"
     } else {
       # reformat + convert to uppercase, e.g.: pr.snp.pass -> "SNP_PASS"
-      path <- sub(".*?\\.([[:alpha:]]*?)\\.([[:alpha:]]*$)", "\\U\\1_\\2\\E", path, perl = TRUE)
+      path <- sub(".*?\\.([[:alpha:]]*?)\\.([[:alpha:]]*$)", "\\U\\1_\\2\\E", table, perl = TRUE)
     }
 
     item_list <- lapply(happy_result_list, function(d) {
 
-      if (!table %in% d$pr_curve) {
-        warning("missing pr data: ", table,
+      if (!exists(path, envir = d$pr_curve, inherits = FALSE)) {
+        message(names(d$pr_curve))
+        warning("missing pr data: ", path,
                 " in R object from: ", attr(d, "from"),
-                " - skipping")
+                " - skipping", call. = FALSE)
         return (NULL)
       }
 
-      table_out <- d$pr_curve[[table]]
+      table_out <- d$pr_curve[[path]]
+      if (is.null(table_out)) {
+        warning("missing pr data: ", path,
+                " in R object from: ", attr(d, "from"),
+                " - skipping", call. = FALSE)
+        return (NULL)
+      }
       table_out$from <- attr(d, "from")
       table_out
     })
@@ -187,6 +194,9 @@ extract <- function(happy_result_list,
   }
 
   df <- dplyr::bind_rows(item_list)
+  if (nrow(df) == 0) {
+    stop("no results found for extraction")
+  }
 
   # set class
   if (table == "summary") {
