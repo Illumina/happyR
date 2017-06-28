@@ -96,7 +96,9 @@ into a single <code>data.frame</code>. Source information from each
 result is added as an additional column (<code>from</code>).</p>
     
 
-    <pre class="usage"><span class='fu'>extract</span>(<span class='no'>happy_result_list</span>, <span class='kw'>table</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"summary"</span>, <span class='st'>"extended"</span>))</pre>
+    <pre class="usage"><span class='fu'>extract</span>(<span class='no'>happy_result_list</span>, <span class='kw'>table</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"summary"</span>, <span class='st'>"extended"</span>, <span class='st'>"pr.all"</span>,
+  <span class='st'>"pr.indel.pass"</span>, <span class='st'>"pr.indel.sel"</span>, <span class='st'>"pr.indel.all"</span>, <span class='st'>"pr.snp.pass"</span>, <span class='st'>"pr.snp.sel"</span>,
+  <span class='st'>"pr.snp.all"</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -108,9 +110,15 @@ by combining <code>happy_result</code>s together with <code>c</code></p></td>
     </tr>
     <tr>
       <th>table</th>
-      <td><p>Table of data to extract from each result</p></td>
+      <td><p>Table of data to extract from each result.
+<code>"summary"</code> or <code>"extended"</code> get top level tables
+while the <code>pr</code> options get Precision-Recall tables.</p></td>
     </tr>
     </table>
+    
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>a <code>data.frame</code> of combined tables from list</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -133,7 +141,9 @@ by combining <code>happy_result</code>s together with <code>c</code></p></td>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#value">Value</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

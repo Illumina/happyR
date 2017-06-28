@@ -29,6 +29,10 @@ the region ID. \code{"*"} for genome-wide PR data. See details.}
 
 \item{quietly}{suppress info messages}
 }
+\value{
+a \code{data.frame} of Precision-Recall metrics for the
+  selected subset
+}
 \description{
 Simpler interface to retrieve a data.frame
 of PR metrics from a happy_result object.

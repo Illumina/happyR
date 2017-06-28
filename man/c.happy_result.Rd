@@ -12,6 +12,9 @@
 \arguments{
 \item{...}{Multiple \code{happy_result} objects}
 }
+\value{
+a list of \code{happy_result} objects
+}
 \description{
 Combine >1 objects of class "happy_result" into
 a list, or extend an existing "happy_result_list".

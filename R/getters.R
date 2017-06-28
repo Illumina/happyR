@@ -31,6 +31,9 @@
 #' \code{D} deletion; and \code{C} complex. Hap.py bins the lengths of these records
 #' into ranges by ALT allele length in basepairs: \code{1_5}, \code{6_15} and \code{16_PLUS}.
 #'
+#' @return a \code{data.frame} of Precision-Recall metrics for the
+#'   selected subset
+#'
 #' @examples
 #' # figure out prefix from pkg install location
 #' happy_input <- system.file("extdata", "happy_demo.summary.csv", package = "happyR")
@@ -118,7 +121,11 @@ pr_data <- function(happy_result,
 #'
 #' @param happy_result_list A \code{happy_result_list} object, created
 #'   by combining \code{happy_result}s together with \code{c}
-#' @param table Table of data to extract from each result
+#' @param table Table of data to extract from each result.
+#'   \code{"summary"} or \code{"extended"} get top level tables
+#'   while the \code{pr} options get Precision-Recall tables.
+#'
+#' @return a \code{data.frame} of combined tables from list
 #'
 #' @examples
 #'
@@ -137,7 +144,11 @@ pr_data <- function(happy_result,
 #' }
 #'
 #' @export
-extract <- function(happy_result_list, table = c("summary", "extended")) {
+extract <- function(happy_result_list,
+                    table = c("summary", "extended",
+                              "pr.all",
+                              "pr.indel.pass", "pr.indel.sel", "pr.indel.all",
+                              "pr.snp.pass", "pr.snp.sel", "pr.snp.all")) {
   # validate input
   if (!"happy_result_list" %in% class(happy_result_list)) {
     stop("Must provide a happy_result_list object.")
@@ -145,16 +156,54 @@ extract <- function(happy_result_list, table = c("summary", "extended")) {
 
   table <- match.arg(table)
 
-  # extract results into a data.frame
-  item_list <- lapply(happy_result_list, function(d) {
-    if (!table %in% names(d)) {
-      stop("Could not find ", table, " in happy_result_list")
+  if (grepl("^pr\\.", table)) {
+
+    if (table == "pr.all") {
+      path <- "all"
+    } else {
+      # reformat + convert to uppercase, e.g.: pr.snp.pass -> "SNP_PASS"
+      path <- sub(".*?\\.([[:alpha:]]*?)\\.([[:alpha:]]*$)", "\\U\\1_\\2\\E", table, perl = TRUE)
     }
-    table_out <- d[[table]]
-    table_out$from <- attr(d, "from")
-    table_out
-  })
+
+    item_list <- lapply(happy_result_list, function(d) {
+
+      if (!exists(path, envir = d$pr_curve, inherits = FALSE)) {
+        message(names(d$pr_curve))
+        warning("missing pr data: ", path,
+                " in R object from: ", attr(d, "from"),
+                " - skipping", call. = FALSE)
+        return (NULL)
+      }
+
+      table_out <- d$pr_curve[[path]]
+      if (is.null(table_out)) {
+        warning("missing pr data: ", path,
+                " in R object from: ", attr(d, "from"),
+                " - skipping", call. = FALSE)
+        return (NULL)
+      }
+      table_out$from <- attr(d, "from")
+      table_out
+    })
+
+  } else {
+    # not PR data, e.g. summary / extended
+
+    item_list <- lapply(happy_result_list, function(d) {
+      if (!table %in% names(d)) {
+        stop("Could not find ", table, " in happy_result_list")
+      }
+      table_out <- d[[table]]
+      table_out$from <- attr(d, "from")
+      table_out
+    })
+
+  }
+
   df <- dplyr::bind_rows(item_list)
+  if (nrow(df) == 0) {
+    stop("no results found for extraction")
+  }
 
   # set class
   if (table == "summary") {

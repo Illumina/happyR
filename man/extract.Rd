@@ -4,13 +4,20 @@
 \alias{extract}
 \title{Extract tables from hap.py result lists}
 \usage{
-extract(happy_result_list, table = c("summary", "extended"))
+extract(happy_result_list, table = c("summary", "extended", "pr.all",
+  "pr.indel.pass", "pr.indel.sel", "pr.indel.all", "pr.snp.pass", "pr.snp.sel",
+  "pr.snp.all"))
 }
 \arguments{
 \item{happy_result_list}{A \code{happy_result_list} object, created
 by combining \code{happy_result}s together with \code{c}}
 
-\item{table}{Table of data to extract from each result}
+\item{table}{Table of data to extract from each result.
+\code{"summary"} or \code{"extended"} get top level tables
+while the \code{pr} options get Precision-Recall tables.}
+}
+\value{
+a \code{data.frame} of combined tables from list
 }
 \description{
 Extract tables from multiple hap.py result objects and combine
