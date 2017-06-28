@@ -63,6 +63,8 @@ print.happy_result <- function(x, ...){
 #' # happy_results_list
 #' }
 #'
+#' @return a list of \code{happy_result} objects
+#'
 #' @export
 c.happy_result <- function(...){
 

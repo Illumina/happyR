@@ -24,10 +24,12 @@ test_that("pr data can be extracted from lists of happy_results", {
   pr_snv_pass <- extract(result_list, "pr.snp.pass")
   expect_equal(unique(pr_snv_pass$Filter), "PASS")
   expect_equal(unique(pr_snv_pass$Type), "SNP")
+  expect_length(unique(pr_snv_pass$from), 2)
 
   pr_indel_sel <- extract(result_list, "pr.indel.sel")
   expect_equal(unique(pr_indel_sel$Filter), "SEL")
   expect_equal(unique(pr_indel_sel$Type), "INDEL")
+  expect_length(unique(pr_indel_sel$from), 2)
 })
 
 test_that("missing pr data gives a warning on extraction", {

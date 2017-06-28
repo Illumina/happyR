@@ -31,6 +31,9 @@
 #' \code{D} deletion; and \code{C} complex. Hap.py bins the lengths of these records
 #' into ranges by ALT allele length in basepairs: \code{1_5}, \code{6_15} and \code{16_PLUS}.
 #'
+#' @return a \code{data.frame} of Precision-Recall metrics for the
+#'   selected subset
+#'
 #' @examples
 #' # figure out prefix from pkg install location
 #' happy_input <- system.file("extdata", "happy_demo.summary.csv", package = "happyR")
@@ -118,7 +121,11 @@ pr_data <- function(happy_result,
 #'
 #' @param happy_result_list A \code{happy_result_list} object, created
 #'   by combining \code{happy_result}s together with \code{c}
-#' @param table Table of data to extract from each result
+#' @param table Table of data to extract from each result.
+#'   \code{"summary"} or \code{"extended"} get top level tables
+#'   while the \code{pr} options get Precision-Recall tables.
+#'
+#' @return a \code{data.frame} of combined tables from list
 #'
 #' @examples
 #'
