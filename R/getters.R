@@ -137,7 +137,11 @@ pr_data <- function(happy_result,
 #' }
 #'
 #' @export
-extract <- function(happy_result_list, table = c("summary", "extended")) {
+extract <- function(happy_result_list,
+                    table = c("summary", "extended",
+                              "pr.all",
+                              "pr.indel.pass", "pr.indel.sel", "pr.indel.all",
+                              "pr.snp.pass", "pr.snp.sel", "pr.snp.all")) {
   # validate input
   if (!"happy_result_list" %in% class(happy_result_list)) {
     stop("Must provide a happy_result_list object.")
@@ -145,15 +149,43 @@ extract <- function(happy_result_list, table = c("summary", "extended")) {
 
   table <- match.arg(table)
 
-  # extract results into a data.frame
-  item_list <- lapply(happy_result_list, function(d) {
-    if (!table %in% names(d)) {
-      stop("Could not find ", table, " in happy_result_list")
+  if (grepl("^pr\\.", table)) {
+
+    if (table == "pr.all") {
+      path <- "pr_curve$ALL"
+    } else {
+      # reformat + convert to uppercase, e.g.: pr.snp.pass -> "SNP_PASS"
+      path <- sub(".*?\\.([[:alpha:]]*?)\\.([[:alpha:]]*$)", "\\U\\1_\\2\\E", path, perl = TRUE)
     }
-    table_out <- d[[table]]
-    table_out$from <- attr(d, "from")
-    table_out
-  })
+
+    item_list <- lapply(happy_result_list, function(d) {
+
+      if (!table %in% d$pr_curve) {
+        warning("missing pr data: ", table,
+                " in R object from: ", attr(d, "from"),
+                " - skipping")
+        return (NULL)
+      }
+
+      table_out <- d$pr_curve[[table]]
+      table_out$from <- attr(d, "from")
+      table_out
+    })
+
+  } else {
+    # not PR data, e.g. summary / extended
+
+    item_list <- lapply(happy_result_list, function(d) {
+      if (!table %in% names(d)) {
+        stop("Could not find ", table, " in happy_result_list")
+      }
+      table_out <- d[[table]]
+      table_out$from <- attr(d, "from")
+      table_out
+    })
+
+  }
+
   df <- dplyr::bind_rows(item_list)
 
   # set class
