@@ -57,7 +57,7 @@ pr_data <- function(happy_result,
 
   if (class(happy_result) != "happy_result") {
     stop("Object must be a happy_result loaded via happyR, ",
-         "not a ", class(happy_result))
+         "not ", class(happy_result))
   }
 
   filter <- match.arg(filter)

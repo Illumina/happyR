@@ -13,14 +13,18 @@ result_list <- c(results, other_results)
 test_that("summary tables can be extracted from list of happy_result", {
   summary_table <- extract_results(result_list, "summary")
   expect_is(summary_table, "data.frame")
+  expect_is(summary_table, "happy_summary")
   expect_equal(nrow(summary_table), 8)
 })
 
-test_that("pr data can be extracted from lists of happy_results", {
-  pr_all <- extract_results(result_list, "pr.all")
-  expect_is(pr_all, "data.frame")
-  expect_gt(nrow(pr_all), 50)
+test_that("extended tables can be extracted from list of happy_result", {
+  extended <- extract_results(result_list, "extended")
+  expect_is(extended, "data.frame")
+  expect_is(extended, "happy_extended")
+  expect_gt(nrow(extended), 8)
+})
 
+test_that("SEL and PASS pr data can be extracted from lists of happy_results", {
   pr_snv_pass <- extract_results(result_list, "pr.snp.pass")
   expect_equal(unique(pr_snv_pass$Filter), "PASS")
   expect_equal(unique(pr_snv_pass$Type), "SNP")
@@ -32,6 +36,12 @@ test_that("pr data can be extracted from lists of happy_results", {
   expect_equal(unique(pr_indel_sel$Type), "INDEL")
   expect_length(unique(pr_indel_sel$from), 2)
   expect_equal(nrow(pr_indel_sel), nrow(results$pr_curve$INDEL_SEL) * 2)
+})
+
+test_that("ALL pr data can be extracted from lists of happy_results", {
+  pr_all <- extract_results(result_list, "pr.all")
+  expect_is(pr_all, "data.frame")
+  expect_gt(nrow(pr_all), 50)
 
   pr_indel_all <- extract_results(result_list, "pr.indel.all")
   expect_equal(unique(pr_indel_all$Filter), "ALL")
@@ -58,10 +68,14 @@ test_that("missing pr data gives a warning on extraction", {
 })
 
 test_that("pr_data gets correct PR subsets", {
-
   # example from vignette
   short_ins1 <- subset(results$pr_curve$all, Filter == "ALL" & Subset == "*" & Subtype == "D1_5")
   short_ins2 <- pr_data(results, var_type = "indel", subtype = "D1_5")
   expect_equal(short_ins1, short_ins2)
 
+  # example from vignette
+  snv_pr <- pr_data(results, var_type = "snv",
+                    subset = c("TS_contained", "TS_boundary"))
+  expect_equal(unique(snv_pr$Subset), c("TS_boundary", "TS_contained"))
+  expect_equal(unique(snv_pr$Type), "SNP")
 })
