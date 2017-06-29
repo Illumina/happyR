@@ -115,7 +115,7 @@ pr_data <- function(happy_result,
 
 #' Extract tables from hap.py result lists
 #'
-#' Extract tables from multiple hap.py result objects and combine
+#' Extract results tables from multiple hap.py result objects and combine
 #' into a single \code{data.frame}. Source information from each
 #' result is added as an additional column (\code{from}).
 #'
@@ -135,16 +135,16 @@ pr_data <- function(happy_result,
 #' results_list <- c(happy1, happy2)
 #'
 #' # get full extended metrics for all results as a data.frame
-#' extended_df <- extract(results_list, table = "extended")
+#' extended_df <- extract_results(results_list, table = "extended")
 #'
 #' # get collapsed summary table of high-level metrics
-#' summary_df <- extract(results_list, table = "summary")
+#' summary_df <- extract_results(results_list, table = "summary")
 #' unique(summary_df$from)
 #' # [1] "/output/path/prefix"  "/different/path/prefix"
 #' }
 #'
 #' @export
-extract <- function(happy_result_list,
+extract_results <- function(happy_result_list,
                     table = c("summary", "extended",
                               "pr.all",
                               "pr.indel.pass", "pr.indel.sel", "pr.indel.all",
