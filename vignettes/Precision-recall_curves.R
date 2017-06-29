@@ -4,7 +4,6 @@ knitr::opts_chunk$set(
   comment = "#>")
 
 ## ----load_settings, message=FALSE----------------------------------------
-
 library(happyR)
 
 happy_input <- system.file("extdata", "happy_demo.summary.csv", package = "happyR")
@@ -17,6 +16,9 @@ library(ggplot2)
 library(magrittr)
 theme_set(theme_minimal())
 
+
+## ----eval=FALSE----------------------------------------------------------
+#  happy_data <- happyR::read_happy("happy_output/na12878")
 
 ## ----force_promise, message=FALSE----------------------------------------
 # Large 'ALL' PR data isn't loaded yet and the results object isn't too big

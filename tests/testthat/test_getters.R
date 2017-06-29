@@ -25,11 +25,25 @@ test_that("pr data can be extracted from lists of happy_results", {
   expect_equal(unique(pr_snv_pass$Filter), "PASS")
   expect_equal(unique(pr_snv_pass$Type), "SNP")
   expect_length(unique(pr_snv_pass$from), 2)
+  expect_equal(nrow(pr_snv_pass), nrow(results$pr_curve$SNP_PASS) * 2)
 
   pr_indel_sel <- extract_results(result_list, "pr.indel.sel")
   expect_equal(unique(pr_indel_sel$Filter), "SEL")
   expect_equal(unique(pr_indel_sel$Type), "INDEL")
   expect_length(unique(pr_indel_sel$from), 2)
+  expect_equal(nrow(pr_indel_sel), nrow(results$pr_curve$INDEL_SEL) * 2)
+
+  pr_indel_all <- extract_results(result_list, "pr.indel.all")
+  expect_equal(unique(pr_indel_all$Filter), "ALL")
+  expect_equal(unique(pr_indel_all$Type), "INDEL")
+  expect_length(unique(pr_indel_all$from), 2)
+  expect_equal(nrow(pr_indel_all), nrow(results$pr_curve$INDEL) * 2)
+
+  pr_snv_all <- extract_results(result_list, "pr.snp.all")
+  expect_equal(unique(pr_snv_all$Filter), "ALL")
+  expect_equal(unique(pr_snv_all$Type), "SNP")
+  expect_length(unique(pr_snv_all$from), 2)
+  expect_equal(nrow(pr_snv_all), nrow(results$pr_curve$SNP) * 2)
 })
 
 test_that("missing pr data gives a warning on extraction", {
