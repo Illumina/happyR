@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract tables from hap.py result lists — extract • happyR</title>
+<title>Extract tables from hap.py result lists — extract_results • happyR</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -91,12 +91,12 @@
     </div>
 
     
-    <p>Extract tables from multiple hap.py result objects and combine
+    <p>Extract results tables from multiple hap.py result objects and combine
 into a single <code>data.frame</code>. Source information from each
 result is added as an additional column (<code>from</code>).</p>
     
 
-    <pre class="usage"><span class='fu'>extract</span>(<span class='no'>happy_result_list</span>, <span class='kw'>table</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"summary"</span>, <span class='st'>"extended"</span>, <span class='st'>"pr.all"</span>,
+    <pre class="usage"><span class='fu'>extract_results</span>(<span class='no'>happy_result_list</span>, <span class='kw'>table</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"summary"</span>, <span class='st'>"extended"</span>, <span class='st'>"pr.all"</span>,
   <span class='st'>"pr.indel.pass"</span>, <span class='st'>"pr.indel.sel"</span>, <span class='st'>"pr.indel.all"</span>, <span class='st'>"pr.snp.pass"</span>, <span class='st'>"pr.snp.sel"</span>,
   <span class='st'>"pr.snp.all"</span>))</pre>
     
@@ -129,10 +129,10 @@ while the <code>pr</code> options get Precision-Recall tables.</p></td>
   <span class='no'>results_list</span> <span class='kw'>&lt;-</span> <span class='fu'>c</span>(<span class='no'>happy1</span>, <span class='no'>happy2</span>)
 
   <span class='co'># get full extended metrics for all results as a data.frame</span>
-  <span class='no'>extended_df</span> <span class='kw'>&lt;-</span> <span class='fu'>extract</span>(<span class='no'>results_list</span>, <span class='kw'>table</span> <span class='kw'>=</span> <span class='st'>"extended"</span>)
+  <span class='no'>extended_df</span> <span class='kw'>&lt;-</span> <span class='fu'>extract_results</span>(<span class='no'>results_list</span>, <span class='kw'>table</span> <span class='kw'>=</span> <span class='st'>"extended"</span>)
 
   <span class='co'># get collapsed summary table of high-level metrics</span>
-  <span class='no'>summary_df</span> <span class='kw'>&lt;-</span> <span class='fu'>extract</span>(<span class='no'>results_list</span>, <span class='kw'>table</span> <span class='kw'>=</span> <span class='st'>"summary"</span>)
+  <span class='no'>summary_df</span> <span class='kw'>&lt;-</span> <span class='fu'>extract_results</span>(<span class='no'>results_list</span>, <span class='kw'>table</span> <span class='kw'>=</span> <span class='st'>"summary"</span>)
   <span class='fu'>unique</span>(<span class='no'>summary_df</span>$<span class='no'>from</span>)
   <span class='co'># [1] "/output/path/prefix"  "/different/path/prefix"</span>
 })</div></pre>
