@@ -158,8 +158,13 @@ extract_results <- function(happy_result_list,
 
   if (grepl("^pr\\.", table)) {
 
-    if (table == "pr.all") {
-      path <- "all"
+    if (grepl("all", table)) {
+      if (table == "pr.all") {
+        path <- "all"
+      } else {
+        # pr.indel.all -> INDEL
+        path <- sub(".*?\\.([[:alpha:]]*?)\\..*$", "\\U\\1\\E", table, perl = TRUE)
+      }
     } else {
       # reformat + convert to uppercase, e.g.: pr.snp.pass -> "SNP_PASS"
       path <- sub(".*?\\.([[:alpha:]]*?)\\.([[:alpha:]]*$)", "\\U\\1_\\2\\E", table, perl = TRUE)
@@ -168,7 +173,6 @@ extract_results <- function(happy_result_list,
     item_list <- lapply(happy_result_list, function(d) {
 
       if (!exists(path, envir = d$pr_curve, inherits = FALSE)) {
-        message(names(d$pr_curve))
         warning("missing pr data: ", path,
                 " in R object from: ", attr(d, "from"),
                 " - skipping", call. = FALSE)
