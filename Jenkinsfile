@@ -20,7 +20,7 @@ node('uk_centos6_cluster') {
     }
 
     stage('Test') {
-        sh "R CMD check --no-examples happyR_*.tar.gz"
+        sh "R CMD check happyR_*.tar.gz"
     }
     
     stage('Test coverage') {
