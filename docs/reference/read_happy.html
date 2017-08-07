@@ -124,14 +124,13 @@ are loaded</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'>not_run</span>({
-  <span class='co'># run hap.py from commandline:</span>
-  <span class='co'>#  hap.py truth.vcf query.vcf -o /output/path/prefix</span>
+</div><span class='co'># NOT RUN {</span>
+<span class='co'># run hap.py from commandline:</span>
+<span class='co'>#  hap.py truth.vcf query.vcf -o /output/path/prefix</span>
 
-  <span class='co'># load result into R</span>
-  <span class='no'>happy</span> <span class='kw'>&lt;-</span> <span class='fu'>read_happy</span>(<span class='st'>'/output/path/prefix'</span>)
-})
-
+<span class='co'># load result into R</span>
+<span class='no'>happy</span> <span class='kw'>&lt;-</span> <span class='fu'>read_happy</span>(<span class='st'>'/output/path/prefix'</span>)
+<span class='co'># }</span><div class='input'>
 <span class='co'># load demo data supplied with package</span>
 <span class='no'>happy_input</span> <span class='kw'>&lt;-</span> <span class='fu'>system.file</span>(<span class='st'>"extdata"</span>, <span class='st'>"happy_demo.summary.csv"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"happyR"</span>)
 <span class='no'>happy_prefix</span> <span class='kw'>&lt;-</span> <span class='fu'>sub</span>(<span class='st'>".summary.csv"</span>, <span class='st'>""</span>, <span class='no'>happy_input</span>)
