@@ -130,3 +130,7 @@ ggplot(pr, aes(x = METRIC.Recall, y = METRIC.Precision, col = Type)) +
 
 ```
 
+## System requirements
+
+Originally developed for R v3.4.0. [Tests](https://travis-ci.org/Illumina/happyR) are run using the most recent available R versions (incl. devel) on Ubuntu (Trusty) and OS X (El Capitan) platforms. HappyR has not been tested on Windows. Dependencies are listed in [DESCRIPTION](DESCRIPTION). 
+
