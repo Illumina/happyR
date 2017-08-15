@@ -4,3 +4,4 @@
 ^docs$
 ^examples$
 ^Jenkinsfile$
+^\.travis\.yml$
