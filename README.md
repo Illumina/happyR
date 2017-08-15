@@ -2,7 +2,7 @@
 happyR
 ======
 
-[build status](#)
+[![Build Status](https://travis-ci.org/Illumina/happyR.svg?branch=master)](https://travis-ci.org/Illumina/happyR)
 
 Load [hap.py](https://github.com/Illumina/hap.py) results into an R data structure to enable plotting, comparisons and aggregation.
 
@@ -12,7 +12,7 @@ Install
 Use devtools:
 
 ``` r
-devtools::install_github("url/for/happyR")
+devtools::install_github("Illumina/happyR")
 ```
 
 Usage
