@@ -2,17 +2,17 @@
 happyR
 ======
 
-[![Build Status](https://ukch-prd-jnks01.illumina.com/buildStatus/icon?job=happyR/master)](https://ukch-prd-jnks01.illumina.com/job/happyR/job/master/)
+[build status](#)
 
 Load [hap.py](https://github.com/Illumina/hap.py) results into an R data structure to enable plotting, comparisons and aggregation.
 
 Install
 -------
 
-Download [zip](https://git.illumina.com/bmoore1/happyR/archive/master.zip), extract and run:
+Use devtools:
 
 ``` r
-devtools::install_local("path/to/happyR-master/")
+devtools::install_github("url/for/happyR")
 ```
 
 Usage
