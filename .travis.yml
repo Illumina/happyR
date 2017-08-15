@@ -9,7 +9,4 @@ r:
 cache: packages
 sudo: false
 
-r_packages:
-  - covr
-
 warnings_are_errors: false
