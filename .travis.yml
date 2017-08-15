@@ -9,6 +9,11 @@ os:
   - linux
   - osx
 
+matrix:
+  exclude:
+  - os: osx
+    r: devel
+
 cache: packages
 sudo: false
 
