@@ -2,7 +2,7 @@
 happyR
 ======
 
-[![Build Status](https://travis-ci.org/Illumina/happyR.svg?branch=master)](https://travis-ci.org/Illumina/happyR)
+[![Build Status](https://travis-ci.org/Illumina/happyR.svg?branch=master)](https://travis-ci.org/Illumina/happyR) [![codecov](https://codecov.io/gh/Illumina/happyR/branch/master/graph/badge.svg)](https://codecov.io/gh/Illumina/happyR)
 
 Load [hap.py](https://github.com/Illumina/hap.py) results into an R data structure to enable simple plotting, comparisons and aggregation. The related package [happyCompare](https://github.com/Illumina/happyCompare) builds on happyR with statistical analysis of groups and replicates, as well as providing some more sophisticated plotting and reporting functionality.
 
