@@ -15,77 +15,10 @@ load_happy_csv <- function(path, class = NULL) {
   # extended needs fully-specified cols as some could be
   # NAs for the first 10 - 100,000 or so
   if (class == "happy_extended") {
-    colspec <- cols(
-      Type = col_character(),
-      Subtype = col_character(),
-      Subset = col_character(),
-      Filter = col_character(),
-      Genotype = col_character(),
-      QQ.Field = col_character(),
-      QQ = col_character(),
-      METRIC.Recall = col_double(),
-      METRIC.Precision = col_double(),
-      METRIC.Frac_NA = col_double(),
-      METRIC.F1_Score = col_double(),
-      FP.gt = col_integer(),
-      FP.al = col_integer(),
-      Subset.Size = col_double(),
-      Subset.IS_CONF.Size = col_double(),
-      Subset.Level = col_double(),
-      TRUTH.TOTAL = col_integer(),
-      TRUTH.TOTAL.ti = col_double(),
-      TRUTH.TOTAL.tv = col_double(),
-      TRUTH.TOTAL.het = col_double(),
-      TRUTH.TOTAL.homalt = col_double(),
-      TRUTH.TOTAL.TiTv_ratio = col_double(),
-      TRUTH.TOTAL.het_hom_ratio = col_double(),
-      TRUTH.TP = col_integer(),
-      TRUTH.TP.ti = col_double(),
-      TRUTH.TP.tv = col_double(),
-      TRUTH.TP.het = col_double(),
-      TRUTH.TP.homalt = col_double(),
-      TRUTH.TP.TiTv_ratio = col_double(),
-      TRUTH.TP.het_hom_ratio = col_double(),
-      TRUTH.FN = col_integer(),
-      TRUTH.FN.ti = col_double(),
-      TRUTH.FN.tv = col_double(),
-      TRUTH.FN.het = col_double(),
-      TRUTH.FN.homalt = col_double(),
-      TRUTH.FN.TiTv_ratio = col_double(),
-      TRUTH.FN.het_hom_ratio = col_double(),
-      QUERY.TOTAL = col_integer(),
-      QUERY.TOTAL.ti = col_double(),
-      QUERY.TOTAL.tv = col_double(),
-      QUERY.TOTAL.het = col_double(),
-      QUERY.TOTAL.homalt = col_double(),
-      QUERY.TOTAL.TiTv_ratio = col_double(),
-      QUERY.TOTAL.het_hom_ratio = col_double(),
-      QUERY.TP = col_integer(),
-      QUERY.TP.ti = col_double(),
-      QUERY.TP.tv = col_double(),
-      QUERY.TP.het = col_double(),
-      QUERY.TP.homalt = col_double(),
-      QUERY.TP.TiTv_ratio = col_double(),
-      QUERY.TP.het_hom_ratio = col_double(),
-      QUERY.FP = col_integer(),
-      QUERY.FP.ti = col_double(),
-      QUERY.FP.tv = col_double(),
-      QUERY.FP.het = col_double(),
-      QUERY.FP.homalt = col_double(),
-      QUERY.FP.TiTv_ratio = col_double(),
-      QUERY.FP.het_hom_ratio = col_double(),
-      QUERY.UNK = col_integer(),
-      QUERY.UNK.ti = col_double(),
-      QUERY.UNK.tv = col_double(),
-      QUERY.UNK.het = col_double(),
-      QUERY.UNK.homalt = col_double(),
-      QUERY.UNK.TiTv_ratio = col_double(),
-      QUERY.UNK.het_hom_ratio = col_double()
-    )
     dt <- quiet(readr::read_csv(path, progress = FALSE,
                                 na = c("", "NA", "."),
                                 guess_max = 1e5,
-                                col_types = colspec))
+                                col_types = colspec("extended")))
 
   } else {
     # use readr for speedup, not using fread as we need gzip support
@@ -104,6 +37,7 @@ load_happy_csv <- function(path, class = NULL) {
 lazy_pr <- function(prefix){
   df <- quiet(readr::read_csv(prefix, progress = FALSE,
                               na = c("", "NA", "."),
+                              col_types = colspec("pr"),
                               guess_max = 1e5))
   df$file_source <- prefix
   class(df) <- c("happy_roc", class(df))
