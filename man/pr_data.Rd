@@ -5,9 +5,9 @@
 \title{Extract hap.py Precision-Recall data}
 \usage{
 pr_data(happy_result, var_type = c("both", "snv", "indel"),
-  filter = c("ALL", "PASS", "SEL"), subtype = c("*", "C16_PLUS", "C1_5",
-  "C6_15", "D16_PLUS", "D1_5", "D6_15", "I16_PLUS", "I1_5", "I6_15"),
-  subset = "*", quietly = TRUE)
+  filter = c("ALL", "PASS", "SEL"), subtype = c("*", "C16_PLUS",
+  "C1_5", "C6_15", "D16_PLUS", "D1_5", "D6_15", "I16_PLUS", "I1_5",
+  "I6_15"), subset = "*", quietly = TRUE)
 }
 \arguments{
 \item{happy_result}{a happy result loaded

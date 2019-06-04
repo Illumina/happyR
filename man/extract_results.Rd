@@ -4,9 +4,9 @@
 \alias{extract_results}
 \title{Extract tables from hap.py result lists}
 \usage{
-extract_results(happy_result_list, table = c("summary", "extended", "pr.all",
-  "pr.indel.pass", "pr.indel.sel", "pr.indel.all", "pr.snp.pass", "pr.snp.sel",
-  "pr.snp.all"))
+extract_results(happy_result_list, table = c("summary", "extended",
+  "pr.all", "pr.indel.pass", "pr.indel.sel", "pr.indel.all", "pr.snp.pass",
+  "pr.snp.sel", "pr.snp.all"))
 }
 \arguments{
 \item{happy_result_list}{A \code{happy_result_list} object, created
