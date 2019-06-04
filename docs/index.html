@@ -70,12 +70,12 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#happyr" class="anchor"></a>happyR</h1></div>
 
-<p>Load <a href="https://github.com/Illumina/hap.py">hap.py</a> results into an R data structure to enable plotting, comparisons and aggregation.</p>
+<p>Load <a href="https://github.com/Illumina/hap.py">hap.py</a> results into an R data structure to enable simple plotting, comparisons and aggregation. The related package <a href="https://github.com/Illumina/happyCompare">happyCompare</a> builds on happyR with statistical analysis of groups and replicates, as well as providing some more sophisticated plotting and reporting functionality.</p>
 <div id="install" class="section level2">
 <h2 class="hasAnchor">
 <a href="#install" class="anchor"></a>Install</h2>
-<p>Download <a href="https://git.illumina.com/bmoore1/happyR/archive/master.zip">zip</a>, extract and run:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_local</span>(<span class="st">"path/to/happyR-master/"</span>)</code></pre></div>
+<p>Use devtools:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">"Illumina/happyR"</span>)</code></pre></div>
 </div>
 <div id="usage" class="section level2">
 <h2 class="hasAnchor">
@@ -180,6 +180,11 @@ pr &lt;-<span class="st"> </span>dplyr::<span class="kw">bind_rows</span>(pr, <s
 <p><img src="examples/README-sel_pr-1.png" width="480" style="display: block; margin: auto;"></p>
 </div>
 </div>
+<div id="system-requirements" class="section level2">
+<h2 class="hasAnchor">
+<a href="#system-requirements" class="anchor"></a>System requirements</h2>
+<p>Originally developed for R v3.4.0. <a href="https://travis-ci.org/Illumina/happyR">Tests</a> are run using the most recent available R versions (incl. devel) on Ubuntu (Trusty) and OS X (El Capitan) platforms. HappyR has not been tested on Windows. Dependencies are listed in <a href="DESCRIPTION" class="uri">DESCRIPTION</a>.</p>
+</div>
 </div>
 </div>
   </div>
@@ -187,7 +192,7 @@ pr &lt;-<span class="st"> </span>dplyr::<span class="kw">bind_rows</span>(pr, <s
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2 class="hasAnchor">
 <a href="#sidebar" class="anchor"></a>License</h2>
-<p><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE.html">LICENSE</a></p>
+<p>file <a href="LICENSE.html">LICENSE</a></p>
 <h2>Developers</h2>
 <ul class="list-unstyled">
 <li>Ben Moore <br><small class="roles"> Author, maintainer </small> </li>
@@ -195,7 +200,8 @@ pr &lt;-<span class="st"> </span>dplyr::<span class="kw">bind_rows</span>(pr, <s
 </ul>
 <h2>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://ukch-prd-jnks01.illumina.com/job/happyR/job/master/"><img src="https://ukch-prd-jnks01.illumina.com/buildStatus/icon?job=happyR/master" alt="Build Status"></a></li>
+<li><a href="https://travis-ci.org/Illumina/happyR"><img src="https://travis-ci.org/Illumina/happyR.svg?branch=master" alt="Build Status"></a></li>
+<li><a href="https://codecov.io/gh/Illumina/happyR"><img src="https://codecov.io/gh/Illumina/happyR/branch/master/graph/badge.svg" alt="codecov"></a></li>
 </ul>
 </div>
 

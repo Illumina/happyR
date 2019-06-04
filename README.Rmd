@@ -15,17 +15,19 @@ knitr::opts_chunk$set(
 ```
 
 # happyR
-[![Build Status](https://ukch-prd-jnks01.illumina.com/buildStatus/icon?job=happyR/master)](https://ukch-prd-jnks01.illumina.com/job/happyR/job/master/)
+[![Build Status](https://travis-ci.org/Illumina/happyR.svg?branch=master)](https://travis-ci.org/Illumina/happyR)
+[![codecov](https://codecov.io/gh/Illumina/happyR/branch/master/graph/badge.svg)](https://codecov.io/gh/Illumina/happyR)
 
-Load [hap.py](https://github.com/Illumina/hap.py) results into an R data structure to enable
-plotting, comparisons and aggregation.
+Load [hap.py](https://github.com/Illumina/hap.py) results into an R data structure to enable simple 
+plotting, comparisons and aggregation. The related package [happyCompare](https://github.com/Illumina/happyCompare) builds on happyR with statistical 
+analysis of groups and replicates, as well as providing some more sophisticated plotting and reporting functionality.
 
 ## Install
 
-Download [zip](https://git.illumina.com/bmoore1/happyR/archive/master.zip), extract and run:
+Use devtools:
 
 ```{r install, eval = FALSE}
-devtools::install_local("path/to/happyR-master/")
+devtools::install_github("Illumina/happyR")
 ```
 
 ## Usage
@@ -128,4 +130,8 @@ ggplot(pr, aes(x = METRIC.Recall, y = METRIC.Precision, col = Type)) +
   ggtitle("Selectively-filtered PR curve reliably hits PASS")
 
 ```
+
+## System requirements
+
+Originally developed for R v3.4.0. [Tests](https://travis-ci.org/Illumina/happyR) are run using the most recent available R versions (incl. devel) on Ubuntu (Trusty) and OS X (El Capitan) platforms. HappyR has not been tested on Windows. Dependencies are listed in [DESCRIPTION](DESCRIPTION). 
 

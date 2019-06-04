@@ -5,17 +5,27 @@ quiet <- function(...) {
 }
 
 # Generic loader for CSVs written by hap.py
+#' @import readr
 load_happy_csv <- function(path, class = NULL) {
 
   if (!file.exists(path)) {
     stop("Missing expected hap.py output file: ", path)
   }
 
-  # use readr for speedup, not using fread as we need gzip support
-  # big guess_max for mostly NA columns
-  dt <- quiet(readr::read_csv(path, progress = FALSE,
-                              na = c("", "NA", "."),
-                              guess_max = 1e5))
+  # extended needs fully-specified cols as some could be
+  # NAs for the first 10 - 100,000 or so
+  if (class == "happy_extended") {
+    dt <- quiet(readr::read_csv(path, progress = FALSE,
+                                na = c("", "NA", "."),
+                                guess_max = 1e5,
+                                col_types = colspec("extended")))
+
+  } else {
+    # use readr for speedup, not using fread as we need gzip support
+    dt <- quiet(readr::read_csv(path, progress = FALSE,
+                                na = c("", "NA", "."),
+                                guess_max = 1e4))
+  }
 
   if (!is.null(class)) {
     class(dt) <- c(class, class(dt))
@@ -27,6 +37,7 @@ load_happy_csv <- function(path, class = NULL) {
 lazy_pr <- function(prefix){
   df <- quiet(readr::read_csv(prefix, progress = FALSE,
                               na = c("", "NA", "."),
+                              col_types = colspec("pr"),
                               guess_max = 1e5))
   df$file_source <- prefix
   class(df) <- c("happy_roc", class(df))
