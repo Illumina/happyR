@@ -31,7 +31,7 @@ test_that("combining happy_results warns of redundancy", {
   expect_warning(results_list <- c(results, results2))
 
   results3 <- results
-  attr(results3, "from") <- "dummy/path/to/happy"
+  attr(results3, "happy_prefix") <- "dummy/path/to/happy"
   expect_silent(rl <- c(results2, results3))
 })
 

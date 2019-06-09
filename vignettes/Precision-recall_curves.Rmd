@@ -37,7 +37,6 @@ hapdata <- read_happy(happy_prefix, quietly = TRUE)
 library(ggplot2)
 library(magrittr)
 theme_set(theme_minimal())
-
 ```
 
 ### Real data
@@ -79,6 +78,52 @@ if (require(pryr))
 ```
 
 If you don't find this useful, turn it off by passing `lazy = FALSE` to `read_happy`.
+
+## High-level PR curves
+
+PR curves show how precision and recall vary with a changing threshold, in this
+example it's over a range of quality score thresholds applied to a set of variants: as 
+the threshold increases, the remaining variant set is less comprehensive (lower recall) 
+but typically contains fewer false positives (higher precision).
+
+This gets more complicated when `PASS` records aren't set solely by a single quality score threshold, 
+but by multiple independent filters (e.g. high-depth, genomic context, etc.). These interactions can't be 
+fully captured by drawing a PR curve only on a quality threshold:
+
+```{r all_pr, warning=FALSE}
+# using happyR::pr_data to simplify subsetting:
+all_pr <- pr_data(hapdata)
+
+# this gets PR curve starting at ALL point, equivalent to base:
+# all_pr <- subset(hap_result$pr_curve$all, Filter == "ALL" & Subtype == "*" & Subset == "*")
+
+ggplot(all_pr, aes(x = METRIC.Recall, y = METRIC.Precision, col = Type)) +
+  geom_line() + theme_minimal() +
+  geom_point(data = hapdata$summary) +
+  scale_x_continuous(limits = c(.6, 1)) +
+  scale_y_continuous(limits = c(.95, 1)) +
+  ggtitle("ALL PR curve might not hit the PASS point")
+```
+
+Hap.py accounts for this by generating a selectively-filtered PR curve (`SEL`). First 
+these independent filters are applied to the variant set, then we can draw the 
+remaining PR curve using the quality score threshold. This gives a more accurate view
+of how changing the quality score threshold can impact precision and recall.
+
+```{r sel_pr, warning=FALSE}
+# selectively filtered PR curve
+pr <- pr_data(hapdata, filter = "SEL")
+
+# link this to the ALL point
+pr <- dplyr::bind_rows(pr, subset(hapdata$summary, Filter == "ALL"))
+
+ggplot(pr, aes(x = METRIC.Recall, y = METRIC.Precision, col = Type)) +
+  geom_line() + theme_minimal() +
+  geom_point(data = hapdata$summary) +
+  scale_x_continuous(limits = c(.6, 1)) +
+  scale_y_continuous(limits = c(.95, 1)) +
+  ggtitle("Selectively-filtered PR curve reliably hits PASS")
+```
 
 ## Subset PR curves
 

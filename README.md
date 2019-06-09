@@ -1,137 +1,105 @@
 
-happyR
-======
+# happyR
 
-[![Build Status](https://travis-ci.org/Illumina/happyR.svg?branch=master)](https://travis-ci.org/Illumina/happyR) [![codecov](https://codecov.io/gh/Illumina/happyR/branch/master/graph/badge.svg)](https://codecov.io/gh/Illumina/happyR)
+[![Build
+Status](https://travis-ci.org/Illumina/happyR.svg?branch=master)](https://travis-ci.org/Illumina/happyR)
+[![codecov](https://codecov.io/gh/Illumina/happyR/branch/master/graph/badge.svg)](https://codecov.io/gh/Illumina/happyR)
 
-Load [hap.py](https://github.com/Illumina/hap.py) results into an R data structure to enable simple plotting, comparisons and aggregation. The related package [happyCompare](https://github.com/Illumina/happyCompare) builds on happyR with statistical analysis of groups and replicates, as well as providing some more sophisticated plotting and reporting functionality.
+Load [hap.py](https://github.com/Illumina/hap.py) results into an R data
+structure to enable simple plotting, comparisons and aggregation.
 
-Install
--------
-
-Use devtools:
+## Install
 
 ``` r
 devtools::install_github("Illumina/happyR")
 ```
 
-Usage
------
+## Usage
 
 ``` r
+# set up
 library(happyR)
+library(tidyverse, quietly = TRUE)
+#> ── Attaching packages ─────────────────────────────────────────────────────────────────────── tidyverse 1.2.1.9000 ──
+#> ✔ ggplot2 3.2.0.9000     ✔ purrr   0.3.2     
+#> ✔ tibble  2.1.1          ✔ dplyr   0.8.1.9000
+#> ✔ tidyr   0.8.3          ✔ stringr 1.4.0     
+#> ✔ readr   1.3.1          ✔ forcats 0.4.0
+#> Warning: package 'tibble' was built under R version 3.4.4
+#> Warning: package 'tidyr' was built under R version 3.4.4
+#> Warning: package 'readr' was built under R version 3.4.4
+#> Warning: package 'purrr' was built under R version 3.4.4
+#> Warning: package 'stringr' was built under R version 3.4.4
+#> Warning: package 'forcats' was built under R version 3.4.4
+#> ── Conflicts ─────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+#> ✖ dplyr::filter() masks stats::filter()
+#> ✖ dplyr::lag()    masks stats::lag()
 
-# demo data that comes with the package
-happy_input <- system.file("extdata", "happy_demo.summary.csv", package = "happyR")
-happy_prefix <- sub(".summary.csv", "", happy_input)
 
-# happy_prefix is the -o argument to hap.py, here: path/to/files/happy_demo
-hapdata <- read_happy(happy_prefix)
+# define happyr samplesheet
+extdata_dir <- system.file("extdata", package = "happyR")
+samplesheet <- readr::read_csv("group_id,replicate_id,happy_prefix
+PCR-Free,NA12878-I30,NA12878-I30_S1
+PCR-Free,NA12878-I33,NA12878-I33_S1
+Nano,NA12878-R1,NA12878-R1_S1
+Nano,NA12878-R2,NA12878-R2_S1
+") %>% 
+mutate(happy_prefix = sprintf("%s/%s", extdata_dir, happy_prefix))
+
+
+# load hap.py results
+hap_samplesheet <- read_samplesheet_(samplesheet)
+#> Processing /Library/Frameworks/R.framework/Versions/3.4/Resources/library/happyR/extdata/NA12878-I30_S1
 #> Reading summary table
 #> Reading extended table
 #> Reading precision-recall curve data
-hapdata
-#>   Hap.py result containing:  summary, extended, pr_curve 
-#>    Loaded from:  /Users/bmoore1/Rlibs/happyR/extdata/happy_demo  (hap.py version: v0.3.9)
-#> 
-#> # A tibble: 4 x 17
-#>    Type Filter TRUTH.TOTAL TRUTH.TP TRUTH.FN QUERY.TOTAL QUERY.FP
-#>   <chr>  <chr>       <int>    <int>    <int>       <int>    <int>
-#> 1 INDEL    ALL        8937     7839     1098       11812      343
-#> 2 INDEL   PASS        8937     7550     1387        9971      283
-#> 3   SNP    ALL       52494    52125      369       90092      582
-#> 4   SNP   PASS       52494    46920     5574       48078      143
-#> # ... with 10 more variables: QUERY.UNK <int>, FP.gt <int>,
-#> #   METRIC.Recall <dbl>, METRIC.Precision <dbl>, METRIC.Frac_NA <dbl>,
-#> #   METRIC.F1_Score <dbl>, TRUTH.TOTAL.TiTv_ratio <dbl>,
-#> #   QUERY.TOTAL.TiTv_ratio <dbl>, TRUTH.TOTAL.het_hom_ratio <dbl>,
-#> #   QUERY.TOTAL.het_hom_ratio <dbl>
-```
+#> Missing file: /Library/Frameworks/R.framework/Versions/3.4/Resources/library/happyR/extdata/NA12878-I30_S1.roc.Locations.SNP.csv.gz
+#> Missing file: /Library/Frameworks/R.framework/Versions/3.4/Resources/library/happyR/extdata/NA12878-I30_S1.roc.Locations.SNP.PASS.csv.gz
+#> Missing file: /Library/Frameworks/R.framework/Versions/3.4/Resources/library/happyR/extdata/NA12878-I30_S1.roc.Locations.SNP.SEL.csv.gz
+#> Processing /Library/Frameworks/R.framework/Versions/3.4/Resources/library/happyR/extdata/NA12878-I33_S1
+#> Reading summary table
+#> Reading extended table
+#> Reading precision-recall curve data
+#> Missing file: /Library/Frameworks/R.framework/Versions/3.4/Resources/library/happyR/extdata/NA12878-I33_S1.roc.Locations.SNP.csv.gz
+#> Missing file: /Library/Frameworks/R.framework/Versions/3.4/Resources/library/happyR/extdata/NA12878-I33_S1.roc.Locations.SNP.PASS.csv.gz
+#> Missing file: /Library/Frameworks/R.framework/Versions/3.4/Resources/library/happyR/extdata/NA12878-I33_S1.roc.Locations.SNP.SEL.csv.gz
+#> Processing /Library/Frameworks/R.framework/Versions/3.4/Resources/library/happyR/extdata/NA12878-R1_S1
+#> Reading summary table
+#> Reading extended table
+#> Reading precision-recall curve data
+#> Missing file: /Library/Frameworks/R.framework/Versions/3.4/Resources/library/happyR/extdata/NA12878-R1_S1.roc.Locations.SNP.csv.gz
+#> Missing file: /Library/Frameworks/R.framework/Versions/3.4/Resources/library/happyR/extdata/NA12878-R1_S1.roc.Locations.SNP.PASS.csv.gz
+#> Missing file: /Library/Frameworks/R.framework/Versions/3.4/Resources/library/happyR/extdata/NA12878-R1_S1.roc.Locations.SNP.SEL.csv.gz
+#> Processing /Library/Frameworks/R.framework/Versions/3.4/Resources/library/happyR/extdata/NA12878-R2_S1
+#> Reading summary table
+#> Reading extended table
+#> Reading precision-recall curve data
+#> Missing file: /Library/Frameworks/R.framework/Versions/3.4/Resources/library/happyR/extdata/NA12878-R2_S1.roc.Locations.SNP.csv.gz
+#> Missing file: /Library/Frameworks/R.framework/Versions/3.4/Resources/library/happyR/extdata/NA12878-R2_S1.roc.Locations.SNP.PASS.csv.gz
+#> Missing file: /Library/Frameworks/R.framework/Versions/3.4/Resources/library/happyR/extdata/NA12878-R2_S1.roc.Locations.SNP.SEL.csv.gz
 
-`hapdata` is now a single hap.py data object containing:
 
--   `summary` (from summary.csv) - high-level ALL / PASS numbers
--   `extended` (from extended.csv) - region / subtype stratified metrics
--   `pr_curve` (from roc.\*.csv.gz) - precision-recall over quality score
-
-``` r
-names(hapdata)
-#> [1] "summary"  "extended" "pr_curve"
-
-# e.g. here pr_curve$INDEL_PASS maps to happy_demo.roc.Locations.INDEL.PASS.csv.gz
-names(hapdata$pr_curve)
-#> [1] "INDEL_SEL"  "INDEL_PASS" "SNP"        "all"        "INDEL"     
-#> [6] "SNP_PASS"   "SNP_SEL"
-```
-
-Example plots
--------------
-
-### Indel subtypes
-
-Here subtypes are categories based on the variant type and length (e.g. `I6_15` are insertions of length 6 bp up to 15 bp). Genomic subsets are `*` for all, `TS_contained` for truth variants fully-contained with confident regions and `TS_boundary` for truth variants near the edge of a confident region block. See [hap.py docs](https://github.com/Illumina/hap.py/blob/master/doc/happy.md) for more info.
-
-``` r
-library(ggplot2)
-
-# get indel subtypes from 'extended', skipping complex alleles and combined
-indel_extended <- subset(hapdata$extended, Type == "INDEL" & 
-                         Filter == "ALL" & grepl("^[DI]", Subtype))
-
-# Precision-recall by subtype, scaled by number in truthset
-ggplot(indel_extended, aes(x = METRIC.Recall, y = METRIC.Precision, 
-                           col = Subtype, size = TRUTH.TOTAL, shape=Subset)) +
-  geom_point() + theme_minimal() + 
+# query and visualise performance metrics
+summary <- extract_results(hap_samplesheet$results, table = "summary") %>% 
+  inner_join(samplesheet, by = "happy_prefix")
+summary %>% 
+  filter(Filter == "PASS") %>% 
+  ggplot(aes(x = METRIC.Recall, y = METRIC.Precision, color = group_id, shape = Type)) +
+  geom_point() +
+  xlim(NA, 1) +
+  ylim(NA, 1) +
+  theme_minimal() + 
   scale_color_brewer(palette = "Set2") +
   scale_size(guide = "none") +
-  ggtitle("Indel subtype precision and recall")
+  ggtitle("Precision-Recall scatterplot")  
 ```
 
-<img src="examples/README-indel_subtypes-1.png" style="display: block; margin: auto;" />
+<img src="examples/README-usage-1.png" style="display: block; margin: auto;" />
 
-### Precision-recall curves
+## System requirements
 
-PR curves show how precision and recall vary with a changing threshold, in this example it's over a range of quality score thresholds applied to a set of variants: as the threshold increases, the remaining variant set is less comprehensive (lower recall) but typically contains fewer false positives (higher precision).
-
-This gets more complicated when `PASS` records aren't set solely by a single quality score threshold, but by multiple independent filters (e.g. high-depth, genomic context, etc.). These interactions can't be fully captured by drawing a PR curve only on a quality threshold:
-
-``` r
-# using happyR::pr_data to simplify subsetting:
-all_pr <- pr_data(hapdata)
-
-# this gets PR curve starting at ALL point, equivalent to base:
-# all_pr <- subset(hapdata$pr_curve$all, Filter == "ALL" & Subtype == "*" & Subset == "*")
-
-ggplot(all_pr, aes(x = METRIC.Recall, y = METRIC.Precision, col = Type)) +
-  geom_line() + theme_minimal() +
-  geom_point(data = hapdata$summary) +
-  scale_x_continuous(limits = c(.6, 1)) +
-  scale_y_continuous(limits = c(.95, 1)) +
-  ggtitle("ALL PR curve might not hit the PASS point")
-```
-
-<img src="examples/README-all_pr-1.png" style="display: block; margin: auto;" />
-
-Hap.py accounts for this by generating a selectively-filtered PR curve (`SEL`). First these independent filters are applied to the variant set, then we can draw the remaining PR curve using the quality score threshold. This gives a more accurate view of how changing the quality score threshold can impact precision and recall.
-
-``` r
-# selectively filtered PR curve
-pr <- pr_data(hapdata, filter = "SEL")
-
-# link this to the ALL point
-pr <- dplyr::bind_rows(pr, subset(hapdata$summary, Filter == "ALL"))
-
-ggplot(pr, aes(x = METRIC.Recall, y = METRIC.Precision, col = Type)) +
-  geom_line() + theme_minimal() +
-  geom_point(data = hapdata$summary) +
-  scale_x_continuous(limits = c(.6, 1)) +
-  scale_y_continuous(limits = c(.95, 1)) +
-  ggtitle("Selectively-filtered PR curve reliably hits PASS")
-```
-
-<img src="examples/README-sel_pr-1.png" style="display: block; margin: auto;" />
-
-System requirements
--------------------
-
-Originally developed for R v3.4.0. [Tests](https://travis-ci.org/Illumina/happyR) are run using the most recent available R versions (incl. devel) on Ubuntu (Trusty) and OS X (El Capitan) platforms. HappyR has not been tested on Windows. Dependencies are listed in [DESCRIPTION](DESCRIPTION).
+Originally developed for R v3.4.0.
+[Tests](https://travis-ci.org/Illumina/happyR) are run using the most
+recent available R versions (incl. devel) on Ubuntu (Trusty) and OS X
+(El Capitan) platforms. happyR has not been tested on Windows.
+Dependencies are listed in [DESCRIPTION](DESCRIPTION).

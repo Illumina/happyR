@@ -9,8 +9,7 @@ extract_results(happy_result_list, table = c("summary", "extended",
   "pr.snp.sel", "pr.snp.all"))
 }
 \arguments{
-\item{happy_result_list}{A \code{happy_result_list} object, created
-by combining \code{happy_result}s together with \code{c}}
+\item{happy_result_list}{A \code{happy_result_list} object.}
 
 \item{table}{Table of data to extract from each result.
 \code{"summary"} or \code{"extended"} get top level tables
@@ -22,21 +21,22 @@ a \code{data.frame} of combined tables from list
 \description{
 Extract results tables from multiple hap.py result objects and combine
 into a single \code{data.frame}. Source information from each
-result is added as an additional column (\code{from}).
+result is added as an additional column (\code{happy_prefix}).
 }
 \examples{
 
 \dontrun{
-happy1 <- read_happy('/output/path/prefix')
-happy2 <- read_happy('/different/path/prefix')
-results_list <- c(happy1, happy2)
-
-# get full extended metrics for all results as a data.frame
-extended_df <- extract_results(results_list, table = "extended")
+samplesheet <- readr::read_csv("group_id,replicate_id,happy_prefix
+PCR-Free,NA12878-I30,NA12878-I30_S1
+PCR-Free,NA12878-I33,NA12878-I33_S1
+Nano,NA12878-R1,NA12878-R1_S1
+Nano,NA12878-R2,NA12878-R2_S1
+")
+hap_samplesheet <- read_samplesheet_(samplesheet = samplesheet_df)
 
 # get collapsed summary table of high-level metrics
-summary_df <- extract_results(results_list, table = "summary")
-unique(summary_df$from)
+summary_df <- extract_results(hap_samplesheet$results, table = "summary")
+unique(summary_df$happy_prefix)
 # [1] "/output/path/prefix"  "/different/path/prefix"
 }
 

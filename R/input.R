@@ -187,9 +187,97 @@ read_happy <- function(happy_prefix, lazy = TRUE, quietly = FALSE){
       pr_curve = pr_data
     ),
     class = "happy_result",
-    from = happy_prefix,
+    happy_prefix = happy_prefix,
     version = happy_version)
 
   happy_result
 }
 
+#' Load hap.py results in bulk from a samplesheet.csv
+#'
+#' Load multiple hap.py results into a `happy_samplesheet` object starting from a samplesheet.csv.
+#'
+#' @param samplesheet_path Path to samplesheet.csv. Required fields: `replicate_id`, `happy_prefix`.
+#' @param lazy Do not load larger hap.py results until needed. Default: `TRUE`.
+#'
+#' @return A `happy_samplesheet` object, with the following fields:
+#' \itemize{
+#'   \item{`samplesheet`: the original samplesheet, stored as a `data.frame`}.
+#'   \item{`results`: a `happy_result_list` that contains individual `happy_result` objects}.
+#' }
+#'
+#' @examples
+#'
+#' \dontrun{
+#' hap_samplesheet <- read_samplesheet(samplesheet_path = 'happyr_samplesheet.csv')
+#' }
+#'
+#' @export
+read_samplesheet <- function(samplesheet_path, lazy = TRUE) {
+
+  message("Reading happyR samplesheet")
+  if (!file.exists(samplesheet_path)) {
+    stop(sprintf("Cannot find samplesheet: %s", samplesheet_path))
+  }
+
+  samplesheet <- readr::read_csv(samplesheet_path)
+  happy_samplesheet <- read_samplesheet_(samplesheet, lazy = lazy)
+  return(happy_samplesheet)
+
+}
+
+
+#' Load hap.py results in bulk from a samplesheet dataframe
+#'
+#' Load multiple hap.py results into a `happy_samplesheet` object starting from a samplesheet dataframe.
+#'
+#' @param samplesheet A `happyR` samplesheet (`data.frame`). Required fields: `replicate_id`, `happy_prefix`.
+#' @param lazy Do not load larger hap.py results until needed. Default: `TRUE`.
+#'
+#' @return A `happy_samplesheet` object, with the following fields:
+#' \itemize{
+#'   \item{`samplesheet`: the original samplesheet, stored as a `data.frame`}.
+#'   \item{`results`: a `happy_result_list` that contains individual `happy_result` objects}.
+#' }
+#'
+#' @examples
+#'
+#' \dontrun{
+#' samplesheet <- readr::read_csv("group_id,replicate_id,happy_prefix
+#' PCR-Free,NA12878-I30,NA12878-I30_S1
+#' PCR-Free,NA12878-I33,NA12878-I33_S1
+#' Nano,NA12878-R1,NA12878-R1_S1
+#' Nano,NA12878-R2,NA12878-R2_S1
+#' ")
+#' hap_samplesheet <- read_samplesheet_(samplesheet = samplesheet_df)
+#' }
+#'
+#' @export
+read_samplesheet_ <- function(samplesheet, lazy = TRUE) {
+
+  # validate input
+  if (! "data.frame" %in% class(samplesheet)) {
+    stop("Samplesheet must be a data.frame")
+  }
+
+  required_cols <- c("replicate_id", "happy_prefix")
+  if (!all(required_cols %in% colnames(samplesheet))) {
+    stop("The provided samplesheet is missing required columns, see docs")
+  }
+
+  # load happy results
+  ids <- samplesheet$happy_prefix
+  happy_results <- lapply(seq_along(ids), function(i) {
+    message(sprintf("Processing %s", ids[i]))
+    read_happy(happy_prefix = ids[i], lazy = lazy)
+  })
+  names(happy_results) <- ids
+  class(happy_results) <- c("happy_result_list", class(happy_results))
+
+  # create the happy_samplesheet object
+  happy_samplesheet <- list(samplesheet = samplesheet, results = happy_results)
+  happy_samplesheet <- structure(happy_samplesheet, class = "happy_samplesheet")
+
+  return(happy_samplesheet)
+
+}

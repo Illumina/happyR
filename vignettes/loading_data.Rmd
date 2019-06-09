@@ -1,0 +1,112 @@
+---
+title: "Loading hap.py results"
+author: "Mar Gonzalez-Porta"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r opts, echo=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>")
+```
+
+happyR provides an easy framework to import hap.py results into R. The user can decide whether to upload results from a single sample, by providing a happy prefix path, or to bulk load multiple datasets via a samplesheet. In both cases, it is easy to extract relevant results using helper functions.
+
+## Set up
+```{r message=FALSE, warning=FALSE}
+library(happyR)
+library(tidyverse)
+```
+
+## Loading and querying individual hap.py results
+
+```{r}
+# define happy_prefix (the -o argument to hap.py, here: path/to/files/happy_demo)
+extdata_dir <- system.file("extdata", package = "happyR")
+happy_prefix <- sprintf("%s/happy_demo", extdata_dir)
+
+# load hap.py results
+hap_result <- read_happy(happy_prefix)
+```
+
+`hap_result` is now a single `happy_result` object with the following fields:
+
+* `summary` (from summary.csv) - a `data.frame` with high-level ALL / PASS numbers
+* `extended` (from extended.csv) - a `data.frame` with region / subtype stratified metrics
+* `pr_curve` (from roc.*.csv.gz) - a `happy_roc` object (a list of `data.frames`) containing precision-recall over quality score
+
+```{r}
+class(hap_result)
+names(hap_result)
+```
+
+We can query each item in our `happy_result` object using standard R syntax:
+
+```{r}
+hap_result$summary %>% head
+
+hap_result$extended %>% head
+
+names(hap_result$pr_curve)
+# e.g. here pr_curve$INDEL_PASS maps to happy_demo.roc.Locations.INDEL.PASS.csv.gz
+hap_result$pr_curve$INDEL_PASS %>% head
+```
+
+Or we can use the helper `pr_data` function to query `pr_curve` with advanced filters:
+
+```{r}
+del_pr <- pr_data(hap_result, var_type = "indel", filter = "PASS", subtype = "*")
+del_pr %>% head
+```
+
+## Aggregating results from multiple samples
+
+```{r}
+# define happyr samplesheet
+extdata_dir <- system.file("extdata", package = "happyR")
+samplesheet <- readr::read_csv("group_id,replicate_id,happy_prefix
+PCR-Free,NA12878-I30,NA12878-I30_S1
+PCR-Free,NA12878-I33,NA12878-I33_S1
+Nano,NA12878-R1,NA12878-R1_S1
+Nano,NA12878-R2,NA12878-R2_S1
+") %>% 
+mutate(happy_prefix = sprintf("%s/%s", extdata_dir, happy_prefix))
+
+samplesheet
+
+# load hap.py results
+hap_samplesheet <- read_samplesheet_(samplesheet)
+# or directly from a samplesheet.csv
+# hap_samplesheet <- read_samplesheet(samplesheet_path = "/path/to/happyr_samplesheet.csv")
+```
+
+`hap_samplesheet` is a `happy_samplesheet` object that contains the following fields:
+
+- `samplesheet`: a data.frame with the original samplesheet
+- `results`: a `happy_result_list` that contains individual `happy_result` objects
+- `ids`: a vector of result ids
+
+```{r}
+class(hap_samplesheet)
+names(hap_samplesheet)
+```
+
+We can query `samplesheet` and `ids` fields as usual: 
+
+```{r}
+hap_samplesheet$samplesheet %>% head
+hap_samplesheet$ids %>% head
+```
+
+And access aggregate hap.py results with the `extract_results` function:
+
+```{r}
+summary <- extract_results(hap_samplesheet$results, table = "summary")
+summary %>% head
+# see the extract_results documentation for a list of possible values for the table argument
+```

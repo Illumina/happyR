@@ -32,7 +32,7 @@ print.happy_result <- function(x, ...){
   # show contents of object (i.e. which hap.py files loaded)
   present <- names(x)[which(!vapply(x, is.null, logical(1)))]
   cat("  Hap.py result containing: ", paste(present, collapse=", "), "\n",
-      "  Loaded from: ", attr(x, "from"))
+      "  Loaded from: ", attr(x, "happy_prefix"))
   version <- attr(x, "version")
   if (version != "Unknown") {
     cat("  (hap.py version: ", version, ")", sep = "")
@@ -97,7 +97,7 @@ c.happy_result <- function(...){
     }
   }
 
-  out_names <- lapply(out_list, attr, "from")
+  out_names <- lapply(out_list, attr, "happy_prefix")
   if (length(unique(out_names)) < length(out_names))
     warning("Combining redundant hap.py results")
 

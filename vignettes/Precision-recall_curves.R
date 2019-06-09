@@ -16,7 +16,6 @@ library(ggplot2)
 library(magrittr)
 theme_set(theme_minimal())
 
-
 ## ----eval=FALSE----------------------------------------------------------
 #  happy_data <- happyR::read_happy("happy_output/na12878")
 
@@ -33,6 +32,34 @@ knitr::kable(head(hapdata$pr_curve$all[,1:9]))
 # The hapdata object now includes the full PR data so is a bit bigger
 if (require(pryr))
   pryr::object_size(hapdata)
+
+## ----all_pr, warning=FALSE-----------------------------------------------
+# using happyR::pr_data to simplify subsetting:
+all_pr <- pr_data(hapdata)
+
+# this gets PR curve starting at ALL point, equivalent to base:
+# all_pr <- subset(hap_result$pr_curve$all, Filter == "ALL" & Subtype == "*" & Subset == "*")
+
+ggplot(all_pr, aes(x = METRIC.Recall, y = METRIC.Precision, col = Type)) +
+  geom_line() + theme_minimal() +
+  geom_point(data = hapdata$summary) +
+  scale_x_continuous(limits = c(.6, 1)) +
+  scale_y_continuous(limits = c(.95, 1)) +
+  ggtitle("ALL PR curve might not hit the PASS point")
+
+## ----sel_pr, warning=FALSE-----------------------------------------------
+# selectively filtered PR curve
+pr <- pr_data(hapdata, filter = "SEL")
+
+# link this to the ALL point
+pr <- dplyr::bind_rows(pr, subset(hapdata$summary, Filter == "ALL"))
+
+ggplot(pr, aes(x = METRIC.Recall, y = METRIC.Precision, col = Type)) +
+  geom_line() + theme_minimal() +
+  geom_point(data = hapdata$summary) +
+  scale_x_continuous(limits = c(.6, 1)) +
+  scale_y_continuous(limits = c(.95, 1)) +
+  ggtitle("Selectively-filtered PR curve reliably hits PASS")
 
 ## ----manual_subset-------------------------------------------------------
 # subset for short insertions 1 - 5 bp in length
