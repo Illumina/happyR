@@ -25,6 +25,8 @@ library(tidyverse)
 
 ## Loading and querying individual hap.py results
 
+Let's first explore how to load hap.py outputs from a single sample:
+
 ```{r}
 # define happy_prefix (the -o argument to hap.py, here: path/to/files/happy_demo)
 extdata_dir <- system.file("extdata", package = "happyR")
@@ -32,18 +34,15 @@ happy_prefix <- sprintf("%s/happy_demo", extdata_dir)
 
 # load hap.py results
 hap_result <- read_happy(happy_prefix)
-```
-
-`hap_result` is now a single `happy_result` object with the following fields:
-
-* `summary` (from summary.csv) - a `data.frame` with high-level ALL / PASS numbers
-* `extended` (from extended.csv) - a `data.frame` with region / subtype stratified metrics
-* `pr_curve` (from roc.*.csv.gz) - a `happy_roc` object (a list of `data.frames`) containing precision-recall over quality score
-
-```{r}
 class(hap_result)
 names(hap_result)
 ```
+
+`hap_result` is now a `happy_result` object with the following fields:
+
+* `summary` (from `summary.csv`) - a data.frame with high-level ALL / PASS numbers
+* `extended` (from `extended.csv`) - a data.frame with region / subtype stratified metrics
+* `pr_curve` (from `roc.*.csv.gz`) - a `happy_roc` object (a list of data.frames) containing precision-recall over quality score
 
 We can query each item in our `happy_result` object using standard R syntax:
 
@@ -66,7 +65,9 @@ del_pr %>% head
 
 ## Aggregating results from multiple samples
 
-```{r}
+Often, we will want to inspect results from multiple samples, which we can achieve by passing a samplesheet to happyR:
+
+```{r warning=FALSE}
 # define happyr samplesheet
 extdata_dir <- system.file("extdata", package = "happyR")
 samplesheet <- readr::read_csv("group_id,replicate_id,happy_prefix
@@ -83,6 +84,8 @@ samplesheet
 hap_samplesheet <- read_samplesheet_(samplesheet)
 # or directly from a samplesheet.csv
 # hap_samplesheet <- read_samplesheet(samplesheet_path = "/path/to/happyr_samplesheet.csv")
+class(hap_samplesheet)
+names(hap_samplesheet)
 ```
 
 `hap_samplesheet` is a `happy_samplesheet` object that contains the following fields:
@@ -91,12 +94,7 @@ hap_samplesheet <- read_samplesheet_(samplesheet)
 - `results`: a `happy_result_list` that contains individual `happy_result` objects
 - `ids`: a vector of result ids
 
-```{r}
-class(hap_samplesheet)
-names(hap_samplesheet)
-```
-
-We can query `samplesheet` and `ids` fields as usual: 
+We can query `samplesheet` and `ids` fields by directly accessing the relevant list items: 
 
 ```{r}
 hap_samplesheet$samplesheet %>% head

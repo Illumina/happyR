@@ -41,7 +41,7 @@ sample_posterior <- function(m, successes_field, totals_field,
 
 }
 
-estimate_hdi <- function(r) {
+estimate_hdi <- function(r, credMass = 0.95) {
 
     stan_data <- r$stan_data
     s_result <- r$stan_fit
@@ -49,7 +49,7 @@ estimate_hdi <- function(r) {
     subsets <- row.names(stan_data$p)
     result <- lapply(seq_along(subsets), function(i) {
         props = extract(s_result)$rho[, i]
-        h = hdi(props)
+        h = hdi(props, credMass = credMass)
         r = data.frame(
             i = i,
             subset = subsets[i],
