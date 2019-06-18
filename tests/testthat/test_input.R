@@ -47,8 +47,8 @@ test_that("read_samplesheet_ loads data with no errors and returns the expected 
 
   s <- happy_samplesheet$samplesheet
   expect_is(s, "data.frame")
-  expect_equal(dim(s)[1], 4)
-  expect_equal(dim(s)[2], 5)
+  expect_equal(dim(s)[1], 4)  # 4 rows
+  expect_equal(dim(s)[2], 3)  # 3 columns
 
   r <- happy_samplesheet$results
   expect_is(r, "happy_result_list")
@@ -57,30 +57,26 @@ test_that("read_samplesheet_ loads data with no errors and returns the expected 
   expect_is(r[[1]], "happy_result")
   expect_true(all(names(r[[1]]) %in% c("summary", "extended", "pr_curve")))
 
-  e <- happyR::extract_results(r, table = "summary")
+  e <- extract_results(r, table = "summary")
   expect_is(e, "data.frame")
   expect_equal(dim(e)[1], 16)
   expect_equal(dim(e)[2], 18)
-  expect_true("from" %in% colnames(e))
+  expect_true("happy_prefix" %in% colnames(e))
 
-  e <- happyR::extract_results(r, table = "extended")
+  e <- extract_results(r, table = "extended")
   expect_is(e, "data.frame")
   expect_equal(dim(e)[1], 704)
   expect_equal(dim(e)[2], 66)
-  expect_true("from" %in% colnames(e))
+  expect_true("happy_prefix" %in% colnames(e))
 
   p <- r[[1]]$pr_curve
   expect_is(p, "environment")
   expect_true(all(names(p) %in% c("INDEL_SEL", "INDEL_PASS", "INDEL", "all")))
 
-  e <- happyR::extract_results(r, table = "pr.indel.pass")
+  e <- extract_results(r, table = "pr.indel.pass")
   expect_is(e, "data.frame")
   expect_equal(dim(e)[1], 9126)
   expect_equal(dim(e)[2], 67)
-  expect_true("from" %in% colnames(e))
-
-  expect_is(b[[1]], "data.frame")
-  expect_equal(dim(b[[1]])[1], 1)
-  expect_equal(dim(b[[1]])[2], 136)
+  expect_true("happy_prefix" %in% colnames(e))
 
 })
