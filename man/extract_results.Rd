@@ -12,8 +12,8 @@ extract_results(happy_result_list, table = c("summary", "extended",
 \item{happy_result_list}{A \code{happy_result_list} object.}
 
 \item{table}{Table of data to extract from each result.
-\code{"summary"} or \code{"extended"} get top level tables
-while the \code{pr} options get Precision-Recall tables.}
+\code{"summary"} or \code{"extended"} get top level tables;
+the \code{pr} options get Precision-Recall tables.}
 }
 \value{
 a \code{data.frame} of combined tables from list

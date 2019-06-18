@@ -186,7 +186,8 @@ into ranges by ALT allele length in basepairs: <code>1_5</code>, <code>6_15</cod
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># figure out prefix from pkg install location</span>
+    <pre class="examples"><div class='input'>
+<span class='co'># figure out prefix from pkg install location</span>
 <span class='no'>happy_input</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"extdata"</span>, <span class='st'>"happy_demo.summary.csv"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"happyR"</span>)
 <span class='no'>happy_prefix</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/grep'>sub</a></span>(<span class='st'>".summary.csv"</span>, <span class='st'>""</span>, <span class='no'>happy_input</span>)
 

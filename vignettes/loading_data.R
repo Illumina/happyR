@@ -14,8 +14,6 @@ happy_prefix <- sprintf("%s/happy_demo", extdata_dir)
 
 # load hap.py results
 hap_result <- read_happy(happy_prefix)
-
-## ------------------------------------------------------------------------
 class(hap_result)
 names(hap_result)
 
@@ -32,7 +30,7 @@ hap_result$pr_curve$INDEL_PASS %>% head
 del_pr <- pr_data(hap_result, var_type = "indel", filter = "PASS", subtype = "*")
 del_pr %>% head
 
-## ------------------------------------------------------------------------
+## ----warning=FALSE-------------------------------------------------------
 # define happyr samplesheet
 extdata_dir <- system.file("extdata", package = "happyR")
 samplesheet <- readr::read_csv("group_id,replicate_id,happy_prefix
@@ -49,8 +47,6 @@ samplesheet
 hap_samplesheet <- read_samplesheet_(samplesheet)
 # or directly from a samplesheet.csv
 # hap_samplesheet <- read_samplesheet(samplesheet_path = "/path/to/happyr_samplesheet.csv")
-
-## ------------------------------------------------------------------------
 class(hap_samplesheet)
 names(hap_samplesheet)
 

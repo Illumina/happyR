@@ -35,6 +35,7 @@
 #'   selected subset
 #'
 #' @examples
+#'
 #' # figure out prefix from pkg install location
 #' happy_input <- system.file("extdata", "happy_demo.summary.csv", package = "happyR")
 #' happy_prefix <- sub(".summary.csv", "", happy_input)
@@ -44,7 +45,6 @@
 #'
 #' # long deletion PR curve
 #' del_pr <- pr_data(hapdata, var_type = "indel", subtype = "D16_PLUS")
-#'
 #'
 #' @export
 pr_data <- function(happy_result,
@@ -121,8 +121,8 @@ pr_data <- function(happy_result,
 #'
 #' @param happy_result_list A \code{happy_result_list} object.
 #' @param table Table of data to extract from each result.
-#'   \code{"summary"} or \code{"extended"} get top level tables
-#'   while the \code{pr} options get Precision-Recall tables.
+#'   \code{"summary"} or \code{"extended"} get top level tables;
+#'   the \code{pr} options get Precision-Recall tables.
 #'
 #' @return a \code{data.frame} of combined tables from list
 #'

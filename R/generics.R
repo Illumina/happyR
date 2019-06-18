@@ -47,8 +47,8 @@ print.happy_result <- function(x, ...){
 
 #' Combine multiple hap.py results objects
 #'
-#' Combine >1 objects of class "happy_result" into
-#' a list, or extend an existing "happy_result_list".
+#' Combine >1 objects of class `happy_result` into
+#' a list, or extend an existing `happy_result_list`.
 #'
 #' @param ... Multiple \code{happy_result} objects
 #'

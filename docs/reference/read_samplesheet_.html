@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Load hap.py results in bulk from a samplesheet dataframe — read_samplesheet_ • happyR</title>
+<title>Load hap.py results from a samplesheet dataframe — read_samplesheet_ • happyR</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,9 @@
 
 
 
-<meta property="og:title" content="Load hap.py results in bulk from a samplesheet dataframe — read_samplesheet_" />
+<meta property="og:title" content="Load hap.py results from a samplesheet dataframe — read_samplesheet_" />
 
-<meta property="og:description" content="Load multiple hap.py results into a `happy_samplesheet` object starting from a samplesheet dataframe." />
+<meta property="og:description" content="Load multiple hap.py results into a happy_samplesheet object starting from a samplesheet dataframe." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -112,14 +112,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Load hap.py results in bulk from a samplesheet dataframe</h1>
+    <h1>Load hap.py results from a samplesheet dataframe</h1>
     
     <div class="hidden name"><code>read_samplesheet_.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Load multiple hap.py results into a `happy_samplesheet` object starting from a samplesheet dataframe.</p>
+    <p>Load multiple hap.py results into a <code>happy_samplesheet</code> object starting from a samplesheet dataframe.</p>
     
     </div>
 
@@ -130,19 +130,19 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>samplesheet</th>
-      <td><p>A `happyR` samplesheet (`data.frame`). Required fields: `replicate_id`, `happy_prefix`.</p></td>
+      <td><p>A <code>happyR</code> samplesheet (<code>data.frame</code>). Required fields: <code>replicate_id</code>, <code>happy_prefix</code>.</p></td>
     </tr>
     <tr>
       <th>lazy</th>
-      <td><p>Do not load larger hap.py results until needed. Default: `TRUE`.</p></td>
+      <td><p>Do not load larger hap.py results until needed. Default: <code>TRUE</code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A `happy_samplesheet` object, with the following fields:</p><ul>
-<li><p>`samplesheet`: the original samplesheet, stored as a `data.frame`.</p></li>
-<li><p>`results`: a `happy_result_list` that contains individual `happy_result` objects.</p></li>
+    <p>A <code>happy_samplesheet</code> object, with the following fields:</p><ul>
+<li><p><code>samplesheet</code>: the original samplesheet, stored as a <code>data.frame</code>.</p></li>
+<li><p><code>results</code>: a <code>happy_result_list</code> that contains individual <code>happy_result</code> objects.</p></li>
 </ul>
 
     

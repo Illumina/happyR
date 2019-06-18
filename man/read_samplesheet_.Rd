@@ -2,24 +2,24 @@
 % Please edit documentation in R/input.R
 \name{read_samplesheet_}
 \alias{read_samplesheet_}
-\title{Load hap.py results in bulk from a samplesheet dataframe}
+\title{Load hap.py results from a samplesheet dataframe}
 \usage{
 read_samplesheet_(samplesheet, lazy = TRUE)
 }
 \arguments{
-\item{samplesheet}{A `happyR` samplesheet (`data.frame`). Required fields: `replicate_id`, `happy_prefix`.}
+\item{samplesheet}{A \code{happyR} samplesheet (\code{data.frame}). Required fields: \code{replicate_id}, \code{happy_prefix}.}
 
-\item{lazy}{Do not load larger hap.py results until needed. Default: `TRUE`.}
+\item{lazy}{Do not load larger hap.py results until needed. Default: \code{TRUE}.}
 }
 \value{
-A `happy_samplesheet` object, with the following fields:
+A \code{happy_samplesheet} object, with the following fields:
 \itemize{
-  \item{`samplesheet`: the original samplesheet, stored as a `data.frame`}.
-  \item{`results`: a `happy_result_list` that contains individual `happy_result` objects}.
+  \item{\code{samplesheet}: the original samplesheet, stored as a \code{data.frame}}.
+  \item{\code{results}: a \code{happy_result_list} that contains individual \code{happy_result} objects}.
 }
 }
 \description{
-Load multiple hap.py results into a `happy_samplesheet` object starting from a samplesheet dataframe.
+Load multiple hap.py results into a \code{happy_samplesheet} object starting from a samplesheet dataframe.
 }
 \examples{
 
