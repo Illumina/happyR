@@ -17,7 +17,12 @@ Suggests:
     knitr,
     rmarkdown,
     ggplot2,
-    magrittr
+    magrittr,
+    gridExtra,
+    reshape2,
+    HDInterval,
+    rstan,
+    tidyverse
 Imports:
     readr, 
     dplyr,

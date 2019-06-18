@@ -30,8 +30,10 @@ In this vignette we will descibe a method to calculate credible intervals for st
 library(happyR)
 library(tidyverse)
 theme_set(theme_minimal())
-source("stratified_counts_util.R")
 set.seed(42)
+
+## helper functions for HDI calculation
+# source("stratified_counts_util.R")
 ```
 
 ## Obtaining stratified counts
