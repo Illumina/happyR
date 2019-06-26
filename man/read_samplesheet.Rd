@@ -24,6 +24,13 @@ Load multiple hap.py results into a \code{happy_samplesheet} object starting fro
 \examples{
 
 \dontrun{
+## example happyr_samplesheet.csv
+# group_id,replicate_id,happy_prefix
+# PCR-Free,NA12878-I30,NA12878-I30_S1
+# PCR-Free,NA12878-I33,NA12878-I33_S1
+# Nano,NA12878-R1,NA12878-R1_S1
+# Nano,NA12878-R2,NA12878-R2_S1
+
 hap_samplesheet <- read_samplesheet(samplesheet_path = 'happyr_samplesheet.csv')
 }
 

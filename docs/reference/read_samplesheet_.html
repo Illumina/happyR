@@ -150,12 +150,13 @@
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 </div><span class='co'># NOT RUN {</span>
-<span class='no'>samplesheet</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>readr</span><span class='kw ns'>::</span><span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span>(<span class='st'>"group_id,replicate_id,happy_prefix
-PCR-Free,NA12878-I30,NA12878-I30_S1
-PCR-Free,NA12878-I33,NA12878-I33_S1
-Nano,NA12878-R1,NA12878-R1_S1
-Nano,NA12878-R2,NA12878-R2_S1
-"</span>)
+<span class='no'>samplesheet_df</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>tibble</span><span class='kw ns'>::</span><span class='fu'><a href='https://tibble.tidyverse.org/reference/tribble.html'>tribble</a></span>(
+  ~<span class='no'>group_id</span>, ~<span class='no'>replicate_id</span>, ~<span class='no'>happy_prefix</span>,
+  <span class='st'>"PCR-Free"</span>, <span class='st'>"NA12878-I30"</span>, <span class='st'>"NA12878-I30_S1"</span>,
+  <span class='st'>"PCR-Free"</span>, <span class='st'>"NA12878-I33"</span>, <span class='st'>"NA12878-I33_S1"</span>,
+  <span class='st'>"Nano"</span>, <span class='st'>"NA12878-R1"</span>, <span class='st'>"NA12878-R1_S1"</span>,
+  <span class='st'>"Nano"</span>, <span class='st'>"NA12878-R2"</span>, <span class='st'>"NA12878-R2_S1"</span>
+)
 <span class='no'>hap_samplesheet</span> <span class='kw'>&lt;-</span> <span class='fu'>read_samplesheet_</span>(<span class='kw'>samplesheet</span> <span class='kw'>=</span> <span class='no'>samplesheet_df</span>)
 <span class='co'># }</span><div class='input'>
 </div></pre>

@@ -8,8 +8,10 @@ knitr::opts_chunk$set(
 library(happyR)
 library(tidyverse)
 theme_set(theme_minimal())
-source("stratified_counts_util.R")
 set.seed(42)
+
+## helper functions for HDI calculation
+# source("stratified_counts_util.R")
 
 ## ----eval=FALSE----------------------------------------------------------
 #  # not run

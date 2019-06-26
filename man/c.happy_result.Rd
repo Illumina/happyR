@@ -16,8 +16,8 @@
 a list of \code{happy_result} objects
 }
 \description{
-Combine >1 objects of class `happy_result` into
-a list, or extend an existing `happy_result_list`.
+Combine >1 objects of class \code{happy_result} into
+a list, or extend an existing \code{happy_result_list}.
 }
 \examples{
 

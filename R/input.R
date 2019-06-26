@@ -209,6 +209,13 @@ read_happy <- function(happy_prefix, lazy = TRUE, quietly = FALSE){
 #' @examples
 #'
 #' \dontrun{
+#' ## example happyr_samplesheet.csv
+#' # group_id,replicate_id,happy_prefix
+#' # PCR-Free,NA12878-I30,NA12878-I30_S1
+#' # PCR-Free,NA12878-I33,NA12878-I33_S1
+#' # Nano,NA12878-R1,NA12878-R1_S1
+#' # Nano,NA12878-R2,NA12878-R2_S1
+#'
 #' hap_samplesheet <- read_samplesheet(samplesheet_path = 'happyr_samplesheet.csv')
 #' }
 #'
@@ -243,12 +250,13 @@ read_samplesheet <- function(samplesheet_path, lazy = TRUE) {
 #' @examples
 #'
 #' \dontrun{
-#' samplesheet <- readr::read_csv("group_id,replicate_id,happy_prefix
-#' PCR-Free,NA12878-I30,NA12878-I30_S1
-#' PCR-Free,NA12878-I33,NA12878-I33_S1
-#' Nano,NA12878-R1,NA12878-R1_S1
-#' Nano,NA12878-R2,NA12878-R2_S1
-#' ")
+#' samplesheet_df <- tibble::tribble(
+#'   ~group_id, ~replicate_id, ~happy_prefix,
+#'   "PCR-Free", "NA12878-I30", "NA12878-I30_S1",
+#'   "PCR-Free", "NA12878-I33", "NA12878-I33_S1",
+#'   "Nano", "NA12878-R1", "NA12878-R1_S1",
+#'   "Nano", "NA12878-R2", "NA12878-R2_S1"
+#' )
 #' hap_samplesheet <- read_samplesheet_(samplesheet = samplesheet_df)
 #' }
 #'
@@ -262,13 +270,12 @@ read_samplesheet_ <- function(samplesheet, lazy = TRUE) {
 
   required_cols <- c("replicate_id", "happy_prefix")
   if (!all(required_cols %in% colnames(samplesheet))) {
-    stop("The provided samplesheet is missing required columns, see docs")
+    stop("The provided samplesheet is missing required columns (replicate_id, happy_prefix)")
   }
 
   # load happy results
   ids <- samplesheet$happy_prefix
   happy_results <- lapply(seq_along(ids), function(i) {
-    message(sprintf("Processing %s", ids[i]))
     read_happy(happy_prefix = ids[i], lazy = lazy)
   })
   names(happy_results) <- ids

@@ -100,32 +100,33 @@
 <a class="sourceLine" id="cb2-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb2-6" data-line-number="6"><span class="co"># define happyr samplesheet</span></a>
 <a class="sourceLine" id="cb2-7" data-line-number="7">extdata_dir &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata"</span>, <span class="dt">package =</span> <span class="st">"happyR"</span>)</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">samplesheet &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span>(<span class="st">"group_id,replicate_id,happy_prefix</span></a>
-<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="st">PCR-Free,NA12878-I30,NA12878-I30_S1</span></a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="st">PCR-Free,NA12878-I33,NA12878-I33_S1</span></a>
-<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="st">Nano,NA12878-R1,NA12878-R1_S1</span></a>
-<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="st">Nano,NA12878-R2,NA12878-R2_S1</span></a>
-<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="st">"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-14" data-line-number="14"><span class="kw">mutate</span>(<span class="dt">happy_prefix =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sprintf">sprintf</a></span>(<span class="st">"%s/%s"</span>, extdata_dir, happy_prefix))</a>
-<a class="sourceLine" id="cb2-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">samplesheet &lt;-<span class="st"> </span>tibble<span class="op">::</span><span class="kw"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span>(</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9"><span class="op">~</span>group_id, <span class="op">~</span>replicate_id, <span class="op">~</span>happy_prefix,</a>
+<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="st">"PCR-Free"</span>, <span class="st">"NA12878-I30"</span>, <span class="st">"NA12878-I30_S1"</span>,</a>
+<a class="sourceLine" id="cb2-11" data-line-number="11"><span class="st">"PCR-Free"</span>, <span class="st">"NA12878-I33"</span>, <span class="st">"NA12878-I33_S1"</span>,</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12"><span class="st">"Nano"</span>, <span class="st">"NA12878-R1"</span>, <span class="st">"NA12878-R1_S1"</span>,</a>
+<a class="sourceLine" id="cb2-13" data-line-number="13"><span class="st">"Nano"</span>, <span class="st">"NA12878-R2"</span>, <span class="st">"NA12878-R2_S1"</span></a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15"><span class="kw">mutate</span>(<span class="dt">happy_prefix =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/sprintf">sprintf</a></span>(<span class="st">"%s/%s"</span>, extdata_dir, happy_prefix))</a>
 <a class="sourceLine" id="cb2-16" data-line-number="16"></a>
-<a class="sourceLine" id="cb2-17" data-line-number="17"><span class="co"># load hap.py results</span></a>
-<a class="sourceLine" id="cb2-18" data-line-number="18">hap_samplesheet &lt;-<span class="st"> </span><span class="kw"><a href="reference/read_samplesheet_.html">read_samplesheet_</a></span>(samplesheet)</a>
-<a class="sourceLine" id="cb2-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb2-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb2-18" data-line-number="18"><span class="co"># load hap.py results</span></a>
+<a class="sourceLine" id="cb2-19" data-line-number="19">hap_samplesheet &lt;-<span class="st"> </span><span class="kw"><a href="reference/read_samplesheet_.html">read_samplesheet_</a></span>(samplesheet)</a>
 <a class="sourceLine" id="cb2-20" data-line-number="20"></a>
-<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="co"># query and visualise performance metrics</span></a>
-<a class="sourceLine" id="cb2-22" data-line-number="22">summary &lt;-<span class="st"> </span><span class="kw"><a href="reference/extract_results.html">extract_results</a></span>(hap_samplesheet<span class="op">$</span>results, <span class="dt">table =</span> <span class="st">"summary"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-23" data-line-number="23"><span class="st">  </span><span class="kw">inner_join</span>(samplesheet, <span class="dt">by =</span> <span class="st">"happy_prefix"</span>)</a>
-<a class="sourceLine" id="cb2-24" data-line-number="24">summary <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-25" data-line-number="25"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(Filter <span class="op">==</span><span class="st"> "PASS"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-26" data-line-number="26"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> METRIC.Recall, <span class="dt">y =</span> METRIC.Precision, <span class="dt">color =</span> group_id, <span class="dt">shape =</span> Type)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-27" data-line-number="27"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-28" data-line-number="28"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot.window">xlim</a></span>(<span class="ot">NA</span>, <span class="dv">1</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-29" data-line-number="29"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot.window">ylim</a></span>(<span class="ot">NA</span>, <span class="dv">1</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-30" data-line-number="30"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb2-31" data-line-number="31"><span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">"Set2"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-32" data-line-number="32"><span class="st">  </span><span class="kw">scale_size</span>(<span class="dt">guide =</span> <span class="st">"none"</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb2-33" data-line-number="33"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Precision-Recall scatterplot"</span>)  </a></code></pre></div>
+<a class="sourceLine" id="cb2-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb2-22" data-line-number="22"><span class="co"># query and visualise performance metrics</span></a>
+<a class="sourceLine" id="cb2-23" data-line-number="23">summary &lt;-<span class="st"> </span><span class="kw"><a href="reference/extract_results.html">extract_results</a></span>(hap_samplesheet<span class="op">$</span>results, <span class="dt">table =</span> <span class="st">"summary"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-24" data-line-number="24"><span class="st">  </span><span class="kw">inner_join</span>(samplesheet, <span class="dt">by =</span> <span class="st">"happy_prefix"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-25" data-line-number="25"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/stats/topics/filter">filter</a></span>(Filter <span class="op">==</span><span class="st"> "PASS"</span>)</a>
+<a class="sourceLine" id="cb2-26" data-line-number="26">  </a>
+<a class="sourceLine" id="cb2-27" data-line-number="27"><span class="kw">ggplot</span>(<span class="dt">data =</span> summary, <span class="kw">aes</span>(<span class="dt">x =</span> METRIC.Recall, <span class="dt">y =</span> METRIC.Precision, <span class="dt">color =</span> group_id, <span class="dt">shape =</span> Type)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-28" data-line-number="28"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-29" data-line-number="29"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot.window">xlim</a></span>(<span class="ot">NA</span>, <span class="dv">1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-30" data-line-number="30"><span class="st">  </span><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot.window">ylim</a></span>(<span class="ot">NA</span>, <span class="dv">1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-31" data-line-number="31"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb2-32" data-line-number="32"><span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">palette =</span> <span class="st">"Set2"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-33" data-line-number="33"><span class="st">  </span><span class="kw">scale_size</span>(<span class="dt">guide =</span> <span class="st">"none"</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb2-34" data-line-number="34"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">"Precision-Recall scatterplot"</span>)  </a></code></pre></div>
 <p><img src="examples/README-usage-1.png" width="480" style="display: block; margin: auto;"></p>
 </div>
 <div id="system-requirements" class="section level2">

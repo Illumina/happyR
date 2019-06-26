@@ -16,13 +16,13 @@ Suggests:
     pryr,
     knitr,
     rmarkdown,
-    ggplot2,
     magrittr,
     gridExtra,
     reshape2,
     HDInterval,
     rstan,
-    tidyverse
+    tidyverse,
+    ggplot2
 Imports:
     readr, 
     dplyr,
