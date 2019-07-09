@@ -53,10 +53,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/loading_data.html">Loading hap.py results</a>
+      <a href="../articles/Precision-recall_curves.html">Precision-recall curves</a>
     </li>
     <li>
-      <a href="../articles/precision-recall_curves.html">Precision-recall curves</a>
+      <a href="../articles/loading_data.html">Loading hap.py results</a>
     </li>
     <li>
       <a href="../articles/stratified_counts.html">Analysing stratified counts</a>
@@ -79,7 +79,7 @@
       <h1>Loading hap.py results</h1>
                         <h4 class="author">Mar Gonzalez-Porta</h4>
             
-            <h4 class="date">2019-06-26</h4>
+            <h4 class="date">2019-07-09</h4>
       
       
       <div class="hidden name"><code>loading_data.Rmd</code></div>
@@ -256,47 +256,43 @@
 <a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co">#&gt; # A tibble: 4 x 3</span></a>
 <a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co">#&gt;   group_id replicate_id happy_prefix                                       </span></a>
 <a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co">#&gt;   &lt;chr&gt;    &lt;chr&gt;        &lt;chr&gt;                                              </span></a>
-<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co">#&gt; 1 PCR-Free NA12878-I30  /Library/Frameworks/R.framework/Versions/3.4/Resou…</span></a>
-<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co">#&gt; 2 PCR-Free NA12878-I33  /Library/Frameworks/R.framework/Versions/3.4/Resou…</span></a>
-<a class="sourceLine" id="cb5-17" data-line-number="17"><span class="co">#&gt; 3 Nano     NA12878-R1   /Library/Frameworks/R.framework/Versions/3.4/Resou…</span></a>
-<a class="sourceLine" id="cb5-18" data-line-number="18"><span class="co">#&gt; 4 Nano     NA12878-R2   /Library/Frameworks/R.framework/Versions/3.4/Resou…</span></a>
+<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co">#&gt; 1 PCR-Free NA12878-I30  /usr/local/lib/R/3.6/site-library/happyR/extdata/N…</span></a>
+<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co">#&gt; 2 PCR-Free NA12878-I33  /usr/local/lib/R/3.6/site-library/happyR/extdata/N…</span></a>
+<a class="sourceLine" id="cb5-17" data-line-number="17"><span class="co">#&gt; 3 Nano     NA12878-R1   /usr/local/lib/R/3.6/site-library/happyR/extdata/N…</span></a>
+<a class="sourceLine" id="cb5-18" data-line-number="18"><span class="co">#&gt; 4 Nano     NA12878-R2   /usr/local/lib/R/3.6/site-library/happyR/extdata/N…</span></a>
 <a class="sourceLine" id="cb5-19" data-line-number="19"></a>
 <a class="sourceLine" id="cb5-20" data-line-number="20"><span class="co"># load hap.py results</span></a>
 <a class="sourceLine" id="cb5-21" data-line-number="21">hap_samplesheet &lt;-<span class="st"> </span><span class="kw"><a href="../reference/read_samplesheet_.html">read_samplesheet_</a></span>(samplesheet)</a>
-<a class="sourceLine" id="cb5-22" data-line-number="22"><span class="co">#&gt; Processing /Library/Frameworks/R.framework/Versions/3.4/Resources/library/happyR/extdata/NA12878-I30_S1</span></a>
-<a class="sourceLine" id="cb5-23" data-line-number="23"><span class="co">#&gt; Reading summary table</span></a>
-<a class="sourceLine" id="cb5-24" data-line-number="24"><span class="co">#&gt; Reading extended table</span></a>
-<a class="sourceLine" id="cb5-25" data-line-number="25"><span class="co">#&gt; Reading precision-recall curve data</span></a>
-<a class="sourceLine" id="cb5-26" data-line-number="26"><span class="co">#&gt; Missing file: /Library/Frameworks/R.framework/Versions/3.4/Resources/library/happyR/extdata/NA12878-I30_S1.roc.Locations.SNP.csv.gz</span></a>
-<a class="sourceLine" id="cb5-27" data-line-number="27"><span class="co">#&gt; Missing file: /Library/Frameworks/R.framework/Versions/3.4/Resources/library/happyR/extdata/NA12878-I30_S1.roc.Locations.SNP.PASS.csv.gz</span></a>
-<a class="sourceLine" id="cb5-28" data-line-number="28"><span class="co">#&gt; Missing file: /Library/Frameworks/R.framework/Versions/3.4/Resources/library/happyR/extdata/NA12878-I30_S1.roc.Locations.SNP.SEL.csv.gz</span></a>
-<a class="sourceLine" id="cb5-29" data-line-number="29"><span class="co">#&gt; Processing /Library/Frameworks/R.framework/Versions/3.4/Resources/library/happyR/extdata/NA12878-I33_S1</span></a>
-<a class="sourceLine" id="cb5-30" data-line-number="30"><span class="co">#&gt; Reading summary table</span></a>
-<a class="sourceLine" id="cb5-31" data-line-number="31"><span class="co">#&gt; Reading extended table</span></a>
-<a class="sourceLine" id="cb5-32" data-line-number="32"><span class="co">#&gt; Reading precision-recall curve data</span></a>
-<a class="sourceLine" id="cb5-33" data-line-number="33"><span class="co">#&gt; Missing file: /Library/Frameworks/R.framework/Versions/3.4/Resources/library/happyR/extdata/NA12878-I33_S1.roc.Locations.SNP.csv.gz</span></a>
-<a class="sourceLine" id="cb5-34" data-line-number="34"><span class="co">#&gt; Missing file: /Library/Frameworks/R.framework/Versions/3.4/Resources/library/happyR/extdata/NA12878-I33_S1.roc.Locations.SNP.PASS.csv.gz</span></a>
-<a class="sourceLine" id="cb5-35" data-line-number="35"><span class="co">#&gt; Missing file: /Library/Frameworks/R.framework/Versions/3.4/Resources/library/happyR/extdata/NA12878-I33_S1.roc.Locations.SNP.SEL.csv.gz</span></a>
-<a class="sourceLine" id="cb5-36" data-line-number="36"><span class="co">#&gt; Processing /Library/Frameworks/R.framework/Versions/3.4/Resources/library/happyR/extdata/NA12878-R1_S1</span></a>
-<a class="sourceLine" id="cb5-37" data-line-number="37"><span class="co">#&gt; Reading summary table</span></a>
-<a class="sourceLine" id="cb5-38" data-line-number="38"><span class="co">#&gt; Reading extended table</span></a>
-<a class="sourceLine" id="cb5-39" data-line-number="39"><span class="co">#&gt; Reading precision-recall curve data</span></a>
-<a class="sourceLine" id="cb5-40" data-line-number="40"><span class="co">#&gt; Missing file: /Library/Frameworks/R.framework/Versions/3.4/Resources/library/happyR/extdata/NA12878-R1_S1.roc.Locations.SNP.csv.gz</span></a>
-<a class="sourceLine" id="cb5-41" data-line-number="41"><span class="co">#&gt; Missing file: /Library/Frameworks/R.framework/Versions/3.4/Resources/library/happyR/extdata/NA12878-R1_S1.roc.Locations.SNP.PASS.csv.gz</span></a>
-<a class="sourceLine" id="cb5-42" data-line-number="42"><span class="co">#&gt; Missing file: /Library/Frameworks/R.framework/Versions/3.4/Resources/library/happyR/extdata/NA12878-R1_S1.roc.Locations.SNP.SEL.csv.gz</span></a>
-<a class="sourceLine" id="cb5-43" data-line-number="43"><span class="co">#&gt; Processing /Library/Frameworks/R.framework/Versions/3.4/Resources/library/happyR/extdata/NA12878-R2_S1</span></a>
-<a class="sourceLine" id="cb5-44" data-line-number="44"><span class="co">#&gt; Reading summary table</span></a>
-<a class="sourceLine" id="cb5-45" data-line-number="45"><span class="co">#&gt; Reading extended table</span></a>
-<a class="sourceLine" id="cb5-46" data-line-number="46"><span class="co">#&gt; Reading precision-recall curve data</span></a>
-<a class="sourceLine" id="cb5-47" data-line-number="47"><span class="co">#&gt; Missing file: /Library/Frameworks/R.framework/Versions/3.4/Resources/library/happyR/extdata/NA12878-R2_S1.roc.Locations.SNP.csv.gz</span></a>
-<a class="sourceLine" id="cb5-48" data-line-number="48"><span class="co">#&gt; Missing file: /Library/Frameworks/R.framework/Versions/3.4/Resources/library/happyR/extdata/NA12878-R2_S1.roc.Locations.SNP.PASS.csv.gz</span></a>
-<a class="sourceLine" id="cb5-49" data-line-number="49"><span class="co">#&gt; Missing file: /Library/Frameworks/R.framework/Versions/3.4/Resources/library/happyR/extdata/NA12878-R2_S1.roc.Locations.SNP.SEL.csv.gz</span></a>
-<a class="sourceLine" id="cb5-50" data-line-number="50"><span class="co"># or directly from a samplesheet.csv</span></a>
-<a class="sourceLine" id="cb5-51" data-line-number="51"><span class="co"># hap_samplesheet &lt;- read_samplesheet(samplesheet_path = "/path/to/happyr_samplesheet.csv")</span></a>
-<a class="sourceLine" id="cb5-52" data-line-number="52"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/class">class</a></span>(hap_samplesheet)</a>
-<a class="sourceLine" id="cb5-53" data-line-number="53"><span class="co">#&gt; [1] "happy_samplesheet"</span></a>
-<a class="sourceLine" id="cb5-54" data-line-number="54"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(hap_samplesheet)</a>
-<a class="sourceLine" id="cb5-55" data-line-number="55"><span class="co">#&gt; [1] "samplesheet" "results"</span></a></code></pre></div>
+<a class="sourceLine" id="cb5-22" data-line-number="22"><span class="co">#&gt; Reading summary table</span></a>
+<a class="sourceLine" id="cb5-23" data-line-number="23"><span class="co">#&gt; Reading extended table</span></a>
+<a class="sourceLine" id="cb5-24" data-line-number="24"><span class="co">#&gt; Reading precision-recall curve data</span></a>
+<a class="sourceLine" id="cb5-25" data-line-number="25"><span class="co">#&gt; Missing file: /usr/local/lib/R/3.6/site-library/happyR/extdata/NA12878-I30_S1.roc.Locations.SNP.csv.gz</span></a>
+<a class="sourceLine" id="cb5-26" data-line-number="26"><span class="co">#&gt; Missing file: /usr/local/lib/R/3.6/site-library/happyR/extdata/NA12878-I30_S1.roc.Locations.SNP.PASS.csv.gz</span></a>
+<a class="sourceLine" id="cb5-27" data-line-number="27"><span class="co">#&gt; Missing file: /usr/local/lib/R/3.6/site-library/happyR/extdata/NA12878-I30_S1.roc.Locations.SNP.SEL.csv.gz</span></a>
+<a class="sourceLine" id="cb5-28" data-line-number="28"><span class="co">#&gt; Reading summary table</span></a>
+<a class="sourceLine" id="cb5-29" data-line-number="29"><span class="co">#&gt; Reading extended table</span></a>
+<a class="sourceLine" id="cb5-30" data-line-number="30"><span class="co">#&gt; Reading precision-recall curve data</span></a>
+<a class="sourceLine" id="cb5-31" data-line-number="31"><span class="co">#&gt; Missing file: /usr/local/lib/R/3.6/site-library/happyR/extdata/NA12878-I33_S1.roc.Locations.SNP.csv.gz</span></a>
+<a class="sourceLine" id="cb5-32" data-line-number="32"><span class="co">#&gt; Missing file: /usr/local/lib/R/3.6/site-library/happyR/extdata/NA12878-I33_S1.roc.Locations.SNP.PASS.csv.gz</span></a>
+<a class="sourceLine" id="cb5-33" data-line-number="33"><span class="co">#&gt; Missing file: /usr/local/lib/R/3.6/site-library/happyR/extdata/NA12878-I33_S1.roc.Locations.SNP.SEL.csv.gz</span></a>
+<a class="sourceLine" id="cb5-34" data-line-number="34"><span class="co">#&gt; Reading summary table</span></a>
+<a class="sourceLine" id="cb5-35" data-line-number="35"><span class="co">#&gt; Reading extended table</span></a>
+<a class="sourceLine" id="cb5-36" data-line-number="36"><span class="co">#&gt; Reading precision-recall curve data</span></a>
+<a class="sourceLine" id="cb5-37" data-line-number="37"><span class="co">#&gt; Missing file: /usr/local/lib/R/3.6/site-library/happyR/extdata/NA12878-R1_S1.roc.Locations.SNP.csv.gz</span></a>
+<a class="sourceLine" id="cb5-38" data-line-number="38"><span class="co">#&gt; Missing file: /usr/local/lib/R/3.6/site-library/happyR/extdata/NA12878-R1_S1.roc.Locations.SNP.PASS.csv.gz</span></a>
+<a class="sourceLine" id="cb5-39" data-line-number="39"><span class="co">#&gt; Missing file: /usr/local/lib/R/3.6/site-library/happyR/extdata/NA12878-R1_S1.roc.Locations.SNP.SEL.csv.gz</span></a>
+<a class="sourceLine" id="cb5-40" data-line-number="40"><span class="co">#&gt; Reading summary table</span></a>
+<a class="sourceLine" id="cb5-41" data-line-number="41"><span class="co">#&gt; Reading extended table</span></a>
+<a class="sourceLine" id="cb5-42" data-line-number="42"><span class="co">#&gt; Reading precision-recall curve data</span></a>
+<a class="sourceLine" id="cb5-43" data-line-number="43"><span class="co">#&gt; Missing file: /usr/local/lib/R/3.6/site-library/happyR/extdata/NA12878-R2_S1.roc.Locations.SNP.csv.gz</span></a>
+<a class="sourceLine" id="cb5-44" data-line-number="44"><span class="co">#&gt; Missing file: /usr/local/lib/R/3.6/site-library/happyR/extdata/NA12878-R2_S1.roc.Locations.SNP.PASS.csv.gz</span></a>
+<a class="sourceLine" id="cb5-45" data-line-number="45"><span class="co">#&gt; Missing file: /usr/local/lib/R/3.6/site-library/happyR/extdata/NA12878-R2_S1.roc.Locations.SNP.SEL.csv.gz</span></a>
+<a class="sourceLine" id="cb5-46" data-line-number="46"><span class="co"># or directly from a samplesheet.csv</span></a>
+<a class="sourceLine" id="cb5-47" data-line-number="47"><span class="co"># hap_samplesheet &lt;- read_samplesheet(samplesheet_path = "/path/to/happyr_samplesheet.csv")</span></a>
+<a class="sourceLine" id="cb5-48" data-line-number="48"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/class">class</a></span>(hap_samplesheet)</a>
+<a class="sourceLine" id="cb5-49" data-line-number="49"><span class="co">#&gt; [1] "happy_samplesheet"</span></a>
+<a class="sourceLine" id="cb5-50" data-line-number="50"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(hap_samplesheet)</a>
+<a class="sourceLine" id="cb5-51" data-line-number="51"><span class="co">#&gt; [1] "samplesheet" "results"</span></a></code></pre></div>
 <p><code>hap_samplesheet</code> is a <code>happy_samplesheet</code> object that contains the following fields:</p>
 <ul>
 <li>
@@ -311,10 +307,10 @@
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co">#&gt; # A tibble: 4 x 3</span></a>
 <a class="sourceLine" id="cb6-3" data-line-number="3"><span class="co">#&gt;   group_id replicate_id happy_prefix                                       </span></a>
 <a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">#&gt;   &lt;chr&gt;    &lt;chr&gt;        &lt;chr&gt;                                              </span></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt; 1 PCR-Free NA12878-I30  /Library/Frameworks/R.framework/Versions/3.4/Resou…</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt; 2 PCR-Free NA12878-I33  /Library/Frameworks/R.framework/Versions/3.4/Resou…</span></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt; 3 Nano     NA12878-R1   /Library/Frameworks/R.framework/Versions/3.4/Resou…</span></a>
-<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt; 4 Nano     NA12878-R2   /Library/Frameworks/R.framework/Versions/3.4/Resou…</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt; 1 PCR-Free NA12878-I30  /usr/local/lib/R/3.6/site-library/happyR/extdata/N…</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt; 2 PCR-Free NA12878-I33  /usr/local/lib/R/3.6/site-library/happyR/extdata/N…</span></a>
+<a class="sourceLine" id="cb6-7" data-line-number="7"><span class="co">#&gt; 3 Nano     NA12878-R1   /usr/local/lib/R/3.6/site-library/happyR/extdata/N…</span></a>
+<a class="sourceLine" id="cb6-8" data-line-number="8"><span class="co">#&gt; 4 Nano     NA12878-R2   /usr/local/lib/R/3.6/site-library/happyR/extdata/N…</span></a>
 <a class="sourceLine" id="cb6-9" data-line-number="9">hap_samplesheet<span class="op">$</span>ids <span class="op">%&gt;%</span><span class="st"> </span>head</a>
 <a class="sourceLine" id="cb6-10" data-line-number="10"><span class="co">#&gt; NULL</span></a></code></pre></div>
 <p>And access aggregate hap.py results with the <code>extract_results</code> function:</p>

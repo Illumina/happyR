@@ -53,10 +53,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/loading_data.html">Loading hap.py results</a>
+      <a href="../articles/Precision-recall_curves.html">Precision-recall curves</a>
     </li>
     <li>
-      <a href="../articles/precision-recall_curves.html">Precision-recall curves</a>
+      <a href="../articles/loading_data.html">Loading hap.py results</a>
     </li>
     <li>
       <a href="../articles/stratified_counts.html">Analysing stratified counts</a>
@@ -79,10 +79,10 @@
       <h1>Precision-recall curves</h1>
                         <h4 class="author">Ben Moore</h4>
             
-            <h4 class="date">2019-06-26</h4>
+            <h4 class="date">2019-07-09</h4>
       
       
-      <div class="hidden name"><code>precision-recall_curves.Rmd</code></div>
+      <div class="hidden name"><code>Precision-recall_curves.Rmd</code></div>
 
     </div>
 
@@ -120,8 +120,9 @@
 <p>PR data associated with this hap.py result is lazy-loaded; that is, the data will only be read into R once it is accessed. This saves time that would otherwise be spent reading lots of data that’s never used.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># Large 'ALL' PR data isn't loaded yet and the results object isn't too big</span></a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="cf">if</span> (<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">require</a></span>(pryr))</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">  pryr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/pryr/topics/object_size">object_size</a></span>(hapdata)</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt; 21.4 MB</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-3" data-line-number="3">  pryr<span class="op">::</span><span class="kw">object_size</span>(hapdata)</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt; Warning in library(package, lib.loc = lib.loc, character.only = TRUE,</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; logical.return = TRUE, : there is no package called 'pryr'</span></a></code></pre></div>
 <p>Any access, even just a <code>head</code>, evaluates the promise and loads the remaining data:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># view part of all PR data, evaluating the promise</span></a>
 <a class="sourceLine" id="cb5-2" data-line-number="2">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(hapdata<span class="op">$</span>pr_curve<span class="op">$</span>all[,<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>]))</a></code></pre></div>
@@ -208,8 +209,10 @@
 </table>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># The hapdata object now includes the full PR data so is a bit bigger</span></a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="cf">if</span> (<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">require</a></span>(pryr))</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">  pryr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/pryr/topics/object_size">object_size</a></span>(hapdata)</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">#&gt; 85.4 MB</span></a></code></pre></div>
+<a class="sourceLine" id="cb6-3" data-line-number="3">  pryr<span class="op">::</span><span class="kw">object_size</span>(hapdata)</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">#&gt; Loading required package: pryr</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt; Warning in library(package, lib.loc = lib.loc, character.only = TRUE,</span></a>
+<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt; logical.return = TRUE, : there is no package called 'pryr'</span></a></code></pre></div>
 <p>If you don’t find this useful, turn it off by passing <code>lazy = FALSE</code> to <code>read_happy</code>.</p>
 </div>
 <div id="high-level-pr-curves" class="section level2">
@@ -229,7 +232,7 @@
 <a class="sourceLine" id="cb7-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span>(<span class="dt">limits =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(.<span class="dv">6</span>, <span class="dv">1</span>)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb7-11" data-line-number="11"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span>(<span class="dt">limits =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(.<span class="dv">95</span>, <span class="dv">1</span>)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb7-12" data-line-number="12"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"ALL PR curve might not hit the PASS point"</span>)</a></code></pre></div>
-<p><img src="precision-recall_curves_files/figure-html/all_pr-1.png" width="700"></p>
+<p><img src="Precision-recall_curves_files/figure-html/all_pr-1.png" width="700"></p>
 <p>Hap.py accounts for this by generating a selectively-filtered PR curve (<code>SEL</code>). First these independent filters are applied to the variant set, then we can draw the remaining PR curve using the quality score threshold. This gives a more accurate view of how changing the quality score threshold can impact precision and recall.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># selectively filtered PR curve</span></a>
 <a class="sourceLine" id="cb8-2" data-line-number="2">pr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/pr_data.html">pr_data</a></span>(hapdata, <span class="dt">filter =</span> <span class="st">"SEL"</span>)</a>
@@ -243,7 +246,7 @@
 <a class="sourceLine" id="cb8-10" data-line-number="10"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_x_continuous</a></span>(<span class="dt">limits =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(.<span class="dv">6</span>, <span class="dv">1</span>)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb8-11" data-line-number="11"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/scale_continuous.html">scale_y_continuous</a></span>(<span class="dt">limits =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(.<span class="dv">95</span>, <span class="dv">1</span>)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb8-12" data-line-number="12"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"Selectively-filtered PR curve reliably hits PASS"</span>)</a></code></pre></div>
-<p><img src="precision-recall_curves_files/figure-html/sel_pr-1.png" width="700"></p>
+<p><img src="Precision-recall_curves_files/figure-html/sel_pr-1.png" width="700"></p>
 </div>
 <div id="subset-pr-curves" class="section level2">
 <h2 class="hasAnchor">
@@ -268,7 +271,7 @@
 <a class="sourceLine" id="cb11-5" data-line-number="5"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(del_pr, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> METRIC.Recall, <span class="dt">y =</span> METRIC.Precision, <span class="dt">col =</span> Subtype)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb11-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html">coord_cartesian</a></span>(<span class="dt">ylim =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(.<span class="dv">75</span>, <span class="dv">1</span>)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb11-7" data-line-number="7"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"Longer deletions are more difficult to call accurately"</span>)</a></code></pre></div>
-<p><img src="precision-recall_curves_files/figure-html/del_length-1.png" width="480" style="display: block; margin: auto;"></p>
+<p><img src="Precision-recall_curves_files/figure-html/del_length-1.png" width="480" style="display: block; margin: auto;"></p>
 </div>
 <div id="snvs-at-truthset-boundaries" class="section level3">
 <h3 class="hasAnchor">
@@ -280,7 +283,7 @@
 <a class="sourceLine" id="cb12-4" data-line-number="4"><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span>(snv_pr, <span class="kw"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span>(<span class="dt">x =</span> METRIC.Recall, <span class="dt">y =</span> METRIC.Precision, <span class="dt">col =</span> Subset)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb12-5" data-line-number="5"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span>() <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/coord_cartesian.html">coord_cartesian</a></span>(<span class="dt">ylim =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(.<span class="dv">8</span>, <span class="dv">1</span>)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb12-6" data-line-number="6"><span class="st">  </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"TS_contained performance is higher than TS_boundary"</span>)</a></code></pre></div>
-<p><img src="precision-recall_curves_files/figure-html/snv_boundary-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="Precision-recall_curves_files/figure-html/snv_boundary-1.png" width="576" style="display: block; margin: auto;"></p>
 </div>
 </div>
   </div>

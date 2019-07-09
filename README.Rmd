@@ -45,10 +45,10 @@ extdata_dir <- system.file("extdata", package = "happyR")
 # these extdata files are supplied with the package
 samplesheet <- tibble::tribble(
   ~group_id,  ~replicate_id, ~happy_prefix,
-  "PCR-Free", "NA12878-I30", sprintf("%s/%s", extdata_dir, "NA12878-I30_S1"),
-  "PCR-Free", "NA12878-I33", sprintf("%s/%s", extdata_dir, "NA12878-I33_S1"),
-  "Nano",     "NA12878-R1",  sprintf("%s/%s", extdata_dir, "NA12878-R1_S1"),
-  "Nano",     "NA12878-R2",  sprintf("%s/%s", extdata_dir, "NA12878-R2_S1")
+  "PCR-Free", "NA12878-I30", paste(extdata_dir, "NA12878-I30_S1", sep = "/"),
+  "PCR-Free", "NA12878-I33", paste(extdata_dir, "NA12878-I33_S1", sep = "/"),
+  "Nano",     "NA12878-R1",  paste(extdata_dir, "NA12878-R1_S1", sep = "/"),
+  "Nano",     "NA12878-R2",  paste(extdata_dir, "NA12878-R2_S1", sep = "/")
 )
 
 # here the above table is used to read hap.py output files from disk 
@@ -64,6 +64,7 @@ ggplot(data = summary, aes(x = METRIC.Recall, y = METRIC.Precision, color = grou
   geom_point() + theme_minimal() + 
   xlim(NA, 1) + ylim(NA, 1) +
   scale_color_brewer(palette = "Set2") +
+  labs(x = "Recall", y = "Precision", color = "Prep") +
   ggtitle("PCR-Free vs. Nano variant calling",
           "PCR treatment reduces indel calling performance")  
 ```
