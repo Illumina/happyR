@@ -51,6 +51,7 @@ where the first letter indicates the variant classification: \code{I} insertion;
 into ranges by ALT allele length in basepairs: \code{1_5}, \code{6_15} and \code{16_PLUS}.
 }
 \examples{
+
 # figure out prefix from pkg install location
 happy_input <- system.file("extdata", "happy_demo.summary.csv", package = "happyR")
 happy_prefix <- sub(".summary.csv", "", happy_input)
@@ -60,6 +61,5 @@ hapdata <- read_happy(happy_prefix)
 
 # long deletion PR curve
 del_pr <- pr_data(hapdata, var_type = "indel", subtype = "D16_PLUS")
-
 
 }

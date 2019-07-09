@@ -1,7 +1,7 @@
 Package: happyR
 Type: Package
-Title: Load Hap.py Results into R
-Version: 1.0.0
+Title: Load hap.py results into R
+Version: 2.0.0
 Authors@R: as.person(c(
     "Ben Moore <bmoore1@illumina.com> [aut, cre]",
     "Mar Gonzalez-Porta <mgonzalez@illumina.com> [aut]"))
@@ -10,14 +10,19 @@ Description: Read multiple output files from the haplotype-comparison
 License: file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.0.9000
+RoxygenNote: 6.1.1.9000
 Suggests:
     testthat, 
     pryr,
     knitr,
     rmarkdown,
-    ggplot2,
-    magrittr
+    magrittr,
+    gridExtra,
+    reshape2,
+    HDInterval,
+    rstan,
+    tidyverse,
+    ggplot2
 Imports:
     readr, 
     dplyr,

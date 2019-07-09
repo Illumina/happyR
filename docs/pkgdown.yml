@@ -1,0 +1,8 @@
+pandoc: 2.3.1
+pkgdown: 1.3.0
+pkgdown_sha: ~
+articles:
+  Precision-recall_curves: Precision-recall_curves.html
+  loading_data: loading_data.html
+  stratified_counts: stratified_counts.html
+

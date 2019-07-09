@@ -1,7 +1,6 @@
 # History files
 .Rhistory
 .Rapp.history
-
 # Session Data files
 .RData
 # Example code in package build process
@@ -26,3 +25,5 @@ vignettes/*.pdf
 .Rproj.user
 inst/doc
 .Rd2pdf*
+# mac os files
+.DS_Store
