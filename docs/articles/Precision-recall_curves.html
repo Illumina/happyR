@@ -79,7 +79,7 @@
       <h1>Precision-recall curves</h1>
                         <h4 class="author">Ben Moore</h4>
             
-            <h4 class="date">2019-07-09</h4>
+            <h4 class="date">2019-07-12</h4>
       
       
       <div class="hidden name"><code>Precision-recall_curves.Rmd</code></div>
@@ -120,9 +120,8 @@
 <p>PR data associated with this hap.py result is lazy-loaded; that is, the data will only be read into R once it is accessed. This saves time that would otherwise be spent reading lots of data that’s never used.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co"># Large 'ALL' PR data isn't loaded yet and the results object isn't too big</span></a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="cf">if</span> (<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">require</a></span>(pryr))</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3">  pryr<span class="op">::</span><span class="kw">object_size</span>(hapdata)</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt; Warning in library(package, lib.loc = lib.loc, character.only = TRUE,</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt; logical.return = TRUE, : there is no package called 'pryr'</span></a></code></pre></div>
+<a class="sourceLine" id="cb4-3" data-line-number="3">  pryr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/pryr/topics/object_size">object_size</a></span>(hapdata)</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt; 21.4 MB</span></a></code></pre></div>
 <p>Any access, even just a <code>head</code>, evaluates the promise and loads the remaining data:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="co"># view part of all PR data, evaluating the promise</span></a>
 <a class="sourceLine" id="cb5-2" data-line-number="2">knitr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/knitr/topics/kable">kable</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(hapdata<span class="op">$</span>pr_curve<span class="op">$</span>all[,<span class="dv">1</span><span class="op">:</span><span class="dv">9</span>]))</a></code></pre></div>
@@ -209,10 +208,8 @@
 </table>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># The hapdata object now includes the full PR data so is a bit bigger</span></a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="cf">if</span> (<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">require</a></span>(pryr))</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">  pryr<span class="op">::</span><span class="kw">object_size</span>(hapdata)</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">#&gt; Loading required package: pryr</span></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="co">#&gt; Warning in library(package, lib.loc = lib.loc, character.only = TRUE,</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="co">#&gt; logical.return = TRUE, : there is no package called 'pryr'</span></a></code></pre></div>
+<a class="sourceLine" id="cb6-3" data-line-number="3">  pryr<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/pryr/topics/object_size">object_size</a></span>(hapdata)</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co">#&gt; 85.4 MB</span></a></code></pre></div>
 <p>If you don’t find this useful, turn it off by passing <code>lazy = FALSE</code> to <code>read_happy</code>.</p>
 </div>
 <div id="high-level-pr-curves" class="section level2">
